@@ -1,0 +1,11 @@
+https://www.jianshu.com/p/8e6c7ec2d306
+https://developers.weixin.qq.com/miniprogram/dev/framework/
+https://www.cnblogs.com/webhmy/p/9271956.html
+https://www.jianshu.com/p/4a6cac171de0
+https://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index
+https://blog.csdn.net/sinat_33921105/article/details/81561271
+https://www.cnblogs.com/zhangxiaoyong/p/6254162.html
+https://mp.weixin.qq.com/advanced/autoreply?action=autoreply&t=ivr/reply&token=1334375706&lang=zh_CN
+https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421135319
+https://www.cnblogs.com/lanxiaoke/p/6426223.html
+https://www.cnblogs.com/lanxiaoke/p/6411873.html
