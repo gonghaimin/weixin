@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using weixinTool;
 
 namespace weixingongzhonghao.Controllers
 {
@@ -14,6 +15,7 @@ namespace weixingongzhonghao.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
+            var token=WeCharBase.AccessToken;
             return new string[] { "value1", "value2" };
         }
 

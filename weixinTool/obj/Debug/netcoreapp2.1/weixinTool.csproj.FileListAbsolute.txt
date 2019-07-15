@@ -1,0 +1,12 @@
+G:\GHM\weixin\weixinTool\bin\Debug\netcoreapp2.1\weixinTool.deps.json
+G:\GHM\weixin\weixinTool\bin\Debug\netcoreapp2.1\weixinTool.dll
+G:\GHM\weixin\weixinTool\bin\Debug\netcoreapp2.1\Microsoft.Extensions.Http.dll
+G:\GHM\weixin\weixinTool\bin\Debug\netcoreapp2.1\Microsoft.Extensions.Http.xml
+G:\GHM\weixin\weixinTool\obj\Debug\netcoreapp2.1\weixinTool.csprojAssemblyReference.cache
+G:\GHM\weixin\weixinTool\obj\Debug\netcoreapp2.1\weixinTool.csproj.CoreCompileInputs.cache
+G:\GHM\weixin\weixinTool\obj\Debug\netcoreapp2.1\weixinTool.AssemblyInfoInputs.cache
+G:\GHM\weixin\weixinTool\obj\Debug\netcoreapp2.1\weixinTool.AssemblyInfo.cs
+G:\GHM\weixin\weixinTool\obj\Debug\netcoreapp2.1\weixinTool.csproj.CopyComplete
+G:\GHM\weixin\weixinTool\bin\Debug\netcoreapp2.1\weixinTool.pdb
+G:\GHM\weixin\weixinTool\obj\Debug\netcoreapp2.1\weixinTool.dll
+G:\GHM\weixin\weixinTool\obj\Debug\netcoreapp2.1\weixinTool.pdb
