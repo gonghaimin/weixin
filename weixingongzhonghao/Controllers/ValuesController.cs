@@ -7,6 +7,11 @@ using weixinTool;
 
 namespace weixingongzhonghao.Controllers
 {
+    /// <summary>
+    /// Sqlite
+    /// https://blog.csdn.net/qq_34759481/article/details/85013025
+    /// https://www.cnblogs.com/anech/p/6873385.html 
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
