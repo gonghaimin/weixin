@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "weixingongzhonghao", "weixingongzhonghao\weixingongzhonghao.csproj", "{137BFB79-6128-4A82-8D09-CF68E6F15E39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "weixingongzhonghao", "weixingongzhonghao\weixingongzhonghao.csproj", "{137BFB79-6128-4A82-8D09-CF68E6F15E39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "weixinTool", "weixinTool\weixinTool.csproj", "{1B319902-3197-4C4C-9E0F-21D2BD29764C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "weixinTool", "weixinTool\weixinTool.csproj", "{1B319902-3197-4C4C-9E0F-21D2BD29764C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rns.Data", "rns.data\Rns.Data.csproj", "{F098D9C5-F7D8-4FD5-B7AF-A24AE15783B3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rns.Core", "rns.core\Rns.Core.csproj", "{F6C81889-ED30-4C19-BC86-ACE249CED8C5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rns.Services", "rns.services\Rns.Services.csproj", "{0F445428-5D2A-4130-ACA2-80B5923E9860}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +27,18 @@ Global
 		{1B319902-3197-4C4C-9E0F-21D2BD29764C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B319902-3197-4C4C-9E0F-21D2BD29764C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B319902-3197-4C4C-9E0F-21D2BD29764C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F098D9C5-F7D8-4FD5-B7AF-A24AE15783B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F098D9C5-F7D8-4FD5-B7AF-A24AE15783B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F098D9C5-F7D8-4FD5-B7AF-A24AE15783B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F098D9C5-F7D8-4FD5-B7AF-A24AE15783B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6C81889-ED30-4C19-BC86-ACE249CED8C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6C81889-ED30-4C19-BC86-ACE249CED8C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6C81889-ED30-4C19-BC86-ACE249CED8C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6C81889-ED30-4C19-BC86-ACE249CED8C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F445428-5D2A-4130-ACA2-80B5923E9860}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F445428-5D2A-4130-ACA2-80B5923E9860}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F445428-5D2A-4130-ACA2-80B5923E9860}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F445428-5D2A-4130-ACA2-80B5923E9860}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

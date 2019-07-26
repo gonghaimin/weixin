@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "G:\\GHM\\weixin\\weixingongzhonghao\\weixingongzhonghao.csproj": {}
+    "E:\\mycode\\weixin\\weixingongzhonghao\\weixingongzhonghao.csproj": {}
   },
   "projects": {
-    "G:\\GHM\\weixin\\weixingongzhonghao\\weixingongzhonghao.csproj": {
+    "E:\\mycode\\weixin\\weixingongzhonghao\\weixingongzhonghao.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\GHM\\weixin\\weixingongzhonghao\\weixingongzhonghao.csproj",
+        "projectUniqueName": "E:\\mycode\\weixin\\weixingongzhonghao\\weixingongzhonghao.csproj",
         "projectName": "weixingongzhonghao",
-        "projectPath": "G:\\GHM\\weixin\\weixingongzhonghao\\weixingongzhonghao.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "G:\\GHM\\weixin\\weixingongzhonghao\\obj\\",
+        "projectPath": "E:\\mycode\\weixin\\weixingongzhonghao\\weixingongzhonghao.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "E:\\mycode\\weixin\\weixingongzhonghao\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -25,13 +25,13 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://www.nuget.org/api/v2/": {}
         },
         "frameworks": {
           "netcoreapp2.1": {
             "projectReferences": {
-              "G:\\GHM\\weixin\\weixinTool\\weixinTool.csproj": {
-                "projectPath": "G:\\GHM\\weixin\\weixinTool\\weixinTool.csproj"
+              "E:\\mycode\\weixin\\weixinTool\\weixinTool.csproj": {
+                "projectPath": "E:\\mycode\\weixin\\weixinTool\\weixinTool.csproj"
               }
             }
           }
@@ -70,20 +70,20 @@
         }
       }
     },
-    "G:\\GHM\\weixin\\weixinTool\\weixinTool.csproj": {
+    "E:\\mycode\\weixin\\weixinTool\\weixinTool.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\GHM\\weixin\\weixinTool\\weixinTool.csproj",
+        "projectUniqueName": "E:\\mycode\\weixin\\weixinTool\\weixinTool.csproj",
         "projectName": "weixinTool",
-        "projectPath": "G:\\GHM\\weixin\\weixinTool\\weixinTool.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "G:\\GHM\\weixin\\weixinTool\\obj\\",
+        "projectPath": "E:\\mycode\\weixin\\weixinTool\\weixinTool.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "E:\\mycode\\weixin\\weixinTool\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -91,7 +91,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://www.nuget.org/api/v2/": {}
         },
         "frameworks": {
           "netcoreapp2.1": {
