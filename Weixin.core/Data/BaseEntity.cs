@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Rns.Core.Data
+namespace Weixin.Core.Data
 {
     public abstract class BaseEntity
     {

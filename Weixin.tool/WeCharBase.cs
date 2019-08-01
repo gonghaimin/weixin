@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 
-namespace weixinTool
+namespace Weixin.Tool
 {
     public class WeCharBase
     {
@@ -24,7 +24,7 @@ namespace weixinTool
 
 
         /// <summary>获取ccess_token</summary>
-        /// <returns></returns>
+        /// <retuWeixin></retuWeixin>
         private static string GetToken()
         {
             try

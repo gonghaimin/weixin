@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weixin.Core", "Weixin.core\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weixin.Services", "Weixin.services\Weixin.Services.csproj", "{0F445428-5D2A-4130-ACA2-80B5923E9860}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weixin.Web", "Weixin.web\Weixin.Web.csproj", "{F6E99950-A11F-4362-840D-9A1F1F048081}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weixin.WebApi", "Weixin.Webapi\Weixin.WebApi.csproj", "{F6E99950-A11F-4362-840D-9A1F1F048081}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

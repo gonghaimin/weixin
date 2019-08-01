@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Rns.Core.Infranstructure
+namespace Weixin.Core.Infranstructure
 {
     public interface IEngine
     {

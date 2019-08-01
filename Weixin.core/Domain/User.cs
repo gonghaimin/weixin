@@ -1,10 +1,10 @@
-﻿using Rns.Core.Data;
+﻿using Weixin.Core.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Rns.Core.Domain
+namespace Weixin.Core.Domain
 {
     [Table("user")]
     public class User:BaseEntity

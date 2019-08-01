@@ -1,9 +1,9 @@
-﻿using Rns.Core.Domain;
+﻿using Weixin.Core.Domain;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Rns.Core
+namespace Weixin.Core
 {
     public interface IWorkContext
     {

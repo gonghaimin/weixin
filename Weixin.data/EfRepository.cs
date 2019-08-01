@@ -1,11 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Rns.Core.Data;
+﻿using Weixin.Core.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
-namespace Rns.Data
+namespace Weixin.Data
 {
     public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {

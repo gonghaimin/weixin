@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Rns.Core.Infranstructure
+namespace Weixin.Core.Infranstructure
 {
-    public class AppEngine : IEngine
+    public class DefaultEngine : IEngine
     {
         private readonly IServiceProvider _serviceProvider;
-        public AppEngine(IServiceProvider serviceProvider)
+        public DefaultEngine(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }

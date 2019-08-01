@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Rns.Core.Infranstructure
+namespace Weixin.Core.Infranstructure
 {
     public class EngineContext
     {
@@ -10,7 +10,7 @@ namespace Rns.Core.Infranstructure
 
         public static void Create(IServiceProvider serviceProvider)
         {
-            _engine = new AppEngine(serviceProvider);
+            _engine = new DefaultEngine(serviceProvider);
         }
 
 

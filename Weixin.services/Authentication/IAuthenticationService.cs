@@ -1,9 +1,9 @@
-﻿using Rns.Core.Domain;
+﻿using Weixin.Core.Domain;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Rns.Services.Authentication
+namespace Weixin.Services.Authentication
 {
     public interface IAuthenticationService
     {

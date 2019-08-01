@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Rns.Core.Extensions
+namespace Weixin.Core.Extensions
 {
     public static class EnumExtensions
     {

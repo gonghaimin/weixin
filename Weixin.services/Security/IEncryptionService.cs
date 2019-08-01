@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Rns.Services.Security
+namespace Weixin.Services.Security
 {
     public interface IEncryptionService
     {

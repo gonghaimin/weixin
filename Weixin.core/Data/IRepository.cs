@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Rns.Core.Data
+namespace Weixin.Core.Data
 {
     public interface IRepository<TEntity> where TEntity:BaseEntity
     {
