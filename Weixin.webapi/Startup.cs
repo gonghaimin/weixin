@@ -18,6 +18,8 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using System.Reflection;
 using Weixin.WebApi.Extensions;
 using Weixin.Core.Infranstructure;
+using Weixin.Core.Domain;
+using Weixin.Core.Data;
 
 namespace Weixin.WebApi
 {
@@ -49,7 +51,22 @@ namespace Weixin.WebApi
                 app.UseDeveloperExceptionPage();
             }
 
-            
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                try
+                {
+                    var a=services.GetRequiredService<IRepository<User>>();
+                    var context = services.GetRequiredService<WeixinContext>();
+                    context.Database.EnsureCreated();
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred creating the DB.");
+                }
+            }
             app.UseCors(builder =>
             {
                 builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials();

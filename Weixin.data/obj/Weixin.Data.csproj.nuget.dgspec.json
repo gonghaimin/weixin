@@ -1,34 +1,34 @@
 {
   "format": 1,
   "restore": {
-    "G:\\GHM\\weixin\\Weixin.data\\Weixin.Data.csproj": {}
+    "E:\\mycode\\weixin\\Weixin.data\\Weixin.Data.csproj": {}
   },
   "projects": {
-    "G:\\GHM\\weixin\\Weixin.core\\Weixin.Core.csproj": {
+    "E:\\mycode\\weixin\\Weixin.core\\Weixin.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\GHM\\weixin\\Weixin.core\\Weixin.Core.csproj",
+        "projectUniqueName": "E:\\mycode\\weixin\\Weixin.core\\Weixin.Core.csproj",
         "projectName": "Weixin.Core",
-        "projectPath": "G:\\GHM\\weixin\\Weixin.core\\Weixin.Core.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "G:\\GHM\\weixin\\Weixin.core\\obj\\",
+        "projectPath": "E:\\mycode\\weixin\\Weixin.core\\Weixin.Core.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "E:\\mycode\\weixin\\Weixin.core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "netcoreapp2.1"
+          "netcoreapp2.2"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://www.nuget.org/api/v2/": {}
         },
         "frameworks": {
-          "netcoreapp2.1": {
+          "netcoreapp2.2": {
             "projectReferences": {}
           }
         },
@@ -39,11 +39,11 @@
         }
       },
       "frameworks": {
-        "netcoreapp2.1": {
+        "netcoreapp2.2": {
           "dependencies": {
             "Microsoft.AspNetCore.App": {
               "target": "Package",
-              "version": "[2.1.1, )"
+              "version": "[2.2.4, )"
             },
             "Microsoft.Extensions.PlatformAbstractions": {
               "target": "Package",
@@ -52,7 +52,7 @@
             "Microsoft.NETCore.App": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[2.1.0, )",
+              "version": "[2.2.0, )",
               "autoReferenced": true
             }
           },
@@ -64,34 +64,34 @@
         }
       }
     },
-    "G:\\GHM\\weixin\\Weixin.data\\Weixin.Data.csproj": {
+    "E:\\mycode\\weixin\\Weixin.data\\Weixin.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\GHM\\weixin\\Weixin.data\\Weixin.Data.csproj",
+        "projectUniqueName": "E:\\mycode\\weixin\\Weixin.data\\Weixin.Data.csproj",
         "projectName": "Weixin.Data",
-        "projectPath": "G:\\GHM\\weixin\\Weixin.data\\Weixin.Data.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "G:\\GHM\\weixin\\Weixin.data\\obj\\",
+        "projectPath": "E:\\mycode\\weixin\\Weixin.data\\Weixin.Data.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "E:\\mycode\\weixin\\Weixin.data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "netcoreapp2.1"
+          "netcoreapp2.2"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://www.nuget.org/api/v2/": {}
         },
         "frameworks": {
-          "netcoreapp2.1": {
+          "netcoreapp2.2": {
             "projectReferences": {
-              "G:\\GHM\\weixin\\Weixin.core\\Weixin.Core.csproj": {
-                "projectPath": "G:\\GHM\\weixin\\Weixin.core\\Weixin.Core.csproj"
+              "E:\\mycode\\weixin\\Weixin.core\\Weixin.Core.csproj": {
+                "projectPath": "E:\\mycode\\weixin\\Weixin.core\\Weixin.Core.csproj"
               }
             }
           }
@@ -103,7 +103,7 @@
         }
       },
       "frameworks": {
-        "netcoreapp2.1": {
+        "netcoreapp2.2": {
           "dependencies": {
             "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
@@ -112,7 +112,7 @@
             "Microsoft.NETCore.App": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[2.1.0, )",
+              "version": "[2.2.0, )",
               "autoReferenced": true
             }
           },

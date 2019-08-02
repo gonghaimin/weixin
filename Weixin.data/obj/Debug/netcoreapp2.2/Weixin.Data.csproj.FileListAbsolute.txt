@@ -1,0 +1,4 @@
+E:\mycode\weixin\Weixin.data\obj\Debug\netcoreapp2.2\Weixin.Data.csprojAssemblyReference.cache
+E:\mycode\weixin\Weixin.data\obj\Debug\netcoreapp2.2\Weixin.Data.csproj.CoreCompileInputs.cache
+E:\mycode\weixin\Weixin.data\obj\Debug\netcoreapp2.2\Weixin.Data.AssemblyInfoInputs.cache
+E:\mycode\weixin\Weixin.data\obj\Debug\netcoreapp2.2\Weixin.Data.AssemblyInfo.cs

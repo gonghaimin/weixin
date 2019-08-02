@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Weixin.Core.Data;
+using Weixin.Core.Domain;
 using Weixin.Data;
 using Weixin.Tool;
 
@@ -17,20 +21,22 @@ namespace Weixin.WebApi.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        private readonly WeixinContext _context;
-        public ValuesController(WeixinContext context)
+        public WeixinContext _context { get; set; }
+        public readonly IRepository<User> Users;
+        public ValuesController(ILogger<Program> context, IApplicationBuilder app)
         {
-            _context = context;
+            
         }
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            _context.Users.Add(new Core.Domain.User() {
+            _context.Users.Add(new User() {
                 UserName="ghm"
             });
+            _context.SaveChanges();
             var token=WeCharBase.AccessToken;
-            return new string[] { "value1", "value2" };
+            return new string[] { token };
         }
 
         // GET api/values/5
