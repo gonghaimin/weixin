@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Weixin.Data
 {
-    public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
+    public class EfRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity
     {
         private DbContext _context;
         private DbSet<TEntity> _entities;
@@ -33,6 +33,8 @@ namespace Weixin.Data
 
         public IQueryable<TEntity> TableNoTracking => Entities.AsNoTracking();
 
+        public DbContext Context { get => this._context;  }
+
         public void Delete(TEntity entity)
         {
             Entities.Remove(entity);
@@ -49,7 +51,6 @@ namespace Weixin.Data
         {
             return Entities.Find(id);
         }
-
 
         public void Insert(TEntity entity)
         {

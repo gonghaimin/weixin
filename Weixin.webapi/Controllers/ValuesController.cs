@@ -2,41 +2,44 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Weixin.Core.Data;
 using Weixin.Core.Domain;
 using Weixin.Data;
 using Weixin.Tool;
+using Weixin.WebApi.Extensions;
+using Weixin.WebApi.Options;
 
 namespace Weixin.WebApi.Controllers
 {
-    /// <summary>
-    /// Sqlite
-    /// https://blog.csdn.net/qq_34759481/article/details/85013025
-    /// https://www.cnblogs.com/anech/p/6873385.html 
+
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = "common")]
     public class ValuesController : ControllerBase
     {
-        public WeixinContext _context { get; set; }
-        public readonly IRepository<User> Users;
-        public ValuesController(ILogger<Program> context, IApplicationBuilder app)
+        private readonly IBaseRepository<User> Users;
+        private IOptions<MyOwnModel> settings;
+
+        public ValuesController(IBaseRepository<User> users, IOptions<MyOwnModel> settings, IOptionsSnapshot<MyOwnModel> namedOptionsAccessor)
         {
-            
+            this.Users = users;
+            this.settings = settings;
+            var own = namedOptionsAccessor.Get("自定义配置");
         }
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            _context.Users.Add(new User() {
-                UserName="ghm"
-            });
-            _context.SaveChanges();
-            var token=WeCharBase.AccessToken;
-            return new string[] { token };
+            var a = Users.Context;
+            Users.Insert(new User() { UserName = "ghm" });
+            var token = WeCharBase.AccessToken;
+            return new string[] { token, AppsettingsUtility.GetSetting("Logging:LogLevel:Default") };
         }
 
         // GET api/values/5

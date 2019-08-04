@@ -1,0 +1,14 @@
+G:\GHM\weixin\Weixin.services\bin\Debug\netcoreapp2.2\Weixin.Services.deps.json
+G:\GHM\weixin\Weixin.services\bin\Debug\netcoreapp2.2\Weixin.Services.dll
+G:\GHM\weixin\Weixin.services\bin\Debug\netcoreapp2.2\Weixin.Services.pdb
+G:\GHM\weixin\Weixin.services\bin\Debug\netcoreapp2.2\Weixin.Core.dll
+G:\GHM\weixin\Weixin.services\bin\Debug\netcoreapp2.2\Weixin.Data.dll
+G:\GHM\weixin\Weixin.services\bin\Debug\netcoreapp2.2\Weixin.Data.pdb
+G:\GHM\weixin\Weixin.services\bin\Debug\netcoreapp2.2\Weixin.Core.pdb
+G:\GHM\weixin\Weixin.services\obj\Debug\netcoreapp2.2\Weixin.Services.csprojAssemblyReference.cache
+G:\GHM\weixin\Weixin.services\obj\Debug\netcoreapp2.2\Weixin.Services.csproj.CoreCompileInputs.cache
+G:\GHM\weixin\Weixin.services\obj\Debug\netcoreapp2.2\Weixin.Services.AssemblyInfoInputs.cache
+G:\GHM\weixin\Weixin.services\obj\Debug\netcoreapp2.2\Weixin.Services.AssemblyInfo.cs
+G:\GHM\weixin\Weixin.services\obj\Debug\netcoreapp2.2\Weixin.Services.csproj.CopyComplete
+G:\GHM\weixin\Weixin.services\obj\Debug\netcoreapp2.2\Weixin.Services.dll
+G:\GHM\weixin\Weixin.services\obj\Debug\netcoreapp2.2\Weixin.Services.pdb
