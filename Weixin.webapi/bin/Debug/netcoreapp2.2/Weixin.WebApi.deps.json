@@ -25,6 +25,7 @@
       "Weixin.WebApi/1.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Authentication.JwtBearer": "2.2.0",
+          "Microsoft.Extensions.Caching.Abstractions": "2.2.0",
           "Microsoft.Extensions.Caching.Redis": "2.2.0",
           "Microsoft.NETCore.App": "2.2.0",
           "Swashbuckle.AspNetCore": "4.0.1",
