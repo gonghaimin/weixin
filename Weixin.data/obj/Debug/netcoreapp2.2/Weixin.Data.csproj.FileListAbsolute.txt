@@ -14,3 +14,11 @@ G:\GHM\weixin\Weixin.data\obj\Debug\netcoreapp2.2\Weixin.Data.AssemblyInfo.cs
 G:\GHM\weixin\Weixin.data\obj\Debug\netcoreapp2.2\Weixin.Data.csproj.CopyComplete
 G:\GHM\weixin\Weixin.data\obj\Debug\netcoreapp2.2\Weixin.Data.dll
 G:\GHM\weixin\Weixin.data\obj\Debug\netcoreapp2.2\Weixin.Data.pdb
+E:\mycode\weixin\Weixin.data\bin\Debug\netcoreapp2.2\Weixin.Data.deps.json
+E:\mycode\weixin\Weixin.data\bin\Debug\netcoreapp2.2\Weixin.Data.dll
+E:\mycode\weixin\Weixin.data\bin\Debug\netcoreapp2.2\Weixin.Data.pdb
+E:\mycode\weixin\Weixin.data\bin\Debug\netcoreapp2.2\Weixin.Core.dll
+E:\mycode\weixin\Weixin.data\bin\Debug\netcoreapp2.2\Weixin.Core.pdb
+E:\mycode\weixin\Weixin.data\obj\Debug\netcoreapp2.2\Weixin.Data.csproj.CopyComplete
+E:\mycode\weixin\Weixin.data\obj\Debug\netcoreapp2.2\Weixin.Data.dll
+E:\mycode\weixin\Weixin.data\obj\Debug\netcoreapp2.2\Weixin.Data.pdb
