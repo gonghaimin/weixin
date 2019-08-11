@@ -1,28 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Serialization;
-using Weixin.Data;
 using Swashbuckle.AspNetCore.Swagger;
-using Microsoft.Extensions.PlatformAbstractions;
 using System.IO;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using System.Reflection;
 using Weixin.WebApi.Extensions;
 using Weixin.Core.Infranstructure;
-using Weixin.Core.Domain;
-using Weixin.Core.Data;
 using Weixin.WebApi.Middleware;
 using Microsoft.EntityFrameworkCore;
-using Weixin.WebApi.Options;
+using Weixin.Core.Options;
+using Weixin.Services;
 
 namespace Weixin.WebApi
 {
@@ -35,10 +27,8 @@ namespace Weixin.WebApi
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
             services.AddSwaggerGen(options =>
@@ -65,6 +55,7 @@ namespace Weixin.WebApi
                 r.Configuration = Configuration["Redis:ConnectionString"];
             });
             services.Configure<JwtOption>(Configuration.GetSection("JwtOption"));
+
             EngineContext.Create(services.BuildServiceProvider());
         }
 
@@ -91,6 +82,8 @@ namespace Weixin.WebApi
 
                     var context = services.GetRequiredService<DbContext>();
                     context.Database.EnsureCreated();
+
+                    var ii= services.GetRequiredService<UserContext>();
                 }
                 catch (Exception ex)
                 {

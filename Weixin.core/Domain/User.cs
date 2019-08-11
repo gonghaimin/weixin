@@ -19,6 +19,8 @@ namespace Weixin.Core.Domain
 
         public int RoleId { get; set; }
 
+        public string Email { get; set; }
+
         [NotMapped]
         public string RoleName { get; set; }
 

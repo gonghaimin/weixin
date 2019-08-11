@@ -23,11 +23,6 @@
             自定义授权中间件
             </summary>
         </member>
-        <member name="T:Weixin.WebApi.Options.JwtOption">
-            <summary>
-            jwt配置
-            </summary>
-        </member>
         <member name="M:Weixin.WebApi.Policy.CommonAuthorizeHandler.HandleRequirementAsync(Microsoft.AspNetCore.Authorization.AuthorizationHandlerContext,Weixin.WebApi.Policy.CommonAuthorize)">
             <summary>
             常用自定义验证策略，模仿自定义中间件JwtCustomerauthorizeMiddleware的验证范围

@@ -8,7 +8,7 @@ namespace Weixin.WebApi
 {
     public class UserContext: IContext
     {
-        public static List<string> AllowAnonymousPathList = new List<string>();
+        
 
         public bool IsAllowAnonymous(string path)
         {

@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "583e2b668a3f444d0192a322605355df0041f7ec"
+    "signature": "5069691e22656e50bb3ae1b8b0bf87335a9c2696"
   },
   "compilationOptions": {
     "defines": [
@@ -38,22 +38,6 @@
         },
         "compile": {
           "Weixin.WebApi.dll": {}
-        }
-      },
-      "EIS.Microsoft.AspNetCore.App/1.0.1": {
-        "dependencies": {
-          "Microsoft.AspNetCore": "2.2.0",
-          "Microsoft.AspNetCore.HttpsPolicy": "2.2.0",
-          "Microsoft.AspNetCore.Mvc": "2.2.0"
-        },
-        "runtime": {
-          "lib/netstandard2.0/EIS.Microsoft.AspNetCore.App.dll": {
-            "assemblyVersion": "1.0.1.0",
-            "fileVersion": "1.0.1.0"
-          }
-        },
-        "compile": {
-          "lib/netstandard2.0/EIS.Microsoft.AspNetCore.App.dll": {}
         }
       },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
@@ -4470,7 +4454,6 @@
       },
       "Weixin.Core/1.0.0": {
         "dependencies": {
-          "EIS.Microsoft.AspNetCore.App": "1.0.1",
           "Microsoft.AspNetCore.App": "2.2.4",
           "Microsoft.Extensions.PlatformAbstractions": "1.1.0"
         },
@@ -4703,13 +4686,6 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
-    },
-    "EIS.Microsoft.AspNetCore.App/1.0.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-husS3QkEudIxiJZHY+AXQahnfClC4qNpHyXQmgTJ4DTM3PZjLTYVQoVlxmmwMb8WGfUzVQvi4A4+1LU1KTE+Kw==",
-      "path": "eis.microsoft.aspnetcore.app/1.0.1",
-      "hashPath": "eis.microsoft.aspnetcore.app.1.0.1.nupkg.sha512"
     },
     "Microsoft.AspNet.WebApi.Client/5.2.6": {
       "type": "package",

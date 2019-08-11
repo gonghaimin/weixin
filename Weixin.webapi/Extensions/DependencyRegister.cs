@@ -28,8 +28,9 @@ namespace Weixin.WebApi.Extensions
             var connections = configuration.GetSection("Connections");
             var connStr = "Data source=" + Path.Combine(basePath, "mydb.db");
             services.AddDbContext<DbContext, WeixinContext>(options => options.UseSqlite(connStr));
-            services.AddSingleton(typeof(IHttpContextAccessor));
+            services.AddSingleton(typeof(IHttpContextAccessor), typeof(HttpContextAccessor));
             services.AddScoped(typeof(IBaseRepository<>), typeof(EfRepository<>));
+            services.AddScoped(typeof(UserContext));
             //services.AddScoped(typeof(INoteService), typeof(NoteService));
             //services.AddScoped(typeof(ISecurityService), typeof(SecurityService));
             //services.AddScoped(typeof(IAuthenticationService), typeof(CookieAuthenticationService));
@@ -76,7 +77,7 @@ namespace Weixin.WebApi.Extensions
 
             //自定义策略IOC添加
 
-            services.AddSingleton<IAuthorizationHandler, CommonAuthorizeHandler>();
+            services.AddScoped<IAuthorizationHandler, CommonAuthorizeHandler>();
 
         }
     }

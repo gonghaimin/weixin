@@ -2,20 +2,6 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.2": {
-      "EIS.Microsoft.AspNetCore.App/1.0.1": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.AspNetCore": "2.1.1",
-          "Microsoft.AspNetCore.HttpsPolicy": "2.1.1",
-          "Microsoft.AspNetCore.Mvc": "2.1.1"
-        },
-        "compile": {
-          "lib/netstandard2.0/EIS.Microsoft.AspNetCore.App.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/EIS.Microsoft.AspNetCore.App.dll": {}
-        }
-      },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
         "type": "package",
         "dependencies": {
@@ -4469,18 +4455,6 @@
     }
   },
   "libraries": {
-    "EIS.Microsoft.AspNetCore.App/1.0.1": {
-      "sha512": "husS3QkEudIxiJZHY+AXQahnfClC4qNpHyXQmgTJ4DTM3PZjLTYVQoVlxmmwMb8WGfUzVQvi4A4+1LU1KTE+Kw==",
-      "type": "package",
-      "path": "eis.microsoft.aspnetcore.app/1.0.1",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "eis.microsoft.aspnetcore.app.1.0.1.nupkg.sha512",
-        "eis.microsoft.aspnetcore.app.nuspec",
-        "lib/netstandard2.0/EIS.Microsoft.AspNetCore.App.dll"
-      ]
-    },
     "Microsoft.AspNet.WebApi.Client/5.2.6": {
       "sha512": "owAlEIUZXWSnkK8Z1c+zR47A0X6ykF4XjbPok4lQKNuciUfHLGPd6QnI+rt/8KlQ17PmF+I4S3f+m+Qe4IvViw==",
       "type": "package",
@@ -12123,30 +12097,29 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
-      "EIS.Microsoft.AspNetCore.App >= 1.0.1",
       "Microsoft.AspNetCore.App >= 2.2.4",
       "Microsoft.Extensions.PlatformAbstractions >= 1.1.0",
       "Microsoft.NETCore.App >= 2.2.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Admin\\.nuget\\packages\\": {},
+    "C:\\Users\\Administrator\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\mycode\\weixin\\Weixin.core\\Weixin.Core.csproj",
+      "projectUniqueName": "G:\\GHM\\weixin\\Weixin.core\\Weixin.Core.csproj",
       "projectName": "Weixin.Core",
-      "projectPath": "E:\\mycode\\weixin\\Weixin.core\\Weixin.Core.csproj",
-      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "E:\\mycode\\weixin\\Weixin.core\\obj\\",
+      "projectPath": "G:\\GHM\\weixin\\Weixin.core\\Weixin.Core.csproj",
+      "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+      "outputPath": "G:\\GHM\\weixin\\Weixin.core\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -12154,7 +12127,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://www.nuget.org/api/v2/": {}
+        "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp2.2": {
@@ -12170,10 +12143,6 @@
     "frameworks": {
       "netcoreapp2.2": {
         "dependencies": {
-          "EIS.Microsoft.AspNetCore.App": {
-            "target": "Package",
-            "version": "[1.0.1, )"
-          },
           "Microsoft.AspNetCore.App": {
             "target": "Package",
             "version": "[2.2.4, )"

@@ -1,26 +1,17 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "3c130dc0a7f7e4d2e179c1d6f393f2c754b5a26a"
+    "signature": "3d2f9c65249e682e7e57eadb2da8ffe03d7bf1bf"
   },
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v2.2": {
       "Weixin.Core/1.0.0": {
         "dependencies": {
-          "EIS.Microsoft.AspNetCore.App": "1.0.1",
           "Microsoft.Extensions.PlatformAbstractions": "1.1.0"
         },
         "runtime": {
           "Weixin.Core.dll": {}
-        }
-      },
-      "EIS.Microsoft.AspNetCore.App/1.0.1": {
-        "runtime": {
-          "lib/netstandard2.0/EIS.Microsoft.AspNetCore.App.dll": {
-            "assemblyVersion": "1.0.1.0",
-            "fileVersion": "1.0.1.0"
-          }
         }
       },
       "Microsoft.Extensions.PlatformAbstractions/1.1.0": {
@@ -38,13 +29,6 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
-    },
-    "EIS.Microsoft.AspNetCore.App/1.0.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-husS3QkEudIxiJZHY+AXQahnfClC4qNpHyXQmgTJ4DTM3PZjLTYVQoVlxmmwMb8WGfUzVQvi4A4+1LU1KTE+Kw==",
-      "path": "eis.microsoft.aspnetcore.app/1.0.1",
-      "hashPath": "eis.microsoft.aspnetcore.app.1.0.1.nupkg.sha512"
     },
     "Microsoft.Extensions.PlatformAbstractions/1.1.0": {
       "type": "package",

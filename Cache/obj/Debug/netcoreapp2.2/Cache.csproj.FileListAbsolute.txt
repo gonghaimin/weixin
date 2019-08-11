@@ -1,12 +1,3 @@
-G:\GHM\weixin\Cache\bin\Debug\netcoreapp2.2\Cache.deps.json
-G:\GHM\weixin\Cache\bin\Debug\netcoreapp2.2\Cache.dll
-G:\GHM\weixin\Cache\bin\Debug\netcoreapp2.2\Cache.pdb
-G:\GHM\weixin\Cache\obj\Debug\netcoreapp2.2\Cache.csproj.CoreCompileInputs.cache
-G:\GHM\weixin\Cache\obj\Debug\netcoreapp2.2\Cache.AssemblyInfoInputs.cache
-G:\GHM\weixin\Cache\obj\Debug\netcoreapp2.2\Cache.AssemblyInfo.cs
-G:\GHM\weixin\Cache\obj\Debug\netcoreapp2.2\Cache.dll
-G:\GHM\weixin\Cache\obj\Debug\netcoreapp2.2\Cache.pdb
-G:\GHM\weixin\Cache\obj\Debug\netcoreapp2.2\Cache.csprojAssemblyReference.cache
 E:\mycode\weixin\Cache\bin\Debug\netcoreapp2.2\Cache.deps.json
 E:\mycode\weixin\Cache\bin\Debug\netcoreapp2.2\Cache.dll
 E:\mycode\weixin\Cache\bin\Debug\netcoreapp2.2\Cache.pdb
@@ -16,3 +7,11 @@ E:\mycode\weixin\Cache\obj\Debug\netcoreapp2.2\Cache.AssemblyInfoInputs.cache
 E:\mycode\weixin\Cache\obj\Debug\netcoreapp2.2\Cache.AssemblyInfo.cs
 E:\mycode\weixin\Cache\obj\Debug\netcoreapp2.2\Cache.dll
 E:\mycode\weixin\Cache\obj\Debug\netcoreapp2.2\Cache.pdb
+G:\GHM\weixin\Cache\bin\Debug\netcoreapp2.2\Cache.deps.json
+G:\GHM\weixin\Cache\bin\Debug\netcoreapp2.2\Cache.dll
+G:\GHM\weixin\Cache\bin\Debug\netcoreapp2.2\Cache.pdb
+G:\GHM\weixin\Cache\obj\Debug\netcoreapp2.2\Cache.csproj.CoreCompileInputs.cache
+G:\GHM\weixin\Cache\obj\Debug\netcoreapp2.2\Cache.AssemblyInfoInputs.cache
+G:\GHM\weixin\Cache\obj\Debug\netcoreapp2.2\Cache.AssemblyInfo.cs
+G:\GHM\weixin\Cache\obj\Debug\netcoreapp2.2\Cache.dll
+G:\GHM\weixin\Cache\obj\Debug\netcoreapp2.2\Cache.pdb

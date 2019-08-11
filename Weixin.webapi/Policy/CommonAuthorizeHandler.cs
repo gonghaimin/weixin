@@ -7,8 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Weixin.Core.Options;
 using Weixin.Services;
-using Weixin.WebApi.Options;
+
 
 namespace Weixin.WebApi.Policy
 {
