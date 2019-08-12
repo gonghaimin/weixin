@@ -21,3 +21,4 @@ G:\GHM\weixin\Weixin.tool\obj\Debug\netcoreapp2.2\Weixin.Tool.csproj.CopyComplet
 G:\GHM\weixin\Weixin.tool\obj\Debug\netcoreapp2.2\Weixin.Tool.dll
 G:\GHM\weixin\Weixin.tool\obj\Debug\netcoreapp2.2\Weixin.Tool.pdb
 G:\GHM\weixin\Weixin.tool\obj\Debug\netcoreapp2.2\Weixin.Tool.csprojAssemblyReference.cache
+E:\mycode\weixin\Weixin.tool\obj\Debug\netcoreapp2.2\Weixin.Tool.csprojAssemblyReference.cache

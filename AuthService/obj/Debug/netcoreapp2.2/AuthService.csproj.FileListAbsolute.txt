@@ -14,3 +14,15 @@ G:\GHM\weixin\AuthService\obj\Debug\netcoreapp2.2\AuthService.AssemblyInfo.cs
 G:\GHM\weixin\AuthService\obj\Debug\netcoreapp2.2\AuthService.csproj.CopyComplete
 G:\GHM\weixin\AuthService\obj\Debug\netcoreapp2.2\AuthService.dll
 G:\GHM\weixin\AuthService\obj\Debug\netcoreapp2.2\AuthService.pdb
+E:\mycode\weixin\AuthService\obj\Debug\netcoreapp2.2\AuthService.csprojAssemblyReference.cache
+E:\mycode\weixin\AuthService\obj\Debug\netcoreapp2.2\AuthService.csproj.CoreCompileInputs.cache
+E:\mycode\weixin\AuthService\obj\Debug\netcoreapp2.2\AuthService.AssemblyInfoInputs.cache
+E:\mycode\weixin\AuthService\obj\Debug\netcoreapp2.2\AuthService.AssemblyInfo.cs
+E:\mycode\weixin\AuthService\obj\Debug\netcoreapp2.2\AuthService.dll
+E:\mycode\weixin\AuthService\obj\Debug\netcoreapp2.2\AuthService.pdb
+E:\mycode\weixin\AuthService\bin\Debug\netcoreapp2.2\AuthService.deps.json
+E:\mycode\weixin\AuthService\bin\Debug\netcoreapp2.2\AuthService.dll
+E:\mycode\weixin\AuthService\bin\Debug\netcoreapp2.2\AuthService.pdb
+E:\mycode\weixin\AuthService\bin\Debug\netcoreapp2.2\Weixin.Core.dll
+E:\mycode\weixin\AuthService\bin\Debug\netcoreapp2.2\Weixin.Core.pdb
+E:\mycode\weixin\AuthService\obj\Debug\netcoreapp2.2\AuthService.csproj.CopyComplete

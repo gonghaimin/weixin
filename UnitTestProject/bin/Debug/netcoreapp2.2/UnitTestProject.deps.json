@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v2.2": {
       "UnitTestProject/1.0.0": {
         "dependencies": {
+          "AuthService": "1.0.0",
           "MSTest.TestAdapter": "1.4.0",
           "MSTest.TestFramework": "1.4.0",
           "Microsoft.NET.Test.Sdk": "16.0.1",
@@ -4031,6 +4032,15 @@
           }
         }
       },
+      "AuthService/1.0.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Abstractions": "2.2.0",
+          "Weixin.Core": "1.0.0"
+        },
+        "runtime": {
+          "AuthService.dll": {}
+        }
+      },
       "Weixin.Core/1.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.App": "2.2.4",
@@ -6192,6 +6202,11 @@
       "sha512": "sha512-Zm2BdeanuncYs3NhCj4c9e1x3EXFzFBVv2wPEc/Dj4ZbI9R8ecLSR5frAsx4zJCPBtKQreQ7Q/KxJEohJZbfzA==",
       "path": "system.xml.xpath.xmldocument/4.0.1",
       "hashPath": "system.xml.xpath.xmldocument.4.0.1.nupkg.sha512"
+    },
+    "AuthService/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "Weixin.Core/1.0.0": {
       "type": "project",

@@ -19,11 +19,10 @@ namespace AuthService.JWT.Middleware
 
         public JwtCustomerAuthorizeMiddleware(RequestDelegate next)
         {
-          
             this.next = next;
         }
 
-        public async Task Invoke(HttpContext context, UserContext userContext, IOptions<JwtOption> optionContainer)
+        public async Task Invoke(HttpContext context, IAuthContext userContext, IOptions<JwtOption> optionContainer)
         {
             //检查当前url是否可以匿名访问，如果可以就直接通过，不做验证了；如果不是可以匿名访问的路径，那就继续
             if (userContext.IsAllowAnonymous(context.Request.Path))
@@ -37,7 +36,7 @@ namespace AuthService.JWT.Middleware
             #region   设置自定义jwt 的秘钥
             if (!string.IsNullOrEmpty(option.SecurityKey))
             {
-                TokenContext.securityKey = option.SecurityKey;
+                JwtHandler.securityKey = option.SecurityKey;
             }
             #endregion
 
@@ -49,7 +48,7 @@ namespace AuthService.JWT.Middleware
             {
                 throw new UnauthorizedAccessException("未授权");
             }
-            result = TokenContext.Validate(authStr.ToString().Substring("Bearer ".Length).Trim(), payLoad =>
+            result = JwtHandler.Validate(authStr.ToString().Substring("Bearer ".Length).Trim(), payLoad =>
             {
                 var success = true;
                 //可以添加一些自定义验证，用法参照测试用例

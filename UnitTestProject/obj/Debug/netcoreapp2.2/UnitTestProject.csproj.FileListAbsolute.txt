@@ -40,3 +40,5 @@ G:\GHM\weixin\UnitTestProject\obj\Debug\netcoreapp2.2\UnitTestProject.AssemblyIn
 G:\GHM\weixin\UnitTestProject\obj\Debug\netcoreapp2.2\UnitTestProject.csproj.CopyComplete
 G:\GHM\weixin\UnitTestProject\obj\Debug\netcoreapp2.2\UnitTestProject.dll
 G:\GHM\weixin\UnitTestProject\obj\Debug\netcoreapp2.2\UnitTestProject.pdb
+E:\mycode\weixin\UnitTestProject\bin\Debug\netcoreapp2.2\AuthService.dll
+E:\mycode\weixin\UnitTestProject\bin\Debug\netcoreapp2.2\AuthService.pdb

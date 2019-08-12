@@ -24,6 +24,7 @@
     ".NETCoreApp,Version=v2.2": {
       "Weixin.WebApi/1.0.0": {
         "dependencies": {
+          "AuthService": "1.0.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "2.2.0",
           "Microsoft.Extensions.Caching.Abstractions": "2.2.0",
           "Microsoft.Extensions.Caching.Redis": "2.2.0",
@@ -4452,6 +4453,18 @@
           "System.Xml.XPath": "4.3.0"
         }
       },
+      "AuthService/1.0.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Abstractions": "2.2.0",
+          "Weixin.Core": "1.0.0"
+        },
+        "runtime": {
+          "AuthService.dll": {}
+        },
+        "compile": {
+          "AuthService.dll": {}
+        }
+      },
       "Weixin.Core/1.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.App": "2.2.4",
@@ -6779,6 +6792,11 @@
       "sha512": "sha512-jw9oHHEIVW53mHY9PgrQa98Xo2IZ0ZjrpdOTmtvk+Rvg4tq7dydmxdNqUvJ5YwjDqhn75mBXWttWjiKhWP53LQ==",
       "path": "system.xml.xpath.xdocument/4.3.0",
       "hashPath": "system.xml.xpath.xdocument.4.3.0.nupkg.sha512"
+    },
+    "AuthService/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "Weixin.Core/1.0.0": {
       "type": "project",

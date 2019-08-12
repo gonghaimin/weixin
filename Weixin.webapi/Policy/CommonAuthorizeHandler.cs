@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AuthService.JWT;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Options;
@@ -42,7 +43,7 @@ namespace Weixin.WebApi.Policy
             {
                 return Task.CompletedTask;
             }
-            result = TokenContext.Validate(authStr.ToString().Substring("Bearer ".Length).Trim(), payLoad =>
+            result = JwtHandler.Validate(authStr.ToString().Substring("Bearer ".Length).Trim(), payLoad =>
             {
                 var success = true;
                 //可以添加一些自定义验证，用法参照测试用例

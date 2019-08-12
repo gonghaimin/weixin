@@ -1,7 +1,6 @@
 E:\mycode\weixin\Cache\bin\Debug\netcoreapp2.2\Cache.deps.json
 E:\mycode\weixin\Cache\bin\Debug\netcoreapp2.2\Cache.dll
 E:\mycode\weixin\Cache\bin\Debug\netcoreapp2.2\Cache.pdb
-E:\mycode\weixin\Cache\obj\Debug\netcoreapp2.2\Cache.csprojAssemblyReference.cache
 E:\mycode\weixin\Cache\obj\Debug\netcoreapp2.2\Cache.csproj.CoreCompileInputs.cache
 E:\mycode\weixin\Cache\obj\Debug\netcoreapp2.2\Cache.AssemblyInfoInputs.cache
 E:\mycode\weixin\Cache\obj\Debug\netcoreapp2.2\Cache.AssemblyInfo.cs

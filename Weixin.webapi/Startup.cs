@@ -97,7 +97,6 @@ namespace Weixin.WebApi
             });
             app.UseMiddleware(typeof(ErrorHandlingMiddleware));
             app.UseMiddleware<AuthenticationMiddleware>();
-            app.UseMiddleware<JwtCustomerAuthorizeMiddleware>(new List<string>() { "/api/values/getjwt", "/" });
             app.UseAuthentication();//启动配置权限管道
             app.UseMvc();
             app.UseSwagger();

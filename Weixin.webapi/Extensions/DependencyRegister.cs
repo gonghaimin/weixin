@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using AuthService.JWT;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -54,14 +55,14 @@ namespace Weixin.WebApi.Extensions
             {
                 if (!string.IsNullOrEmpty(configuration["JwtOption:SecurityKey"]))
                 {
-                    TokenContext.securityKey = configuration["JwtOption:SecurityKey"];
+                    JwtHandler.securityKey = configuration["JwtOption:SecurityKey"];
                 }
                 //设置需要验证的项目
                 option.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidIssuer = "http://localhost:5200",
                     ValidAudience = "api",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(TokenContext.securityKey))//拿到SecurityKey
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtHandler.securityKey))//拿到SecurityKey
                                                                                                                  /***********************************TokenValidationParameters的参数默认值***********************************/
                                                                                                                  // ValidateIssuer = true,//是否验证Issuer
                                                                                                                  //ValidateAudience = true,//是否验证Audience

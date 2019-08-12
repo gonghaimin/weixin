@@ -1,3 +1,4 @@
+using AuthService.JWT;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -21,9 +22,9 @@ namespace UnitTestProject
             payLoad.Add("aud", "roberAudience");
             payLoad.Add("age", 40);
 
-            var encodeJwt = TokenContext.CreateTokenByHandler(payLoad, 30);
+            var encodeJwt = JwtHandler.CreateTokenByHandler(payLoad, 30);
 
-            var result = TokenContext.Validate(encodeJwt, (load) => {
+            var result = JwtHandler.Validate(encodeJwt, (load) => {
                 var success = true;
                 //验证是否包含aud 并等于 roberAudience
                 success = success && load["aud"]?.ToString() == "roberAudience";

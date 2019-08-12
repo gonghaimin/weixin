@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AuthService;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,21 +7,21 @@ using Weixin.Services;
 
 namespace Weixin.WebApi
 {
-    public class UserContext: IContext
+    public class UserContext: IAuthContext
     {
         
 
-        public bool IsAllowAnonymous(string path)
+        public override bool IsAllowAnonymous(string path)
         {
             return true;
         }
 
-        public void TryInit(string json)
+        public override void TryInit(string json)
         {
 
         }
 
-        public bool Authorize(string path)
+        public override bool Authorize(string path)
         {
             return true;
         }

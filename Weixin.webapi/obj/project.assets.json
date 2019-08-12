@@ -4851,6 +4851,20 @@
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
       },
+      "AuthService/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.2",
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Abstractions": "2.2.0",
+          "Weixin.Core": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AuthService.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AuthService.dll": {}
+        }
+      },
       "Weixin.Core/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.2",
@@ -13071,6 +13085,11 @@
         "system.xml.xpath.xdocument.nuspec"
       ]
     },
+    "AuthService/1.0.0": {
+      "type": "project",
+      "path": "../AuthService/AuthService.csproj",
+      "msbuildProject": "../AuthService/AuthService.csproj"
+    },
     "Weixin.Core/1.0.0": {
       "type": "project",
       "path": "../Weixin.core/Weixin.Core.csproj",
@@ -13094,6 +13113,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
+      "AuthService >= 1.0.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 2.2.0",
       "Microsoft.Extensions.Caching.Abstractions >= 2.2.0",
       "Microsoft.Extensions.Caching.Redis >= 2.2.0",
@@ -13105,23 +13125,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Administrator\\.nuget\\packages\\": {},
+    "C:\\Users\\Admin\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "G:\\GHM\\weixin\\Weixin.Webapi\\Weixin.WebApi.csproj",
+      "projectUniqueName": "E:\\mycode\\weixin\\Weixin.Webapi\\Weixin.WebApi.csproj",
       "projectName": "Weixin.WebApi",
-      "projectPath": "G:\\GHM\\weixin\\Weixin.Webapi\\Weixin.WebApi.csproj",
-      "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "G:\\GHM\\weixin\\Weixin.Webapi\\obj\\",
+      "projectPath": "E:\\mycode\\weixin\\Weixin.Webapi\\Weixin.WebApi.csproj",
+      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+      "outputPath": "E:\\mycode\\weixin\\Weixin.Webapi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -13129,19 +13149,22 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "https://www.nuget.org/api/v2/": {}
       },
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "G:\\GHM\\weixin\\Weixin.data\\Weixin.Data.csproj": {
-              "projectPath": "G:\\GHM\\weixin\\Weixin.data\\Weixin.Data.csproj"
+            "E:\\mycode\\weixin\\AuthService\\AuthService.csproj": {
+              "projectPath": "E:\\mycode\\weixin\\AuthService\\AuthService.csproj"
             },
-            "G:\\GHM\\weixin\\Weixin.services\\Weixin.Services.csproj": {
-              "projectPath": "G:\\GHM\\weixin\\Weixin.services\\Weixin.Services.csproj"
+            "E:\\mycode\\weixin\\Weixin.data\\Weixin.Data.csproj": {
+              "projectPath": "E:\\mycode\\weixin\\Weixin.data\\Weixin.Data.csproj"
             },
-            "G:\\GHM\\weixin\\Weixin.tool\\Weixin.Tool.csproj": {
-              "projectPath": "G:\\GHM\\weixin\\Weixin.tool\\Weixin.Tool.csproj"
+            "E:\\mycode\\weixin\\Weixin.services\\Weixin.Services.csproj": {
+              "projectPath": "E:\\mycode\\weixin\\Weixin.services\\Weixin.Services.csproj"
+            },
+            "E:\\mycode\\weixin\\Weixin.tool\\Weixin.Tool.csproj": {
+              "projectPath": "E:\\mycode\\weixin\\Weixin.tool\\Weixin.Tool.csproj"
             }
           }
         }
