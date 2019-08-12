@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Weixin.WebApi.Middleware
@@ -27,6 +26,8 @@ namespace Weixin.WebApi.Middleware
                 OriginalPath = context.Request.Path,
                 OriginalPathBase = context.Request.PathBase
             });
+            var request = context.Features.Get<IHttpRequestFeature>();
+
             // Give any IAuthenticationRequestHandler schemes a chance to handle the request
             var handlers = context.RequestServices.GetRequiredService<IAuthenticationHandlerProvider>();
             foreach (var scheme in await Schemes.GetRequestHandlerSchemesAsync())
@@ -51,7 +52,8 @@ namespace Weixin.WebApi.Middleware
                     context.User = result.Principal;
                 }
             }
-
+          
+            // DefaultAuthenticationManager
             await _next(context);
         }
     }

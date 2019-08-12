@@ -18,3 +18,4 @@ G:\GHM\weixin\Weixin.core\obj\Debug\netcoreapp2.2\Weixin.Core.AssemblyInfoInputs
 G:\GHM\weixin\Weixin.core\obj\Debug\netcoreapp2.2\Weixin.Core.AssemblyInfo.cs
 G:\GHM\weixin\Weixin.core\obj\Debug\netcoreapp2.2\Weixin.Core.dll
 G:\GHM\weixin\Weixin.core\obj\Debug\netcoreapp2.2\Weixin.Core.pdb
+G:\GHM\weixin\Weixin.core\obj\Debug\netcoreapp2.2\Weixin.Core.csprojAssemblyReference.cache

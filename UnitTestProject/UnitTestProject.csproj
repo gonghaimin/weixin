@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AuthService\AuthService.csproj" />
-    <ProjectReference Include="..\Weixin.services\Weixin.Services.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,7 @@
 ﻿using AuthService.JWT.Policy;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -14,16 +15,20 @@ namespace AuthService.JWT
     //https://www.cnblogs.com/danvic712/p/10331976.html
     public static class JwtAuthRegister
     {
-        public static void ConfigureServices(this IServiceCollection services, IOptions<JwtOption> jwtOption)
+        public static void ConfigureServices(this IServiceCollection services, IConfiguration configuration)
         {
-            TimeSpan expiration = TimeSpan.FromMinutes(Convert.ToDouble(jwtOption.Value.Expiration));
-            SecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOption.Value.SecurityKey));
+            var expire = Convert.ToDouble(configuration["JwtOption:Expiration"]);
+            var securityKey = configuration["JwtOption:SecurityKey"];
+            var issuer = configuration["JwtOption:Issuer"];
+            var audience = configuration["JwtOption:Audience"];
+
+            TimeSpan expiration = TimeSpan.FromMinutes(expire);
+            SecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(securityKey));
 
             services.AddAuthorization(options =>
             {
-                //1、Definition authorization policy
-                options.AddPolicy("Permission",
-                   policy => policy.Requirements.Add(new PolicyRequirement()));
+                //在需要验证的Controller或者Action中加上[Authorize(Policy = "common")]属性
+                options.AddPolicy("common", policy => policy.Requirements.Add(new PolicyRequirement()));
             }).AddAuthentication(s =>
             {
                 //2、Authentication
@@ -35,8 +40,8 @@ namespace AuthService.JWT
                 //3、Use Jwt bearer 
                 s.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidIssuer = jwtOption.Value.Issuer,
-                    ValidAudience = jwtOption.Value.Audience,
+                    ValidIssuer = issuer,
+                    ValidAudience = audience,
                     IssuerSigningKey = key,
                     ClockSkew = expiration,
                     ValidateLifetime = true
@@ -54,7 +59,7 @@ namespace AuthService.JWT
                     }
                 };
             });
-
+            services.AddSingleton<IJwtAppService, JwtAppService>();
             //DI handler process function
             services.AddSingleton<IAuthorizationHandler, PolicyHandler>();
         }

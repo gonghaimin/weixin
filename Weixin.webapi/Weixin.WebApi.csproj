@@ -25,8 +25,9 @@
   <ItemGroup>
     <ProjectReference Include="..\AuthService\AuthService.csproj" />
     <ProjectReference Include="..\Weixin.data\Weixin.Data.csproj" />
-    <ProjectReference Include="..\Weixin.services\Weixin.Services.csproj" />
     <ProjectReference Include="..\Weixin.tool\Weixin.Tool.csproj" />
   </ItemGroup>
+  
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

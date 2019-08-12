@@ -9,13 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weixin.Data", "Weixin.data\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weixin.Core", "Weixin.core\Weixin.Core.csproj", "{F6C81889-ED30-4C19-BC86-ACE249CED8C5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weixin.Services", "Weixin.services\Weixin.Services.csproj", "{0F445428-5D2A-4130-ACA2-80B5923E9860}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonService", "CommonService\CommonService.csproj", "{0F445428-5D2A-4130-ACA2-80B5923E9860}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weixin.WebApi", "Weixin.Webapi\Weixin.WebApi.csproj", "{F6E99950-A11F-4362-840D-9A1F1F048081}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestProject", "UnitTestProject\UnitTestProject.csproj", "{6DDC905C-BBE5-437C-BC5C-7A51A26CFD36}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cache", "Cache\Cache.csproj", "{AE02B0FC-5C97-4470-93C1-7DF3CFEB89F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CacheHelper", "CacheHelper\CacheHelper.csproj", "{AE02B0FC-5C97-4470-93C1-7DF3CFEB89F2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService", "AuthService\AuthService.csproj", "{C59B17AF-EA41-423E-9828-384D45436E44}"
 EndProject

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +13,7 @@ using Weixin.Core.Infranstructure;
 using Weixin.WebApi.Middleware;
 using Microsoft.EntityFrameworkCore;
 using Weixin.Core.Options;
-using Weixin.Services;
+using AuthService.JWT;
 
 namespace Weixin.WebApi
 {
@@ -39,7 +38,7 @@ namespace Weixin.WebApi
             });
 
             services.Register(Configuration);
-
+            services.ConfigureServices(Configuration);
             services.AddCors();
 
             //初始化MyOwnModel实例并且映射appSettings里的配置
@@ -54,6 +53,7 @@ namespace Weixin.WebApi
             {
                 r.Configuration = Configuration["Redis:ConnectionString"];
             });
+            //Configuration.GetSection("").
             services.Configure<JwtOption>(Configuration.GetSection("JwtOption"));
 
             EngineContext.Create(services.BuildServiceProvider());

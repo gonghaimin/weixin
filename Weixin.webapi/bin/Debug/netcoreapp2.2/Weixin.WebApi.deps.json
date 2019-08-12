@@ -31,7 +31,6 @@
           "Microsoft.NETCore.App": "2.2.0",
           "Swashbuckle.AspNetCore": "4.0.1",
           "Weixin.Data": "1.0.0",
-          "Weixin.Services": "1.0.0",
           "Weixin.Tool": "1.0.0"
         },
         "runtime": {
@@ -4489,17 +4488,6 @@
           "Weixin.Data.dll": {}
         }
       },
-      "Weixin.Services/1.0.0": {
-        "dependencies": {
-          "Weixin.Data": "1.0.0"
-        },
-        "runtime": {
-          "Weixin.Services.dll": {}
-        },
-        "compile": {
-          "Weixin.Services.dll": {}
-        }
-      },
       "Weixin.Tool/1.0.0": {
         "dependencies": {
           "Newtonsoft.Json": "12.0.2"
@@ -6804,11 +6792,6 @@
       "sha512": ""
     },
     "Weixin.Data/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Weixin.Services/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

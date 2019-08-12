@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security.Claims;
-using System.Text;
 using Microsoft.AspNetCore.Http;
-using System.Linq;
 using Weixin.Core.Domain;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 
 namespace AuthService.Cookie

@@ -2,7 +2,7 @@ using AuthService.JWT;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using Weixin.Services;
+
 
 namespace UnitTestProject
 {
