@@ -12,10 +12,8 @@ E:\mycode\weixin\Weixin.Webapi\bin\Debug\netcoreapp2.2\Weixin.WebApi.pdb
 E:\mycode\weixin\Weixin.Webapi\bin\Debug\netcoreapp2.2\Weixin.WebApi.xml
 E:\mycode\weixin\Weixin.Webapi\bin\Debug\netcoreapp2.2\Weixin.Core.dll
 E:\mycode\weixin\Weixin.Webapi\bin\Debug\netcoreapp2.2\Weixin.Data.dll
-E:\mycode\weixin\Weixin.Webapi\bin\Debug\netcoreapp2.2\Weixin.Services.dll
 E:\mycode\weixin\Weixin.Webapi\bin\Debug\netcoreapp2.2\Weixin.Tool.dll
 E:\mycode\weixin\Weixin.Webapi\bin\Debug\netcoreapp2.2\Weixin.Data.pdb
-E:\mycode\weixin\Weixin.Webapi\bin\Debug\netcoreapp2.2\Weixin.Services.pdb
 E:\mycode\weixin\Weixin.Webapi\bin\Debug\netcoreapp2.2\Weixin.Tool.pdb
 E:\mycode\weixin\Weixin.Webapi\bin\Debug\netcoreapp2.2\Weixin.Core.pdb
 E:\mycode\weixin\Weixin.Webapi\obj\Debug\netcoreapp2.2\Weixin.WebApi.csproj.CopyComplete

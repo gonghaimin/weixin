@@ -13106,23 +13106,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Administrator\\.nuget\\packages\\": {},
+    "C:\\Users\\Admin\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "G:\\GHM\\weixin\\Weixin.Webapi\\Weixin.WebApi.csproj",
+      "projectUniqueName": "E:\\mycode\\weixin\\Weixin.Webapi\\Weixin.WebApi.csproj",
       "projectName": "Weixin.WebApi",
-      "projectPath": "G:\\GHM\\weixin\\Weixin.Webapi\\Weixin.WebApi.csproj",
-      "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "G:\\GHM\\weixin\\Weixin.Webapi\\obj\\",
+      "projectPath": "E:\\mycode\\weixin\\Weixin.Webapi\\Weixin.WebApi.csproj",
+      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+      "outputPath": "E:\\mycode\\weixin\\Weixin.Webapi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -13130,19 +13130,19 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "https://www.nuget.org/api/v2/": {}
       },
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "G:\\GHM\\weixin\\AuthService\\AuthService.csproj": {
-              "projectPath": "G:\\GHM\\weixin\\AuthService\\AuthService.csproj"
+            "E:\\mycode\\weixin\\AuthService\\AuthService.csproj": {
+              "projectPath": "E:\\mycode\\weixin\\AuthService\\AuthService.csproj"
             },
-            "G:\\GHM\\weixin\\Weixin.data\\Weixin.Data.csproj": {
-              "projectPath": "G:\\GHM\\weixin\\Weixin.data\\Weixin.Data.csproj"
+            "E:\\mycode\\weixin\\Weixin.data\\Weixin.Data.csproj": {
+              "projectPath": "E:\\mycode\\weixin\\Weixin.data\\Weixin.Data.csproj"
             },
-            "G:\\GHM\\weixin\\Weixin.tool\\Weixin.Tool.csproj": {
-              "projectPath": "G:\\GHM\\weixin\\Weixin.tool\\Weixin.Tool.csproj"
+            "E:\\mycode\\weixin\\Weixin.tool\\Weixin.Tool.csproj": {
+              "projectPath": "E:\\mycode\\weixin\\Weixin.tool\\Weixin.Tool.csproj"
             }
           }
         }

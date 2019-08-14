@@ -96,8 +96,11 @@ namespace Weixin.WebApi
                 builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials();
             });
             app.UseMiddleware(typeof(ErrorHandlingMiddleware));
-            app.UseMiddleware<AuthenticationMiddleware>();
-            app.UseAuthentication();//启动配置权限管道
+            //Microsoft.AspNetCore.Authentication.AuthenticationMiddleware
+            //启动配置权限管道
+            //UseAuthentication方法注册了AuthenticationMiddleware中间件
+            app.UseAuthentication();
+           
             app.UseMvc();
             app.UseSwagger();
             app.UseSwaggerUI(options =>

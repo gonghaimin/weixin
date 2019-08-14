@@ -7,11 +7,7 @@ E:\mycode\weixin\UnitTestProject\bin\Debug\netcoreapp2.2\UnitTestProject.runtime
 E:\mycode\weixin\UnitTestProject\bin\Debug\netcoreapp2.2\UnitTestProject.dll
 E:\mycode\weixin\UnitTestProject\bin\Debug\netcoreapp2.2\UnitTestProject.pdb
 E:\mycode\weixin\UnitTestProject\bin\Debug\netcoreapp2.2\Weixin.Core.dll
-E:\mycode\weixin\UnitTestProject\bin\Debug\netcoreapp2.2\Weixin.Data.dll
-E:\mycode\weixin\UnitTestProject\bin\Debug\netcoreapp2.2\Weixin.Services.dll
-E:\mycode\weixin\UnitTestProject\bin\Debug\netcoreapp2.2\Weixin.Services.pdb
 E:\mycode\weixin\UnitTestProject\bin\Debug\netcoreapp2.2\Weixin.Core.pdb
-E:\mycode\weixin\UnitTestProject\bin\Debug\netcoreapp2.2\Weixin.Data.pdb
 E:\mycode\weixin\UnitTestProject\obj\Debug\netcoreapp2.2\UnitTestProject.csprojAssemblyReference.cache
 E:\mycode\weixin\UnitTestProject\obj\Debug\netcoreapp2.2\UnitTestProject.csproj.CoreCompileInputs.cache
 E:\mycode\weixin\UnitTestProject\obj\Debug\netcoreapp2.2\UnitTestProject.AssemblyInfoInputs.cache

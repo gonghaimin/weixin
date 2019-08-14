@@ -12,3 +12,17 @@ G:\GHM\weixin\CommonService\obj\Debug\netcoreapp2.2\CommonService.AssemblyInfo.c
 G:\GHM\weixin\CommonService\obj\Debug\netcoreapp2.2\CommonService.csproj.CopyComplete
 G:\GHM\weixin\CommonService\obj\Debug\netcoreapp2.2\CommonService.dll
 G:\GHM\weixin\CommonService\obj\Debug\netcoreapp2.2\CommonService.pdb
+E:\mycode\weixin\CommonService\bin\Debug\netcoreapp2.2\CommonService.deps.json
+E:\mycode\weixin\CommonService\bin\Debug\netcoreapp2.2\CommonService.dll
+E:\mycode\weixin\CommonService\bin\Debug\netcoreapp2.2\CommonService.pdb
+E:\mycode\weixin\CommonService\bin\Debug\netcoreapp2.2\Weixin.Core.dll
+E:\mycode\weixin\CommonService\bin\Debug\netcoreapp2.2\Weixin.Data.dll
+E:\mycode\weixin\CommonService\bin\Debug\netcoreapp2.2\Weixin.Data.pdb
+E:\mycode\weixin\CommonService\bin\Debug\netcoreapp2.2\Weixin.Core.pdb
+E:\mycode\weixin\CommonService\obj\Debug\netcoreapp2.2\CommonService.csprojAssemblyReference.cache
+E:\mycode\weixin\CommonService\obj\Debug\netcoreapp2.2\CommonService.csproj.CoreCompileInputs.cache
+E:\mycode\weixin\CommonService\obj\Debug\netcoreapp2.2\CommonService.AssemblyInfoInputs.cache
+E:\mycode\weixin\CommonService\obj\Debug\netcoreapp2.2\CommonService.AssemblyInfo.cs
+E:\mycode\weixin\CommonService\obj\Debug\netcoreapp2.2\CommonService.csproj.CopyComplete
+E:\mycode\weixin\CommonService\obj\Debug\netcoreapp2.2\CommonService.dll
+E:\mycode\weixin\CommonService\obj\Debug\netcoreapp2.2\CommonService.pdb
