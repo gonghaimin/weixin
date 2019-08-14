@@ -12,6 +12,5 @@ namespace CacheHelper
         bool Exists(string key);
         void Remove(string key);
         void RemoveByPattern(string pattern);
-        void Clear();
     }
 }

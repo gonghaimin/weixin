@@ -23,7 +23,7 @@ namespace CacheHelper
 
         public void Dispose()
         {
-           
+            Cache.Dispose();
         }
 
         public T Get<T>(string key) 
