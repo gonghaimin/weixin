@@ -31,10 +31,9 @@ namespace CacheHelper
         {
             if (key == null)
                 throw new ArgumentNullException(nameof(key));
-            var bytes = Cache.Get(key);
-            if(bytes != null)
+            var val = Cache.GetString(key);
+            if(!string.IsNullOrEmpty(val))
             {
-               var val = Encoding.UTF8.GetString(bytes);
                return JsonConvert.DeserializeObject<T>(val);
             }
             return default(T);
@@ -67,8 +66,7 @@ namespace CacheHelper
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
             var str = JsonConvert.SerializeObject(value);
-            var bytes = Encoding.UTF8.GetBytes(str);
-            Cache.Set(key, bytes, new DistributedCacheEntryOptions() { AbsoluteExpirationRelativeToNow=TimeSpan.FromSeconds(cacheSeconds) });
+            Cache.SetString(key, str, new DistributedCacheEntryOptions() { AbsoluteExpirationRelativeToNow=TimeSpan.FromSeconds(cacheSeconds) });
 
         }
 

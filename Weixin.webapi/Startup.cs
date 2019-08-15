@@ -35,6 +35,15 @@ namespace Weixin.WebApi
                 options.SwaggerDoc("v1", new Info() { Title = "Swagger Test UI", Version = "v1" });
                 options.CustomSchemaIds(type => type.FullName); // 解决相同类名会报错的问题
                 options.IncludeXmlComments(Path.Combine(Directory.GetCurrentDirectory(), "Weixin.WebApi.xml")); // 标注要使用的 XML 文档
+                                                                                                                             //启用auth支持
+                options.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = "header",
+                    Type = "apiKey"
+                });
+
             });
 
             services.Register(Configuration);

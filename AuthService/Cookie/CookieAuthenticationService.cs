@@ -4,16 +4,18 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Weixin.Core.Domain;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace AuthService.Cookie
 {
     public class CookieAuthenticationService : IAuthService
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-
-        public CookieAuthenticationService(IHttpContextAccessor httpContextAccessor)
+        private readonly IDistributedCache _cache;
+        public CookieAuthenticationService(IHttpContextAccessor httpContextAccessor, IDistributedCache cache)
         {
             this._httpContextAccessor = httpContextAccessor;
+            this._cache = cache;
         }
 
         public User GetCurrentUser()
@@ -35,17 +37,25 @@ namespace AuthService.Cookie
 
         public void SignIn(User user)
         {
-            var claims = new List<Claim>();
-            claims.Add(new Claim(ClaimTypes.Name, user.UserName, ClaimValueTypes.String, CookieAuthenticationDefaults.ClaimsIssuer));
-            var userIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            var userPrincipal = new ClaimsPrincipal(userIdentity);
+            DateTime authTime = DateTime.UtcNow;
+            DateTime expiresAt = authTime.AddMinutes(30);
+
+            //将用户信息添加到 Claim 中
+            var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+            IEnumerable<Claim> claims = new Claim[] {
+                new Claim(ClaimTypes.Name,user.UserName),
+                new Claim(ClaimTypes.Role,user.RoleId.ToString()),
+                new Claim(ClaimTypes.Expiration,expiresAt.ToString())
+            };
+            identity.AddClaims(claims);
+
             var authenticationProperties = new AuthenticationProperties
             {
                 IsPersistent = false,
                 IssuedUtc = DateTime.UtcNow
             };
 
-            _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, userPrincipal, authenticationProperties).Wait();
+            _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), authenticationProperties).Wait();
         }
 
         public void SignOut()
