@@ -14,7 +14,7 @@ namespace AuthService.Cookie
     {
         public static void Register(this IServiceCollection services)
         {
-            services.AddScoped(typeof(IAuthService),typeof(CookieAuthenticationService));
+            
         }
         public static void AddCookieAuthentication(this IServiceCollection services)
         {

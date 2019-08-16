@@ -14,6 +14,7 @@ using Weixin.WebApi.Middleware;
 using Microsoft.EntityFrameworkCore;
 using Weixin.Core.Options;
 using AuthService.JWT;
+using AuthService;
 
 namespace Weixin.WebApi
 {
@@ -45,7 +46,7 @@ namespace Weixin.WebApi
                 });
 
             });
-
+            services.AddScoped(typeof(IAuthService), typeof(CookieAuthenticationService));
             services.Register(Configuration);
             services.ConfigureServices(Configuration);
             services.AddCors();

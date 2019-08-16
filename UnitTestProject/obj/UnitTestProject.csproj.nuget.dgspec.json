@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "G:\\GHM\\weixin\\UnitTestProject\\UnitTestProject.csproj": {}
+    "E:\\mycode\\weixin\\UnitTestProject\\UnitTestProject.csproj": {}
   },
   "projects": {
-    "G:\\GHM\\weixin\\AuthService\\AuthService.csproj": {
+    "E:\\mycode\\weixin\\AuthService\\AuthService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\GHM\\weixin\\AuthService\\AuthService.csproj",
+        "projectUniqueName": "E:\\mycode\\weixin\\AuthService\\AuthService.csproj",
         "projectName": "AuthService",
-        "projectPath": "G:\\GHM\\weixin\\AuthService\\AuthService.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "G:\\GHM\\weixin\\AuthService\\obj\\",
+        "projectPath": "E:\\mycode\\weixin\\AuthService\\AuthService.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "E:\\mycode\\weixin\\AuthService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -25,13 +25,13 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://www.nuget.org/api/v2/": {}
         },
         "frameworks": {
           "netcoreapp2.2": {
             "projectReferences": {
-              "G:\\GHM\\weixin\\Weixin.core\\Weixin.Core.csproj": {
-                "projectPath": "G:\\GHM\\weixin\\Weixin.core\\Weixin.Core.csproj"
+              "E:\\mycode\\weixin\\Weixin.core\\Weixin.Core.csproj": {
+                "projectPath": "E:\\mycode\\weixin\\Weixin.core\\Weixin.Core.csproj"
               }
             }
           }
@@ -64,20 +64,20 @@
         }
       }
     },
-    "G:\\GHM\\weixin\\UnitTestProject\\UnitTestProject.csproj": {
+    "E:\\mycode\\weixin\\UnitTestProject\\UnitTestProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\GHM\\weixin\\UnitTestProject\\UnitTestProject.csproj",
+        "projectUniqueName": "E:\\mycode\\weixin\\UnitTestProject\\UnitTestProject.csproj",
         "projectName": "UnitTestProject",
-        "projectPath": "G:\\GHM\\weixin\\UnitTestProject\\UnitTestProject.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "G:\\GHM\\weixin\\UnitTestProject\\obj\\",
+        "projectPath": "E:\\mycode\\weixin\\UnitTestProject\\UnitTestProject.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "E:\\mycode\\weixin\\UnitTestProject\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -85,13 +85,13 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://www.nuget.org/api/v2/": {}
         },
         "frameworks": {
           "netcoreapp2.2": {
             "projectReferences": {
-              "G:\\GHM\\weixin\\AuthService\\AuthService.csproj": {
-                "projectPath": "G:\\GHM\\weixin\\AuthService\\AuthService.csproj"
+              "E:\\mycode\\weixin\\AuthService\\AuthService.csproj": {
+                "projectPath": "E:\\mycode\\weixin\\AuthService\\AuthService.csproj"
               }
             }
           }
@@ -132,20 +132,20 @@
         }
       }
     },
-    "G:\\GHM\\weixin\\Weixin.core\\Weixin.Core.csproj": {
+    "E:\\mycode\\weixin\\Weixin.core\\Weixin.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\GHM\\weixin\\Weixin.core\\Weixin.Core.csproj",
+        "projectUniqueName": "E:\\mycode\\weixin\\Weixin.core\\Weixin.Core.csproj",
         "projectName": "Weixin.Core",
-        "projectPath": "G:\\GHM\\weixin\\Weixin.core\\Weixin.Core.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "G:\\GHM\\weixin\\Weixin.core\\obj\\",
+        "projectPath": "E:\\mycode\\weixin\\Weixin.core\\Weixin.Core.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "E:\\mycode\\weixin\\Weixin.core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -153,7 +153,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://www.nuget.org/api/v2/": {}
         },
         "frameworks": {
           "netcoreapp2.2": {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using AuthService;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Distributed;
@@ -13,7 +14,7 @@ using System.Text;
 using Weixin.Core.Domain;
 using Weixin.Core.Options;
 
-namespace AuthService.JWT
+namespace Weixin.WebApi
 {
     public class JwtAuthenticationService : IAuthService
     {

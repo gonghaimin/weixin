@@ -5,8 +5,10 @@ using Microsoft.AspNetCore.Http;
 using Weixin.Core.Domain;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Caching.Distributed;
+using AuthService.Cookie;
+using AuthService;
 
-namespace AuthService.Cookie
+namespace Weixin.WebApi
 {
     public class CookieAuthenticationService : IAuthService
     {
