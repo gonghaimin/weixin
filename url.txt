@@ -9,3 +9,5 @@ https://mp.weixin.qq.com/advanced/autoreply?action=autoreply&t=ivr/reply&token=1
 https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421135319
 https://www.cnblogs.com/lanxiaoke/p/6426223.html
 https://www.cnblogs.com/lanxiaoke/p/6411873.html
+
+https://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index

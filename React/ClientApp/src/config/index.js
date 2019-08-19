@@ -1,5 +1,5 @@
 const config = {
-  apiHost: ''
+  apiHost: 'http://localhost:51602/'
 };
 
 export { config };

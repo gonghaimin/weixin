@@ -10,14 +10,14 @@ namespace AuthService.JWT
         /// </summary>
         /// <param name="user">用户信息数据传输对象</param>
         /// <returns></returns>
-        JwtAuthorizationDto Create(User user);
+        string Create(User user);
 
         /// <summary>
         /// 刷新 Token
         /// </summary>
         /// <param name="user">用户信息数据传输对象</param>
         /// <returns></returns>
-        Task<JwtAuthorizationDto> RefreshAsync(User user);
+        Task<string> RefreshAsync(User user);
 
         /// <summary>
         /// 判断当前 Token 是否有效

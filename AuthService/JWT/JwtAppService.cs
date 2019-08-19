@@ -52,7 +52,7 @@ namespace AuthService.JWT
         /// </summary>
         /// <param name="user">用户信息数据传输对象</param>
         /// <returns></returns>
-        public JwtAuthorizationDto Create(User user)
+        public string Create(User user)
         {
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
             SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOption.Value.SecurityKey));
@@ -84,17 +84,7 @@ namespace AuthService.JWT
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
-
-            //存储 Token 信息
-            var jwt = new JwtAuthorizationDto
-            {
-                UserId = user.Id,
-                Token = tokenHandler.WriteToken(token),
-                Auths = new DateTimeOffset(authTime).ToUnixTimeSeconds(),
-                Expires = new DateTimeOffset(expiresAt).ToUnixTimeSeconds(),
-                Success = true
-            };
-            return jwt;
+            return tokenHandler.WriteToken(token);
         }
 
         /// <summary>
@@ -131,7 +121,7 @@ namespace AuthService.JWT
         /// </summary>
         /// <param name="user">用户信息</param>
         /// <returns></returns>
-        public async Task<JwtAuthorizationDto> RefreshAsync(User user)
+        public async Task<string> RefreshAsync(User user)
         {
             var jwt = Create(user);
             //停用修改前的 Token 信息

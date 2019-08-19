@@ -19,7 +19,7 @@ namespace Weixin.WebApi.Extensions
             services.AddDbContext<DbContext, WeixinContext>(options => options.UseSqlite(connStr));
             services.AddSingleton(typeof(IHttpContextAccessor), typeof(HttpContextAccessor));
             services.AddScoped(typeof(IBaseRepository<>), typeof(EfRepository<>));
-            services.AddScoped(typeof(UserContext));
+            services.AddScoped(typeof(WorkContext));
             //services.AddScoped(typeof(INoteService), typeof(NoteService));
             //services.AddScoped(typeof(ISecurityService), typeof(SecurityService));
             //services.AddScoped(typeof(IAuthenticationService), typeof(CookieAuthenticationService));

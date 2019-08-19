@@ -48,7 +48,6 @@ namespace Weixin.WebApi
             });
             services.AddScoped(typeof(IAuthService), typeof(CookieAuthenticationService));
             services.Register(Configuration);
-            services.ConfigureServices(Configuration);
             services.AddCors();
 
             //初始化MyOwnModel实例并且映射appSettings里的配置
@@ -92,8 +91,6 @@ namespace Weixin.WebApi
 
                     var context = services.GetRequiredService<DbContext>();
                     context.Database.EnsureCreated();
-
-                    var ii= services.GetRequiredService<UserContext>();
                 }
                 catch (Exception ex)
                 {

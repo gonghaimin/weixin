@@ -15,7 +15,7 @@ namespace Weixin.WebApi.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Policy = "common")]
+   // [Authorize(Policy = "common")]
     public class ValuesController : ControllerBase
     {
         private readonly IBaseRepository<User> Users;
@@ -37,31 +37,11 @@ namespace Weixin.WebApi.Controllers
             return new string[] { token, AppsettingsUtility.GetSetting("Logging:LogLevel:Default") };
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        [HttpGet]
+        [Route("/api/values/createMenu")]
+        public ActionResult<string> createMenu()
         {
-            return "value";
-        }
-
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+           return WeCharBase.createMenu();
         }
     }
-
-   
 }
