@@ -25,6 +25,7 @@
       "Weixin.WebApi/1.0.0": {
         "dependencies": {
           "AuthService": "1.0.0",
+          "CommonService": "1.0.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "2.2.0",
           "Microsoft.Extensions.Caching.Abstractions": "2.2.0",
           "Microsoft.Extensions.Caching.Redis": "2.2.0",
@@ -4464,6 +4465,17 @@
           "AuthService.dll": {}
         }
       },
+      "CommonService/1.0.0": {
+        "dependencies": {
+          "Weixin.Data": "1.0.0"
+        },
+        "runtime": {
+          "CommonService.dll": {}
+        },
+        "compile": {
+          "CommonService.dll": {}
+        }
+      },
       "Weixin.Core/1.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.App": "2.2.4",
@@ -6782,6 +6794,11 @@
       "hashPath": "system.xml.xpath.xdocument.4.3.0.nupkg.sha512"
     },
     "AuthService/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CommonService/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

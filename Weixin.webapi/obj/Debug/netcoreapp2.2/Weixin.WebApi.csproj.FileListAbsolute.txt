@@ -40,3 +40,5 @@ G:\GHM\weixin\Weixin.Webapi\obj\Debug\netcoreapp2.2\Weixin.WebApi.AssemblyInfo.c
 G:\GHM\weixin\Weixin.Webapi\obj\Debug\netcoreapp2.2\Weixin.WebApi.csproj.CopyComplete
 G:\GHM\weixin\Weixin.Webapi\obj\Debug\netcoreapp2.2\Weixin.WebApi.dll
 G:\GHM\weixin\Weixin.Webapi\obj\Debug\netcoreapp2.2\Weixin.WebApi.pdb
+E:\mycode\weixin\Weixin.Webapi\bin\Debug\netcoreapp2.2\CommonService.dll
+E:\mycode\weixin\Weixin.Webapi\bin\Debug\netcoreapp2.2\CommonService.pdb
