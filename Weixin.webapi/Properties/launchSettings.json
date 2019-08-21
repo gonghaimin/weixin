@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iis": {
-      "applicationUrl": "http://2f794316.ngrok.io/",
+      "applicationUrl": "http://e45e1a81.ngrok.io",
       "sslPort": 0
     },
     "iisExpress": {

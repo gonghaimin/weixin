@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using CommonService.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -31,5 +33,27 @@ namespace Weixin.WebApi.Controllers
             //    return echostr;
             //return "";
         }
+        [HttpPost]
+        public ActionResult<string> Post()
+        {
+            wxmessage wx = new wxmessage();
+            var memoryStream = new MemoryStream();
+            Request.Body.CopyTo(memoryStream);
+            StreamReader str = new StreamReader(memoryStream, System.Text.Encoding.UTF8);
+            var a=str.ReadToEnd();                                         
+            return "";
+            //if (tmpStr == signature && !string.IsNullOrWhiteSpace(echostr))
+            //    return echostr;
+            //return "";
+        }
+    }
+    public class wxmessage
+    {
+        public string FromUserName { get; set; }
+        public string ToUserName { get; set; }
+        public string MsgType { get; set; }
+        public string EventName { get; set; }
+        public string Content { get; set; }
+        public string EventKey { get; set; }
     }
 }
