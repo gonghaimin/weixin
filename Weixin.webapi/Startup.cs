@@ -108,7 +108,7 @@ namespace Weixin.WebApi
             //UseAuthentication方法注册了AuthenticationMiddleware中间件
             app.UseAuthentication();
            
-            app.UseMvc();
+            
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {

@@ -33,7 +33,7 @@ namespace Weixin.WebApi.Controllers
         {
             var a = Users.Context;
             //Users.Insert(new User() { UserName = "ghm" });
-            var token = WeCharBase.AccessToken;
+            var token = "22"; //WeCharBase.AccessToken;
             return new string[] { token, AppsettingsUtility.GetSetting("Logging:LogLevel:Default") };
         }
 

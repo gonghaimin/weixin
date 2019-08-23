@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Xml;
 using CommonService.Security;
 using Microsoft.AspNetCore.Authorization;
@@ -37,11 +38,16 @@ namespace Weixin.WebApi.Controllers
         public ActionResult<string> Post()
         {
             wxmessage wx = new wxmessage();
-            var memoryStream = new MemoryStream();
-            Request.Body.CopyTo(memoryStream);
-            StreamReader str = new StreamReader(memoryStream, System.Text.Encoding.UTF8);
-            var a=str.ReadToEnd();                                         
-            return "";
+            var reader = new StreamReader(Request.Body);
+            var contentFromBody = reader.ReadToEnd();
+
+            XmlDocument xml = new XmlDocument();
+            xml.LoadXml(contentFromBody);
+            //xml.Load(contentFromBody);
+            
+            return Content(contentFromBody);
+                 
+           
             //if (tmpStr == signature && !string.IsNullOrWhiteSpace(echostr))
             //    return echostr;
             //return "";

@@ -11,3 +11,20 @@ https://www.cnblogs.com/lanxiaoke/p/6426223.html
 https://www.cnblogs.com/lanxiaoke/p/6411873.html
 
 https://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index
+
+
+https://b.oray.com/forward/
+https://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index
+https://mp.weixin.qq.com/debug?token=486790494&lang=zh_CN
+https://mp.weixin.qq.com/cgi-bin/frame?t=advanced/dev_tools_frame&nav=10049&token=251057043&lang=zh_CN
+https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421135319
+https://www.cnblogs.com/szw/p/3414732.html
+https://github.com/JeffreySu/WeiXinMPSDK
+https://www.cnblogs.com/QLJ1314/p/3855371.html
+https://blog.csdn.net/u013599298/article/details/77698922
+https://www.cnblogs.com/whuanle/p/11377792.html
+https://www.cnblogs.com/huayueniansi/p/10456348.html
+https://developers.weixin.qq.com/miniprogram/dev/api/
+https://www.cnblogs.com/guodf/p/9716262.html
+https://www.cnblogs.com/RainingNight/p/dynamic-authorization-in-asp-net-core.html
+https://www.cnblogs.com/zhangxiaoyong/p/6254162.html
