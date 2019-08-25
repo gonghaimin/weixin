@@ -1,0 +1,11 @@
+G:\GHM\weixin\CacheHelper\bin\Release\netcoreapp2.2\CacheHelper.deps.json
+G:\GHM\weixin\CacheHelper\bin\Release\netcoreapp2.2\CacheHelper.dll
+G:\GHM\weixin\CacheHelper\bin\Release\netcoreapp2.2\CacheHelper.pdb
+G:\GHM\weixin\CacheHelper\bin\Release\netcoreapp2.2\Newtonsoft.Json.dll
+G:\GHM\weixin\CacheHelper\bin\Release\netcoreapp2.2\Newtonsoft.Json.xml
+G:\GHM\weixin\CacheHelper\obj\Release\netcoreapp2.2\CacheHelper.csproj.CoreCompileInputs.cache
+G:\GHM\weixin\CacheHelper\obj\Release\netcoreapp2.2\CacheHelper.AssemblyInfoInputs.cache
+G:\GHM\weixin\CacheHelper\obj\Release\netcoreapp2.2\CacheHelper.AssemblyInfo.cs
+G:\GHM\weixin\CacheHelper\obj\Release\netcoreapp2.2\CacheHelper.csproj.CopyComplete
+G:\GHM\weixin\CacheHelper\obj\Release\netcoreapp2.2\CacheHelper.dll
+G:\GHM\weixin\CacheHelper\obj\Release\netcoreapp2.2\CacheHelper.pdb

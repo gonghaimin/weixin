@@ -1,0 +1,10 @@
+G:\GHM\weixin\Weixin.core\bin\Release\netcoreapp2.2\Weixin.Core.deps.json
+G:\GHM\weixin\Weixin.core\bin\Release\netcoreapp2.2\Weixin.Core.runtimeconfig.json
+G:\GHM\weixin\Weixin.core\bin\Release\netcoreapp2.2\Weixin.Core.runtimeconfig.dev.json
+G:\GHM\weixin\Weixin.core\bin\Release\netcoreapp2.2\Weixin.Core.dll
+G:\GHM\weixin\Weixin.core\bin\Release\netcoreapp2.2\Weixin.Core.pdb
+G:\GHM\weixin\Weixin.core\obj\Release\netcoreapp2.2\Weixin.Core.csproj.CoreCompileInputs.cache
+G:\GHM\weixin\Weixin.core\obj\Release\netcoreapp2.2\Weixin.Core.AssemblyInfoInputs.cache
+G:\GHM\weixin\Weixin.core\obj\Release\netcoreapp2.2\Weixin.Core.AssemblyInfo.cs
+G:\GHM\weixin\Weixin.core\obj\Release\netcoreapp2.2\Weixin.Core.dll
+G:\GHM\weixin\Weixin.core\obj\Release\netcoreapp2.2\Weixin.Core.pdb
