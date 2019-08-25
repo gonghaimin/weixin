@@ -11,6 +11,8 @@ using Weixin.Core.Domain;
 using Weixin.Core.Options;
 using Weixin.Data;
 using Weixin.Tool;
+using Weixin.Tool.Handlers;
+using Weixin.Tool.Utility;
 using Weixin.WebApi.Extensions;
 
 namespace Weixin.WebApi.Controllers
@@ -22,6 +24,8 @@ namespace Weixin.WebApi.Controllers
         [HttpGet]
         public ActionResult<string> Get(string signature, string timestamp, string nonce, string echostr)
         {
+            var token = "huayueniansi";
+            var encodingAESKey = "abUdAO4KHKBnK9mYE5yyqVOZKzo0jtjzrIbpCQM50k2";
             string[] tmpArr = { "huayueniansi", timestamp, nonce };
             Array.Sort(tmpArr);// 字典排序
 
@@ -29,28 +33,20 @@ namespace Weixin.WebApi.Controllers
             EncryptionService ns = new EncryptionService();
             tmpStr = ns.EncryptText(tmpStr);
             tmpStr = tmpStr.ToLower();
+            var result=WXBizMsgCrypt.VerifySignature(token, timestamp, nonce, encodingAESKey, signature);
             return echostr;
-            //if (tmpStr == signature && !string.IsNullOrWhiteSpace(echostr))
-            //    return echostr;
-            //return "";
         }
         [HttpPost]
         public ActionResult<string> Post()
         {
-            wxmessage wx = new wxmessage();
-            var reader = new StreamReader(Request.Body);
-            var contentFromBody = reader.ReadToEnd();
-
-            XmlDocument xml = new XmlDocument();
-            xml.LoadXml(contentFromBody);
-            //xml.Load(contentFromBody);
-            
-            return Content(contentFromBody);
-                 
-           
-            //if (tmpStr == signature && !string.IsNullOrWhiteSpace(echostr))
-            //    return echostr;
-            //return "";
+            string requestXml = Common.ReadRequest(this.Request);
+            IHandler handler = HandlerFactory.CreateHandler(requestXml);
+            if (handler != null)
+            {
+                var res = handler.HandleRequest();
+                return Content(res);
+            }
+            return Content("222");
         }
     }
     public class wxmessage

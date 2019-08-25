@@ -4503,6 +4503,7 @@
       },
       "Weixin.Tool/1.0.0": {
         "dependencies": {
+          "Microsoft.AspNetCore.Http.Abstractions": "2.2.0",
           "Newtonsoft.Json": "12.0.2"
         },
         "runtime": {
