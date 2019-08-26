@@ -49,13 +49,4 @@ namespace Weixin.WebApi.Controllers
             return Content("222");
         }
     }
-    public class wxmessage
-    {
-        public string FromUserName { get; set; }
-        public string ToUserName { get; set; }
-        public string MsgType { get; set; }
-        public string EventName { get; set; }
-        public string Content { get; set; }
-        public string EventKey { get; set; }
-    }
 }
