@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Weixin.Tool.Messages;
+using Weixin.Tool.Utility;
 
 namespace Weixin.Tool.Handlers
 {

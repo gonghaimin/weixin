@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Weixin.Tool
+namespace Weixin.Tool.Utility
 {
     /// <summary>
     /// 公共功能
@@ -53,14 +53,14 @@ namespace Weixin.Tool
         /// </summary>
         public const string MSG_ID = "MsgId";
         /// <summary>
-        /// 得到当前时间（整型）（考虑时区）
+        /// 得到当前时间戳
         /// </summary>
         /// <returns></returns>
         public static string GetNowTime()
         {
             DateTime timeStamp = new DateTime(1970, 1, 1);  //得到1970年的时间戳
-            long a = (DateTime.UtcNow.Ticks - timeStamp.Ticks) / 10000000;
-            return a.ToString();
+            long time = (DateTime.UtcNow.Ticks - timeStamp.Ticks) / 10000000;
+            return time.ToString();
         }
         /// <summary>
         /// 读取请求对象的内容
@@ -78,7 +78,6 @@ namespace Weixin.Tool
                     reqStr = reader.ReadToEnd();
                 }
             }
-
             return reqStr;
         }
     }

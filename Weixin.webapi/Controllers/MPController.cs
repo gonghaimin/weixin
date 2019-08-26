@@ -33,7 +33,7 @@ namespace Weixin.WebApi.Controllers
             EncryptionService ns = new EncryptionService();
             tmpStr = ns.EncryptText(tmpStr);
             tmpStr = tmpStr.ToLower();
-            var result=WXBizMsgCrypt.VerifySignature(token, timestamp, nonce, encodingAESKey, signature);
+            var result= CheckSignature.Check(signature,timestamp,nonce,token);
             return echostr;
         }
         [HttpPost]

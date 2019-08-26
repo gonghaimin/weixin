@@ -35,11 +35,6 @@ namespace Weixin.Tool.Messages
             get { throw new NotImplementedException(); }
         }
         /// <summary>
-        /// 构造函数
-        /// </summary>
-        public Message()
-        { }
-        /// <summary>
         /// 生成内容
         /// </summary>
         /// <returns></returns>
