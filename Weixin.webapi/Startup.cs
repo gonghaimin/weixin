@@ -62,6 +62,8 @@ namespace Weixin.WebApi
             {
                 r.Configuration = Configuration["Redis:ConnectionString"];
             });
+            services.AddHttpClient();
+            services.AddSession();
             //Configuration.GetSection("").
             services.Configure<JwtOption>(Configuration.GetSection("JwtOption"));
 
@@ -115,6 +117,7 @@ namespace Weixin.WebApi
                 //访问swagger
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "MsSystem API V1");
             });
+            app.UseSession();
             app.UseMvc();
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Weixin.Core.Domain;
@@ -31,6 +32,7 @@ namespace Weixin.WebApi.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
+            HttpContext.Session.SetString("test", "ghm");//存储在IDistributedCache
             var a = Users.Context;
             //Users.Insert(new User() { UserName = "ghm" });
             var token = "22"; //WeCharBase.AccessToken;
