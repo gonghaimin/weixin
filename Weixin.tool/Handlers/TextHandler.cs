@@ -31,14 +31,14 @@ namespace Weixin.Tool.Handlers
         {
             string response = string.Empty;
             TextMessage tm = TextMessage.LoadFromXml(RequestXml);
-            string content = tm.Content.Trim();
-            if (string.IsNullOrEmpty(content))
+            string Content = tm.Content.Trim();
+            if (string.IsNullOrEmpty(Content))
             {
                 response = "您什么都没输入，没法帮您啊，%>_<%。";
             }
             else
             {
-                response = HandleOther(content);
+                response = HandleOther(Content);
             }
             tm.Content = response;
             //进行发送者、接收者转换

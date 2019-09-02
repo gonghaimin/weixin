@@ -65,9 +65,9 @@ namespace Weixin.Tool.Messages
                 if (element != null)
                 {
                     em = new EventMessage();
-                    em.FromUserName = element.Element(Common.FROM_USERNAME).Value;
-                    em.ToUserName = element.Element(Common.TO_USERNAME).Value;
-                    em.CreateTime = element.Element(Common.CREATE_TIME).Value;
+                    em.FromUserName = element.Element(Common.FromUserName).Value;
+                    em.ToUserName = element.Element(Common.ToUserName).Value;
+                    em.CreateTime = element.Element(Common.CreateTime).Value;
                     em.Event =element.Element(EVENT).Value;
                     em.EventKey = element.Element(EVENT_KEY).Value;
                 }

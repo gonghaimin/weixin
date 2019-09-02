@@ -13,10 +13,6 @@ namespace Weixin.Tool.Messages
     public class TextMessage:Message
     {
         /// <summary>
-        /// 模板静态字段
-        /// </summary>
-        private static string m_Template;
-        /// <summary>
         /// 内容
         /// </summary>
         public string Content { get; set; }
@@ -29,7 +25,7 @@ namespace Weixin.Tool.Messages
         /// </summary>
         public TextMessage()
         {
-            this.MsgType = "text";
+            this.MsgType = MsgTypeEnum.text.ToString();
         }
         /// <summary>
         /// 从xml数据加载文本消息
@@ -44,11 +40,11 @@ namespace Weixin.Tool.Messages
                 if (element != null)
                 {
                     tm = new TextMessage();
-                    tm.FromUserName = element.Element(Common.FROM_USERNAME).Value;
-                    tm.ToUserName = element.Element(Common.TO_USERNAME).Value;
-                    tm.CreateTime = element.Element(Common.CREATE_TIME).Value;
-                    tm.Content = element.Element(Common.CONTENT).Value;
-                    tm.MsgId = element.Element(Common.MSG_ID).Value;
+                    tm.FromUserName = element.Element(Common.FromUserName).Value;
+                    tm.ToUserName = element.Element(Common.ToUserName).Value;
+                    tm.CreateTime = element.Element(Common.CreateTime).Value;
+                    tm.Content = element.Element(Common.Content).Value;
+                    tm.MsgId = element.Element(Common.MsgId).Value;
                 }
             }
 
@@ -61,12 +57,14 @@ namespace Weixin.Tool.Messages
         {
             get
             {
-                if (string.IsNullOrEmpty(m_Template))
-                {
-                    LoadTemplate();
-                }
-
-                return m_Template;
+                return @"<xml>
+                                <ToUserName><![CDATA[{0}]]></ToUserName>
+                                <FromUserName><![CDATA[{1}]]></FromUserName>
+                                <CreateTime>{2}</CreateTime>
+                                <MsgType><![CDATA[{3}]]></MsgType>
+                                <Content><![CDATA[{4}]]></Content>
+                                <MsgId>{5}</MsgId>
+                            </xml>";
             }
         }
         /// <summary>
@@ -77,20 +75,6 @@ namespace Weixin.Tool.Messages
         {
             this.CreateTime = Common.GetNowTime();
             return string.Format(this.Template,this.ToUserName,this.FromUserName,this.CreateTime,this.MsgType,this.Content,this.MsgId);
-        }
-        /// <summary>
-        /// 加载模板
-        /// </summary>
-        private static void LoadTemplate()
-        {
-            m_Template = @"<xml>
-                                <ToUserName><![CDATA[{0}]]></ToUserName>
-                                <FromUserName><![CDATA[{1}]]></FromUserName>
-                                <CreateTime>{2}</CreateTime>
-                                <MsgType><![CDATA[{3}]]></MsgType>
-                                <Content><![CDATA[{4}]]></Content>
-                                <MsgId>{5}</MsgId>
-                            </xml>";
         }
     }
 }

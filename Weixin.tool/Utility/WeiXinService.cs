@@ -18,19 +18,19 @@ namespace Yank.WeiXin.Robot
         /// <summary>
         /// 签名
         /// </summary>
-        private const string SIGNATURE = "signature";
+        private const string Signature = "signature";
         /// <summary>
         /// 时间戳
         /// </summary>
-        private const string TIMESTAMP = "timestamp";
+        private const string Timestamp = "timestamp";
         /// <summary>
         /// 随机数
         /// </summary>
-        private const string NONCE = "nonce";
+        private const string Nonce = "nonce";
         /// <summary>
         /// 随机字符串
         /// </summary>
-        private const string ECHOSTR = "echostr";     
+        private const string Echostr = "echostr";     
         /// <summary>
         /// 
         /// </summary>
@@ -55,7 +55,7 @@ namespace Yank.WeiXin.Robot
             //{
             //    if (CheckSignature())
             //    {
-            //        return Request.QueryString[ECHOSTR];
+            //        return Request.QueryString[Echostr];
             //    }
             //    else
             //    {
@@ -97,9 +97,9 @@ namespace Yank.WeiXin.Robot
         /// <returns></returns>
         private bool CheckSignature()
         {
-            //string signature = Request.QueryString[SIGNATURE];
-            //string timestamp = Request.QueryString[TIMESTAMP];
-            //string nonce = Request.QueryString[NONCE];
+            //string signature = Request.QueryString[Signature];
+            //string timestamp = Request.QueryString[Timestamp];
+            //string nonce = Request.QueryString[Nonce];
 
             //List<string> list = new List<string>();
             //list.Add(TOKEN);

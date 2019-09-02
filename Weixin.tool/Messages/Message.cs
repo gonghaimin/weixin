@@ -11,6 +11,7 @@ namespace Weixin.Tool.Messages
     /// </summary>
     public class Message : ITemplate
     {
+        public string MsgId { get; set; }
         /// <summary>
         /// 发送方帐号
         /// </summary>

@@ -14,44 +14,60 @@ namespace Weixin.Tool.Utility
         /// <summary>
         /// 加密签名
         /// </summary>
-        public const string SIGNATURE = "signature";
+        public const string Signature = "signature";
         /// <summary>
         /// 时间戳
         /// </summary>
-        public const string TIMESTAMP = "timestamp";
+        public const string Timestamp = "timestamp";
         /// <summary>
         /// 随机数
         /// </summary>
-        public const string NONCE = "nonce";
+        public const string Nonce = "nonce";
         /// <summary>
         /// 随机字符串
         /// </summary>
-        public const string ECHOSTR = "echostr";
+        public const string Echostr = "echostr";
 
         /// <summary>
 		/// 发送人（OpenID）
         /// </summary>
-        public const string FROM_USERNAME = "FromUserName";
+        public const string FromUserName = "FromUserName";
         /// <summary>
         /// 开发者微信号
         /// </summary>
-        public const string TO_USERNAME = "ToUserName";
+        public const string ToUserName = "ToUserName";
         /// <summary>
         /// 消息内容
         /// </summary>
-        public const string CONTENT = "Content";
+        public const string Content = "Content";
         /// <summary>
         /// 消息创建时间 （整型）
         /// </summary>
-        public const string CREATE_TIME = "CreateTime";
+        public const string CreateTime = "CreateTime";
         /// <summary>
         /// 消息类型
         /// </summary>
-        public const string MSG_TYPE = "MsgType";
+        public const string MsgType = "MsgType";
         /// <summary>
         /// 消息id，64位整型
         /// </summary>
-        public const string MSG_ID = "MsgId";
+        public const string MsgId = "MsgId";
+
+        public const string MediaId = "MediaId";
+
+        public const string PicUrl = "PicUrl";
+
+        public const string Format = "Format";
+
+        public const string ThumbMediaId = "ThumbMediaId";
+
+        public const string Location_X = "Location_X";
+
+        public const string Location_Y = "Location_Y";
+
+        public const string Scale = "Scale";
+
+        public const string Label = "Label";
         /// <summary>
         /// 得到当前时间戳
         /// </summary>
