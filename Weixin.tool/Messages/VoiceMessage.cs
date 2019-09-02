@@ -8,9 +8,18 @@ namespace Weixin.Tool.Messages
 {
     public class VoiceMessage: Message
     {
-        public string MsgId { get; set; }
+        /// <summary>
+        /// 语音格式：amr
+        /// </summary>
         public string Format { get; set; }
+        /// <summary>
+        /// 语音消息媒体id，可以调用获取临时素材接口拉取该媒体
+        /// </summary>
         public string MediaId { get; set; }
+        /// <summary>
+        /// 语音识别结果，UTF8编码
+        /// </summary>
+        public string Recognition { get; set; }
         public VoiceMessage()
         {
             this.MsgType = MsgTypeEnum.voice.ToString();
@@ -51,9 +60,10 @@ namespace Weixin.Tool.Messages
                                   <FromUserName><![CDATA[{1}]]></FromUserName>
                                   <CreateTime>{2}</CreateTime>
                                   <MsgType><![CDATA[{3}]]></MsgType>
-                                  <Format><![CDATA[{4}]]></Format>
-                                  <MediaId><![CDATA[{5}]]></MediaId>
-                                  <MsgId>{6}</MsgId>
+                                  <Voice>
+                                    <MediaId><![CDATA[{4}]]></MediaId>
+                                   </Voice>
+                                  <MsgId>{5}</MsgId>
                             </xml>";
             }
         }
@@ -64,7 +74,7 @@ namespace Weixin.Tool.Messages
         public override string GenerateContent()
         {
             this.CreateTime = Common.GetNowTime();
-            return string.Format(this.Template, this.ToUserName, this.FromUserName, this.CreateTime, this.MsgType, this.Format, this.MediaId, this.MsgId);
+            return string.Format(this.Template, this.ToUserName, this.FromUserName, this.CreateTime, this.MsgType, this.MediaId, this.MsgId);
         }
     }
 }

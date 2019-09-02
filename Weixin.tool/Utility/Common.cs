@@ -68,6 +68,8 @@ namespace Weixin.Tool.Utility
         public const string Scale = "Scale";
 
         public const string Label = "Label";
+
+
         /// <summary>
         /// 得到当前时间戳
         /// </summary>
@@ -98,3 +100,4 @@ namespace Weixin.Tool.Utility
         }
     }
 }
+

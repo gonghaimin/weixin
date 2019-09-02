@@ -8,8 +8,17 @@ namespace Weixin.Tool.Messages
 {
     public class LinkMessage : Message
     {
+        /// <summary>
+        /// 消息链接
+        /// </summary>
         public string Url { get; set; }
+        /// <summary>
+        /// 消息标题
+        /// </summary>
         public string Title { get; set; }
+        /// <summary>
+        /// 消息描述
+        /// </summary>
         public string Description { get; set; }
         public LinkMessage()
         {
@@ -32,40 +41,14 @@ namespace Weixin.Tool.Messages
                     m.ToUserName = element.Element(Common.ToUserName).Value;
                     m.CreateTime = element.Element(Common.CreateTime).Value;
                     m.MsgId = element.Element(Common.MsgId).Value;
-                    m.Url = element.Element(Common.Format).Value;
-                    m.Title = element.Element(Common.MediaId).Value;
-                    m.Description = element.Element(Common.MediaId).Value;
+                    m.Url = element.Element("Url").Value;
+                    m.Title = element.Element("Title").Value;
+                    m.Description = element.Element("Description").Value;
                 }
             }
 
             return m;
         }
-        /// <summary>
-        /// 模板
-        /// </summary>
-        public override string Template
-        {
-            get
-            {
-                return @"<xml>
-                                  <ToUserName><![CDATA[{0}]]></ToUserName>
-                                  <FromUserName><![CDATA[{1}]]></FromUserName>
-                                  <CreateTime>{2}</CreateTime>
-                                  <MsgType><![CDATA[{3}]]></MsgType>
-                                  <ThumbMediaId><![CDATA[{4}]]></ThumbMediaId>
-                                  <MediaId><![CDATA[{5}]]></MediaId>
-                                  <MsgId>{6}</MsgId>
-                            </xml>";
-            }
-        }
-        /// <summary>
-        /// 生成内容
-        /// </summary>
-        /// <returns></returns>
-        public override string GenerateContent()
-        {
-            this.CreateTime = Common.GetNowTime();
-            return string.Format(this.Template, this.ToUserName, this.FromUserName, this.CreateTime, this.MsgType, this.ThumbMediaId, this.MediaId, this.MsgId);
-        }
+
     }
 }

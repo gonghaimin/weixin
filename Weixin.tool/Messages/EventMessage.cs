@@ -7,44 +7,33 @@ using Weixin.Tool.Utility;
 
 namespace Weixin.Tool.Messages
 {
-    class EventMessage : Message
+    public class EventMessage : Message
     {
-        private const string EVENT = "Event";
-        private const string EVENT_KEY = "EventKey";
         /// <summary>
-        /// 
+        /// 地理位置纬度
         /// </summary>
-        private static string mTemplate;
+        public string Latitude { get; set; }
         /// <summary>
-        /// 模板
+        /// 地理位置精度
         /// </summary>
-        public override string Template
-        {
-            get 
-            {
-                if (string.IsNullOrEmpty(mTemplate))
-                { 
-                     mTemplate = @"<xml>
-                                <ToUserName><![CDATA[{0}]]></ToUserName>
-                                <FromUserName><![CDATA[{1}]]></FromUserName>
-                                <CreateTime>{2}</CreateTime>
-                                <MsgType><![CDATA[event]]></MsgType>
-                                <Event><![CDATA[{3}]]></Event>
-                                <EventKey>{4}</EventKey>
-                            </xml>";
-                }
+        public string Precision { get; set; }
+        /// <summary>
+        /// 地理位置经度
+        /// </summary>
+        public string Longitude { get; set; }
 
-                return mTemplate;
-            }
-        }
         /// <summary>
-        /// 事件类型
+        /// 事件类型，subscribe(订阅)、unsubscribe(取消订阅)
         /// </summary>
         public string Event { get; set; }
         /// <summary>
         /// 事件KEY值，与自定义菜单接口中KEY值对应
         /// </summary>
         public string EventKey { get; set; }
+        /// <summary>
+        /// 二维码的ticket，可用来换取二维码图片
+        /// </summary>
+        public string Ticket { get; set; }
         /// <summary>
         /// 构造函数
         /// </summary>
@@ -68,8 +57,12 @@ namespace Weixin.Tool.Messages
                     em.FromUserName = element.Element(Common.FromUserName).Value;
                     em.ToUserName = element.Element(Common.ToUserName).Value;
                     em.CreateTime = element.Element(Common.CreateTime).Value;
-                    em.Event =element.Element(EVENT).Value;
-                    em.EventKey = element.Element(EVENT_KEY).Value;
+                    em.Event =element.Element("Event").Value;
+                    em.EventKey = element.Element("EventKey").Value;
+                    em.Ticket = element.Element("Ticket").Value;
+                    em.Latitude = element.Element("Latitude").Value;
+                    em.Longitude = element.Element("Longitude").Value;
+                    em.Precision = element.Element("Precision").Value; 
                 }
             }
 

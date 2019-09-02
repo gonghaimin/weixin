@@ -8,9 +8,22 @@ namespace Weixin.Tool.Messages
 {
     public class VideoMessage: Message
     {
-        public string MsgId { get; set; }
+        /// <summary>
+        /// 视频消息缩略图的媒体id，可以调用多媒体文件下载接口拉取数据
+        /// </summary>
         public string ThumbMediaId { get; set; }
+        /// <summary>
+        /// 视频消息媒体id，可以调用获取临时素材接口拉取数据
+        /// </summary>
         public string MediaId { get; set; }
+        /// <summary>
+        /// 视频消息的标题
+        /// </summary>
+        public string Title { get; set; }
+        /// <summary>
+        /// 视频消息的描述
+        /// </summary>
+        public string Description { get; set; }
         public VideoMessage()
         {
             this.MsgType = MsgTypeEnum.video.ToString();
@@ -51,9 +64,12 @@ namespace Weixin.Tool.Messages
                                   <FromUserName><![CDATA[{1}]]></FromUserName>
                                   <CreateTime>{2}</CreateTime>
                                   <MsgType><![CDATA[{3}]]></MsgType>
-                                  <ThumbMediaId><![CDATA[{4}]]></ThumbMediaId>
-                                  <MediaId><![CDATA[{5}]]></MediaId>
-                                  <MsgId>{6}</MsgId>
+                                   <Video>
+                                    <MediaId><![CDATA[{4}]]></MediaId>
+                                    <Title><![CDATA[{5}]]></Title>
+                                    <Description><![CDATA[{6}]]></Description>
+                                  </Video>
+                                  <MsgId>{7}</MsgId>
                             </xml>";
             }
         }
@@ -64,7 +80,7 @@ namespace Weixin.Tool.Messages
         public override string GenerateContent()
         {
             this.CreateTime = Common.GetNowTime();
-            return string.Format(this.Template, this.ToUserName, this.FromUserName, this.CreateTime, this.MsgType, this.ThumbMediaId, this.MediaId, this.MsgId);
+            return string.Format(this.Template, this.ToUserName, this.FromUserName, this.CreateTime, this.MsgType, this.MediaId, this.Title,this.Description, this.MsgId);
         }
     }
 }

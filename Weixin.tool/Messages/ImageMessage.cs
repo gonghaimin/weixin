@@ -9,10 +9,6 @@ namespace Weixin.Tool.Messages
     public class ImageMessage: Message
     {
         /// <summary>
-        /// 消息ID
-        /// </summary>
-        public string MsgId { get; set; }
-        /// <summary>
         /// 图片链接（由系统生成）
         /// </summary>
         public string PicUrl { get; set; }
@@ -61,9 +57,10 @@ namespace Weixin.Tool.Messages
                                   <FromUserName><![CDATA[{1}]]></FromUserName>
                                   <CreateTime>{2}</CreateTime>
                                   <MsgType><![CDATA[{3}]]></MsgType>
-                                  <PicUrl><![CDATA[{4}]]></PicUrl>
-                                  <MediaId><![CDATA[{5}]]></MediaId>
-                                  <MsgId>{6}</MsgId>
+                                   <Image>
+                                    <MediaId><![CDATA[{4}]]></MediaId>
+                                  </Image>
+                                  <MsgId>{5}</MsgId>
                             </xml>";
             }
         }
@@ -74,7 +71,7 @@ namespace Weixin.Tool.Messages
         public override string GenerateContent()
         {
             this.CreateTime = Common.GetNowTime();
-            return string.Format(this.Template, this.ToUserName, this.FromUserName, this.CreateTime, this.MsgType, this.PicUrl, this.MediaId,this.MsgId);
+            return string.Format(this.Template, this.ToUserName, this.FromUserName, this.CreateTime, this.MsgType, this.MediaId,this.MsgId);
         }
     }
 }

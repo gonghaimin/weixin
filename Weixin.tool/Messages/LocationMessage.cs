@@ -8,10 +8,21 @@ namespace Weixin.Tool.Messages
 {
     public class LocationMessage: Message
     {
-        public string MsgId { get; set; }
+        /// <summary>
+        /// 地理位置信息
+        /// </summary>
         public string Label { get; set; }
+        /// <summary>
+        /// 地图缩放大小
+        /// </summary>
         public string Scale { get; set; }
+        /// <summary>
+        /// 地理位置经度
+        /// </summary>
         public string Location_Y { get; set; }
+        /// <summary>
+        /// 地理位置维度
+        /// </summary>
         public string Location_X { get; set; }
         public LocationMessage()
         {
@@ -43,34 +54,6 @@ namespace Weixin.Tool.Messages
 
             return m;
         }
-        /// <summary>
-        /// 模板
-        /// </summary>
-        public override string Template
-        {
-            get
-            {
-                return @"<xml>
-                                  <ToUserName><![CDATA[{0}]]></ToUserName>
-                                  <FromUserName><![CDATA[{1}]]></FromUserName>
-                                  <CreateTime>{2}</CreateTime>
-                                  <MsgType><![CDATA[{3}]]></MsgType>
-                                  <Location_X>{4}</Location_X>
-                                  <Location_Y>{5}</Location_Y>
-                                  <Scale>{6}</Scale>
-                                  <Label><![CDATA[{7}]]></Label>
-                                  <MsgId>{8}</MsgId>
-                            </xml>";
-            }
-        }
-        /// <summary>
-        /// 生成内容
-        /// </summary>
-        /// <returns></returns>
-        public override string GenerateContent()
-        {
-            this.CreateTime = Common.GetNowTime();
-            return string.Format(this.Template, this.ToUserName, this.FromUserName, this.CreateTime, this.MsgType, this.Location_X, this.Location_Y, this.Scale,this.Label,this.MsgId);
-        }
+
     }
 }
