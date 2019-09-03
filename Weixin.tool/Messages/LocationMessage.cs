@@ -45,10 +45,10 @@ namespace Weixin.Tool.Messages
                     m.ToUserName = element.Element(Common.ToUserName).Value;
                     m.CreateTime = element.Element(Common.CreateTime).Value;
                     m.MsgId = element.Element(Common.MsgId).Value;
-                    m.Label = element.Element(Common.Format).Value;
-                    m.Scale = element.Element(Common.Label).Value;
-                    m.Location_Y = element.Element(Common.Location_Y).Value;
-                    m.Location_X = element.Element(Common.Location_X).Value;
+                    m.Label = element.Element("Label").Value;
+                    m.Scale = element.Element("Scale").Value;
+                    m.Location_Y = element.Element("Location_Y").Value;
+                    m.Location_X = element.Element("Location_X").Value;
                 }
             }
 

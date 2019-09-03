@@ -52,22 +52,10 @@ namespace Weixin.Tool.Utility
         /// 消息id，64位整型
         /// </summary>
         public const string MsgId = "MsgId";
-
+        /// <summary>
+        /// 通过素材管理中的接口上传多媒体文件，得到的id
+        /// </summary>
         public const string MediaId = "MediaId";
-
-        public const string PicUrl = "PicUrl";
-
-        public const string Format = "Format";
-
-        public const string ThumbMediaId = "ThumbMediaId";
-
-        public const string Location_X = "Location_X";
-
-        public const string Location_Y = "Location_Y";
-
-        public const string Scale = "Scale";
-
-        public const string Label = "Label";
 
 
         /// <summary>

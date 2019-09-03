@@ -5,7 +5,7 @@ using Weixin.Tool.Utility;
 
 namespace Weixin.Tool.Messages
 {
-    public class MusicMessage: Message
+    public class MusicMessage: Message, IReplyMessage
     {
         public MusicMessage()
         {
@@ -35,7 +35,7 @@ namespace Weixin.Tool.Messages
         /// <summary>
         /// 模板
         /// </summary>
-        public override string Template
+        public string Template
         {
             get
             {
@@ -55,10 +55,10 @@ namespace Weixin.Tool.Messages
             }
         }
         /// <summary>
-        /// 生成内容
+        /// 生成回复内容
         /// </summary>
         /// <returns></returns>
-        public override string GenerateContent()
+        public string GenerateContent()
         {
             this.CreateTime = Common.GetNowTime();
             return string.Format(this.Template, this.ToUserName, this.FromUserName, this.CreateTime, this.MsgType, this.Title, this.Description,this.MusicUrl,this.HQMusicUrl,this.ThumbMediaId);

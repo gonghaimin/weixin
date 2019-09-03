@@ -6,7 +6,7 @@ using Weixin.Tool.Utility;
 
 namespace Weixin.Tool.Messages
 {
-    public class ImageMessage: Message
+    public class ImageMessage: Message, IReplyMessage
     {
         /// <summary>
         /// 图片链接（由系统生成）
@@ -38,7 +38,7 @@ namespace Weixin.Tool.Messages
                     m.ToUserName = element.Element(Common.ToUserName).Value;
                     m.CreateTime = element.Element(Common.CreateTime).Value;
                     m.MsgId = element.Element(Common.MsgId).Value;
-                    m.PicUrl = element.Element(Common.PicUrl).Value;
+                    m.PicUrl = element.Element("PicUrl").Value;
                     m.MediaId = element.Element(Common.MediaId).Value;
                 }
             }
@@ -48,7 +48,7 @@ namespace Weixin.Tool.Messages
         /// <summary>
         /// 模板
         /// </summary>
-        public override string Template
+        public string Template
         {
             get
             {
@@ -60,18 +60,17 @@ namespace Weixin.Tool.Messages
                                    <Image>
                                     <MediaId><![CDATA[{4}]]></MediaId>
                                   </Image>
-                                  <MsgId>{5}</MsgId>
                             </xml>";
             }
         }
         /// <summary>
-        /// 生成内容
+        /// 生成回复内容
         /// </summary>
         /// <returns></returns>
-        public override string GenerateContent()
+        public string GenerateContent()
         {
             this.CreateTime = Common.GetNowTime();
-            return string.Format(this.Template, this.ToUserName, this.FromUserName, this.CreateTime, this.MsgType, this.MediaId,this.MsgId);
+            return string.Format(this.Template, this.ToUserName, this.FromUserName, this.CreateTime, this.MsgType, this.MediaId);
         }
     }
 }

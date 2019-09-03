@@ -6,7 +6,7 @@ using Weixin.Tool.Utility;
 
 namespace Weixin.Tool.Messages
 {
-    public class VoiceMessage: Message
+    public class VoiceMessage: Message, IReplyMessage
     {
         /// <summary>
         /// 语音格式：amr
@@ -41,7 +41,7 @@ namespace Weixin.Tool.Messages
                     m.ToUserName = element.Element(Common.ToUserName).Value;
                     m.CreateTime = element.Element(Common.CreateTime).Value;
                     m.MsgId = element.Element(Common.MsgId).Value;
-                    m.Format = element.Element(Common.Format).Value;
+                    m.Format = element.Element("Format").Value;
                     m.MediaId = element.Element(Common.MediaId).Value;
                 }
             }
@@ -51,7 +51,7 @@ namespace Weixin.Tool.Messages
         /// <summary>
         /// 模板
         /// </summary>
-        public override string Template
+        public string Template
         {
             get
             {
@@ -63,18 +63,17 @@ namespace Weixin.Tool.Messages
                                   <Voice>
                                     <MediaId><![CDATA[{4}]]></MediaId>
                                    </Voice>
-                                  <MsgId>{5}</MsgId>
                             </xml>";
             }
         }
         /// <summary>
-        /// 生成内容
+        /// 生成回复内容
         /// </summary>
         /// <returns></returns>
-        public override string GenerateContent()
+        public string GenerateContent()
         {
             this.CreateTime = Common.GetNowTime();
-            return string.Format(this.Template, this.ToUserName, this.FromUserName, this.CreateTime, this.MsgType, this.MediaId, this.MsgId);
+            return string.Format(this.Template, this.ToUserName, this.FromUserName, this.CreateTime, this.MsgType, this.MediaId);
         }
     }
 }

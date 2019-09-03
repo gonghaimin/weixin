@@ -8,7 +8,7 @@ namespace Weixin.Tool.Messages
     /// <summary>
     /// 图文消息
     /// </summary>
-    public class ImageWithTextMessage : Message
+    public class ImageWithTextMessage : Message, IReplyMessage
     {
         public ImageWithTextMessage()
         {
@@ -39,7 +39,7 @@ namespace Weixin.Tool.Messages
         /// <summary>
         /// 模板
         /// </summary>
-        public override string Template
+        public string Template
         {
             get
             {
@@ -61,10 +61,10 @@ namespace Weixin.Tool.Messages
             }
         }
         /// <summary>
-        /// 生成内容
+        /// 生成回复内容
         /// </summary>
         /// <returns></returns>
-        public override string GenerateContent()
+        public string GenerateContent()
         {
             this.CreateTime = Common.GetNowTime();
             return string.Format(this.Template, this.ToUserName, this.FromUserName, this.CreateTime, this.MsgType, this.ArticleCount, this.Title, this.Description, this.PicUrl, this.Url);

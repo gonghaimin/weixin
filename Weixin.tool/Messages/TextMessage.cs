@@ -10,16 +10,12 @@ namespace Weixin.Tool.Messages
     /// <summary>
     /// 
     /// </summary>
-    public class TextMessage:Message
+    public class TextMessage:Message, IReplyMessage
     {
         /// <summary>
         /// 内容
         /// </summary>
         public string Content { get; set; }
-        /// <summary>
-        /// 消息ID
-        /// </summary>
-        public string MsgId { get; set; }
         /// <summary>
         /// 默认构造函数
         /// </summary>
@@ -50,10 +46,8 @@ namespace Weixin.Tool.Messages
 
             return tm;
         }
-        /// <summary>
-        /// 模板
-        /// </summary>
-        public override string Template
+
+        public string Template
         {
             get
             {
@@ -63,18 +57,17 @@ namespace Weixin.Tool.Messages
                                 <CreateTime>{2}</CreateTime>
                                 <MsgType><![CDATA[{3}]]></MsgType>
                                 <Content><![CDATA[{4}]]></Content>
-                                <MsgId>{5}</MsgId>
                             </xml>";
             }
         }
         /// <summary>
-        /// 生成内容
+        /// 生成回复内容
         /// </summary>
         /// <returns></returns>
-        public override string GenerateContent()
+        public  string GenerateContent()
         {
             this.CreateTime = Common.GetNowTime();
-            return string.Format(this.Template,this.ToUserName,this.FromUserName,this.CreateTime,this.MsgType,this.Content,this.MsgId);
+            return string.Format(this.Template,this.ToUserName,this.FromUserName,this.CreateTime,this.MsgType,this.Content);
         }
     }
 }

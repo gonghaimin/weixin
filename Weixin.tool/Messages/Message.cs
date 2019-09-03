@@ -7,9 +7,9 @@ using System.Xml.Linq;
 namespace Weixin.Tool.Messages
 {
     /// <summary>
-    /// 
+    /// 微信消息基类
     /// </summary>
-    public class Message : ITemplate
+    public class Message
     {
         /// <summary>
         /// 消息id，64位整型
@@ -31,20 +31,6 @@ namespace Weixin.Tool.Messages
         /// 创建时间
         /// </summary>
         public string CreateTime { get; set; }
-        /// <summary>
-        /// 响应模板
-        /// </summary>
-        public virtual string Template
-        {
-            get { throw new NotImplementedException(); }
-        }
-        /// <summary>
-        /// 生成内容
-        /// </summary>
-        /// <returns></returns>
-        public virtual string GenerateContent()
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }
