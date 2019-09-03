@@ -9,7 +9,7 @@ namespace Weixin.Tool.Messages
     /// <summary>
     /// 微信消息基类
     /// </summary>
-    public class Message
+    public abstract class BaseMessage
     {
         /// <summary>
         /// 消息id，64位整型

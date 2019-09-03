@@ -6,7 +6,10 @@ using Weixin.Tool.Utility;
 
 namespace Weixin.Tool.Messages
 {
-    public class VideoMessage: Message, IReplyMessage
+    /// <summary>
+    /// 视频消息，可用于被动回复用户消息
+    /// </summary>
+    public class VideoMessage: IReplyMessage
     {
         /// <summary>
         /// 视频消息缩略图的媒体id，可以调用多媒体文件下载接口拉取数据
@@ -72,11 +75,21 @@ namespace Weixin.Tool.Messages
                             </xml>";
             }
         }
+        protected override bool VerifyParameter(out string msg)
+        {
+            msg = string.Empty;
+            if (string.IsNullOrEmpty(this.MediaId))
+            {
+                msg = "MediaId";
+                return false;
+            }
+            return true;
+        }
         /// <summary>
         /// 生成回复内容
         /// </summary>
         /// <returns></returns>
-        public string GenerateContent()
+        protected override string GenerateContent()
         {
             this.CreateTime = Common.GetNowTime();
             return string.Format(this.Template, this.ToUserName, this.FromUserName, this.CreateTime, this.MsgType, this.MediaId, this.Title,this.Description);

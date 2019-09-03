@@ -7,7 +7,10 @@ using Weixin.Tool.Utility;
 
 namespace Weixin.Tool.Messages
 {
-    public class EventMessage : Message
+    /// <summary>
+    /// 事件消息
+    /// </summary>
+    public class EventMessage : BaseMessage
     {
         /// <summary>
         /// 地理位置纬度
@@ -39,7 +42,7 @@ namespace Weixin.Tool.Messages
         /// </summary>
         public EventMessage()
         {
-            this.MsgType = "event";
+            this.MsgType = MsgTypeEnum.@event.ToString();
         }
         /// <summary>
         /// 从xml数据加载文本消息

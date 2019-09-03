@@ -6,7 +6,10 @@ using Weixin.Tool.Utility;
 
 namespace Weixin.Tool.Messages
 {
-    public class LocationMessage: Message
+    /// <summary>
+    /// 位置消息
+    /// </summary>
+    public class LocationMessage: BaseMessage
     {
         /// <summary>
         /// 地理位置信息

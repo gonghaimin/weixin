@@ -45,7 +45,7 @@ namespace Weixin.Tool.Handlers
             string temp = tm.ToUserName;
             tm.ToUserName = tm.FromUserName;
             tm.FromUserName = temp;
-            response = tm.GenerateContent();
+            response = tm.GetResponse();
             return response;
         }
         /// <summary>

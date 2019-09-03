@@ -8,9 +8,9 @@ using Weixin.Tool.Utility;
 namespace Weixin.Tool.Messages
 {
     /// <summary>
-    /// 
+    /// 文本消息，可用于被动回复用户消息
     /// </summary>
-    public class TextMessage:Message, IReplyMessage
+    public class TextMessage: IReplyMessage
     {
         /// <summary>
         /// 内容
@@ -60,11 +60,21 @@ namespace Weixin.Tool.Messages
                             </xml>";
             }
         }
+        protected override bool VerifyParameter(out string msg)
+        {
+            msg = string.Empty;
+            if (string.IsNullOrEmpty(this.Content))
+            {
+                msg = "Content";
+                return false;
+            }
+            return true;
+        }
         /// <summary>
         /// 生成回复内容
         /// </summary>
         /// <returns></returns>
-        public  string GenerateContent()
+        protected override string GenerateContent()
         {
             this.CreateTime = Common.GetNowTime();
             return string.Format(this.Template,this.ToUserName,this.FromUserName,this.CreateTime,this.MsgType,this.Content);

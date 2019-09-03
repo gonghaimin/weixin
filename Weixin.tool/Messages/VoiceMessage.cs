@@ -6,7 +6,10 @@ using Weixin.Tool.Utility;
 
 namespace Weixin.Tool.Messages
 {
-    public class VoiceMessage: Message, IReplyMessage
+    /// <summary>
+    /// 语音消息 ，可用于被动回复
+    /// </summary>
+    public class VoiceMessage: IReplyMessage
     {
         /// <summary>
         /// 语音格式：amr
@@ -66,11 +69,21 @@ namespace Weixin.Tool.Messages
                             </xml>";
             }
         }
+        protected override bool VerifyParameter(out string msg)
+        {
+            msg = string.Empty;
+            if (string.IsNullOrEmpty(this.MediaId))
+            {
+                msg = "MediaId";
+                return false;
+            }
+            return true;
+        }
         /// <summary>
         /// 生成回复内容
         /// </summary>
         /// <returns></returns>
-        public string GenerateContent()
+        protected override string GenerateContent()
         {
             this.CreateTime = Common.GetNowTime();
             return string.Format(this.Template, this.ToUserName, this.FromUserName, this.CreateTime, this.MsgType, this.MediaId);

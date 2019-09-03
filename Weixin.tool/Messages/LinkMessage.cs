@@ -6,7 +6,10 @@ using Weixin.Tool.Utility;
 
 namespace Weixin.Tool.Messages
 {
-    public class LinkMessage : Message
+    /// <summary>
+    /// 链接消息
+    /// </summary>
+    public class LinkMessage : BaseMessage
     {
         /// <summary>
         /// 消息链接

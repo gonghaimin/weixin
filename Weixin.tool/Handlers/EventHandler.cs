@@ -50,14 +50,14 @@ namespace Weixin.Tool.Handlers
 		/// <returns></returns>
 		private string SubscribeEventHandler(EventMessage em)
 		{
-			//回复欢迎消息
-			TextMessage tm = new TextMessage();
+            //回复欢迎消息
+            TextMessage tm = new TextMessage();
 			tm.ToUserName = em.FromUserName;
 			tm.FromUserName = em.ToUserName;
 			tm.CreateTime = Common.GetNowTime();
 			tm.Content = "欢迎您关注万睿楼宇自控，我是服务小二，有事就问我～\n\n";
-			tm.GenerateContent();
-			return tm.GenerateContent();
+
+			return tm.GetResponse();
 		}
 		
 		/// <summary>
@@ -96,7 +96,7 @@ namespace Weixin.Tool.Handlers
 			tm.FromUserName = em.ToUserName;
 			tm.CreateTime = Common.GetNowTime();
 			tm.Content = @"谢谢您的支持！";
-			return tm.GenerateContent();
+			return tm.GetResponse();
 		}
 		/// <summary>
 		/// 帮助
@@ -111,7 +111,7 @@ namespace Weixin.Tool.Handlers
 			tm.FromUserName = em.ToUserName;
 			tm.CreateTime = Common.GetNowTime();
 			tm.Content = @"有事找警察～";
-			return tm.GenerateContent();
+			return tm.GetResponse();
 		}
 	}
 }
