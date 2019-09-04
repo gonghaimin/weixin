@@ -11,7 +11,6 @@ namespace Weixin.Tool.Utility
     //     /// 签名验证类 ///
     public class CheckSignature
     {
-        public const string Token = "weixin";
 
         public static bool Check(string signature, string timestamp, string nonce, string token = null)
         {

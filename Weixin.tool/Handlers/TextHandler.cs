@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Weixin.Tool.Messages;
+using Weixin.Tool.Utility;
 
 namespace Weixin.Tool.Handlers
 {
@@ -15,13 +16,15 @@ namespace Weixin.Tool.Handlers
         /// 请求的XML
         /// </summary>
         private string RequestXml { get; set; }
+        private SignModel sign { get; set; }
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="requestXml">请求的xml</param>
-        public TextHandler(string requestXml)
+        public TextHandler(string requestXml, SignModel model)
         {
             this.RequestXml = requestXml;
+            this.sign = model;
         }
         /// <summary>
         /// 处理请求
@@ -46,6 +49,13 @@ namespace Weixin.Tool.Handlers
             tm.ToUserName = tm.FromUserName;
             tm.FromUserName = temp;
             response = tm.GetResponse();
+            if(this.sign != null)
+            {
+                MsgCryptUtility mc = new MsgCryptUtility(Common.Token, Common.encodingAESKey, Common.AppID);
+                string stmp = "";
+                var ret = mc.EncryptMsg(response, this.sign.timestamp, this.sign.nonce, ref stmp);
+                response = stmp;
+            }
             return response;
         }
         /// <summary>

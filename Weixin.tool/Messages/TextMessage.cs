@@ -39,7 +39,7 @@ namespace Weixin.Tool.Messages
                     tm.FromUserName = element.Element(Common.FromUserName).Value;
                     tm.ToUserName = element.Element(Common.ToUserName).Value;
                     tm.CreateTime = element.Element(Common.CreateTime).Value;
-                    tm.Content = element.Element(Common.Content).Value;
+                    tm.Content = element.Element(Common.Content)?.Value;
                     tm.MsgId = element.Element(Common.MsgId)?.Value;
                 }
             }

@@ -11,6 +11,13 @@ namespace Weixin.Tool.Utility
     /// </summary>
     public class Common
     {
+        public const string Token = "huayueniansi";
+        public const string encodingAESKey = "abUdAO4KHKBnK9mYE5yyqVOZKzo0jtjzrIbpCQM50k2";
+        public const string AppID = "wxc69b92dd79536d58";
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string Appsecret = "b4ffc8669785efff1fe00275eea1bee5";
         /// <summary>
         /// 加密签名
         /// </summary>

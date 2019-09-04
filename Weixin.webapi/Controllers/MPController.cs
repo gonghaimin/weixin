@@ -24,25 +24,24 @@ namespace Weixin.WebApi.Controllers
         [HttpGet]
         public ActionResult<string> Get(string signature, string timestamp, string nonce, string echostr)
         {
-            var token = "huayueniansi";
-            var encodingAESKey = "abUdAO4KHKBnK9mYE5yyqVOZKzo0jtjzrIbpCQM50k2";
-            string[] tmpArr = { "huayueniansi", timestamp, nonce };
-            Array.Sort(tmpArr);// 字典排序
-
-            string tmpStr = string.Join("", tmpArr);
-            EncryptionService ns = new EncryptionService();
-            tmpStr = ns.EncryptText(tmpStr);
-            tmpStr = tmpStr.ToLower();
-            var result= CheckSignature.Check(signature,timestamp,nonce,token);
-            return echostr;
+            if (CheckSignature.Check(signature, timestamp, nonce, Common.Token))
+            {
+                return echostr;
+            }
+            return string.Empty;
         }
         [HttpPost]
-        public ActionResult<string> Post()
+        public ActionResult<string> Post([FromQuery]SignModel model)
         {
-            string requestXml = Common.ReadRequest(this.Request);
-            IHandler handler = HandlerFactory.CreateHandler(requestXml);
-            var res = handler.HandleRequest();
-            return Content(res);
+            if (CheckSignature.Check(model.signature, model.timestamp, model.nonce, Common.Token))
+            {
+                string requestXml = Common.ReadRequest(this.Request);
+                IHandler handler = HandlerFactory.CreateHandler(requestXml, model);
+                var res = handler.HandleRequest();
+                return Content(res);
+            }
+            return null;
         }
     }
+   
 }

@@ -17,11 +17,28 @@ namespace Weixin.Tool.Handlers
         /// </summary>
         /// <param name="requestXml">请求的xml</param>
         /// <returns>IHandler对象</returns>
-        public static IHandler CreateHandler(string requestXml)
+        public static IHandler CreateHandler(string requestXml, SignModel model)
         {
             IHandler handler = null;
             if (!string.IsNullOrEmpty(requestXml))
             {
+             
+                if(model != null)
+                {
+                    MsgCryptUtility mc = new MsgCryptUtility(Common.Token, Common.encodingAESKey, Common.AppID);
+                    string sMsg = "";  //解析之后的明文
+                    int ret = 0;
+                    ret = mc.DecryptMsg(model.msg_signature, model.timestamp, model.nonce, requestXml,ref sMsg);
+                    if(ret==0 && !string.IsNullOrEmpty(sMsg))
+                    {
+                        requestXml = sMsg;
+                    }
+                    else
+                    {
+                        throw new Exception("解密失败");
+                    }
+                }
+
                 //解析数据
                 XmlDocument doc = new System.Xml.XmlDocument();
                 doc.LoadXml(requestXml);
@@ -36,7 +53,7 @@ namespace Weixin.Tool.Handlers
                         switch (Enum.Parse(typeof(MsgTypeEnum),msgType))
                         {
                             case MsgTypeEnum.text:
-                                handler = new TextHandler(requestXml);
+                                handler = new TextHandler(requestXml,model);
                                 break;
                             case MsgTypeEnum.@event:
                                 handler = new EventHandler(requestXml);
@@ -45,7 +62,7 @@ namespace Weixin.Tool.Handlers
                                 handler = new LocationHandler(requestXml);
                                 break;
                             default:
-                                handler = new TextHandler(requestXml);
+                                handler = new TextHandler(requestXml, model);
                                 break;
                         }
                     }
