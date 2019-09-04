@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using Weixin.Tool.Utility;
 
 namespace Weixin.Tool.Messages
 {
@@ -32,5 +33,16 @@ namespace Weixin.Tool.Messages
         /// </summary>
         public string CreateTime { get; set; }
 
+    }
+
+    public static class BaseMessageEx
+    {
+        public static void ConvertToIReplyMessage(this BaseMessage message,IReplyMessage rm) 
+        {
+            rm.FromUserName = message.ToUserName;
+            rm.ToUserName = message.FromUserName;
+            rm.MsgId = message.MsgId;
+            rm.CreateTime = Common.GetNowTime();
+        }
     }
 }

@@ -48,8 +48,8 @@ namespace Weixin.Tool.Messages
                     m.ToUserName = element.Element(Common.ToUserName).Value;
                     m.CreateTime = element.Element(Common.CreateTime).Value;
                     m.MsgId = element.Element(Common.MsgId).Value;
-                    m.ThumbMediaId = element.Element("ThumbMediaId").Value;
-                    m.MediaId = element.Element(Common.MediaId).Value;
+                    m.ThumbMediaId = element.Element("ThumbMediaId")?.Value;
+                    m.MediaId = element.Element(Common.MediaId)?.Value;
                 }
             }
 

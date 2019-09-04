@@ -60,12 +60,12 @@ namespace Weixin.Tool.Messages
                     em.FromUserName = element.Element(Common.FromUserName).Value;
                     em.ToUserName = element.Element(Common.ToUserName).Value;
                     em.CreateTime = element.Element(Common.CreateTime).Value;
-                    em.Event =element.Element("Event").Value;
-                    em.EventKey = element.Element("EventKey").Value;
-                    em.Ticket = element.Element("Ticket").Value;
-                    em.Latitude = element.Element("Latitude").Value;
-                    em.Longitude = element.Element("Longitude").Value;
-                    em.Precision = element.Element("Precision").Value; 
+                    em.Event =element.Element("Event")?.Value;
+                    em.EventKey = element.Element("EventKey")?.Value;
+                    em.Ticket = element.Element("Ticket")?.Value;
+                    em.Latitude = element.Element("Latitude")?.Value;
+                    em.Longitude = element.Element("Longitude")?.Value;
+                    em.Precision = element.Element("Precision")?.Value; 
                 }
             }
 

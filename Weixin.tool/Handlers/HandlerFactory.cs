@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using Weixin.Tool.Utility;
 
 namespace Weixin.Tool.Handlers
 {
@@ -32,13 +33,19 @@ namespace Weixin.Tool.Handlers
                     {
                         string msgType = section.Value;
 
-                        switch (msgType)
+                        switch (Enum.Parse(typeof(MsgTypeEnum),msgType))
                         {
-                            case "text":
+                            case MsgTypeEnum.text:
                                 handler = new TextHandler(requestXml);
                                 break;
-                            case "event":
+                            case MsgTypeEnum.@event:
                                 handler = new EventHandler(requestXml);
+                                break;
+                            case MsgTypeEnum.location:
+                                handler = new LocationHandler(requestXml);
+                                break;
+                            default:
+                                handler = new TextHandler(requestXml);
                                 break;
                         }
                     }

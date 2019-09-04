@@ -51,7 +51,7 @@ namespace Weixin.Tool.Utility
     public enum EventEnum
     {
         /// <summary>
-        /// 订阅
+        /// 订阅 和  用户未关注时，进行关注后的事件推送
         /// </summary>
         subscribe,
         /// <summary>
@@ -59,7 +59,7 @@ namespace Weixin.Tool.Utility
         /// </summary>
         unsubscribe,
         /// <summary>
-        /// 扫码
+        /// 扫码,用户已关注时的事件推送
         /// </summary>
         SCAN,
         /// <summary>
@@ -69,6 +69,10 @@ namespace Weixin.Tool.Utility
         /// <summary>
         /// 上报地理位置事件
         /// </summary>
-        LOCATION
+        LOCATION,
+        /// <summary>
+        /// 点击菜单拉取消息时的事件推送
+        /// </summary>
+        CLICK
     }
 }

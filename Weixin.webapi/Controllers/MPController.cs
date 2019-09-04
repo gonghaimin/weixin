@@ -41,12 +41,8 @@ namespace Weixin.WebApi.Controllers
         {
             string requestXml = Common.ReadRequest(this.Request);
             IHandler handler = HandlerFactory.CreateHandler(requestXml);
-            if (handler != null)
-            {
-                var res = handler.HandleRequest();
-                return Content(res);
-            }
-            return Content("222");
+            var res = handler.HandleRequest();
+            return Content(res);
         }
     }
 }

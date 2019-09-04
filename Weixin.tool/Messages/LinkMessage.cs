@@ -44,9 +44,9 @@ namespace Weixin.Tool.Messages
                     m.ToUserName = element.Element(Common.ToUserName).Value;
                     m.CreateTime = element.Element(Common.CreateTime).Value;
                     m.MsgId = element.Element(Common.MsgId).Value;
-                    m.Url = element.Element("Url").Value;
-                    m.Title = element.Element("Title").Value;
-                    m.Description = element.Element("Description").Value;
+                    m.Url = element.Element("Url")?.Value;
+                    m.Title = element.Element("Title")?.Value;
+                    m.Description = element.Element("Description")?.Value;
                 }
             }
 

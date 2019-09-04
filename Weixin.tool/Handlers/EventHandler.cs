@@ -31,12 +31,12 @@ namespace Weixin.Tool.Handlers
             EventMessage em = EventMessage.LoadFromXml(RequestXml);
 			if (em != null)
 			{
-				switch (em.Event.ToLower())
+				switch (Enum.Parse(typeof(EventEnum), em.Event))
 				{ 
-					case ("subscribe"):
+					case EventEnum.subscribe:
 						response = SubscribeEventHandler(em);
 						break;
-					case "click":
+					case EventEnum.VIEW:
 						response = ClickEventHandler(em);
 						break;
 				}

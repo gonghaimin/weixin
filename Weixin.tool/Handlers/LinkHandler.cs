@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Weixin.Tool.Handlers
 {
-    class LinkHandler
+    public class LinkHandler
     {
     }
 }
