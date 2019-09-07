@@ -44,6 +44,7 @@ namespace Weixin.Tool.Utility
         }
 
 
+
         // 检验消息的真实性，并且获取解密后的明文
         // @param sMsgSignature: 签名串，对应URL参数的msg_signature
         // @param sTimeStamp: 时间戳，对应URL参数的timestamp

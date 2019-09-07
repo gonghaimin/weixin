@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Weixin.Tool.Utility;
+using Weixin.Tool.Enums;
+using Weixin.Tool.Messages.Base;
 
-namespace Weixin.Tool.Messages
+namespace Weixin.Tool.Messages.ResponseMessage
 {
     /// <summary>
-    /// 音乐消息，用于被动回复
+    /// 音乐消息
     /// </summary>
-    public class MusicMessage:  IReplyMessage
+    public class ResponseMessageMusic : ResponseMessageBase
     {
-        public MusicMessage()
-        {
-            this.MsgType = MsgTypeEnum.music.ToString();
-        }
+        protected override ResponseMsgType MsgType => ResponseMsgType.Music;
         /// <summary>
         /// 音乐标题
         /// </summary>
@@ -34,11 +32,10 @@ namespace Weixin.Tool.Messages
         /// 缩略图的媒体id，通过素材管理中的接口上传多媒体文件，得到的id
         /// </summary>
         public string ThumbMediaId { get; set; }
-
         /// <summary>
         /// 模板
         /// </summary>
-        public string Template
+        private string Template
         {
             get
             {
@@ -54,27 +51,13 @@ namespace Weixin.Tool.Messages
                             <HQMusicUrl><![CDATA[{7}]]></HQMusicUrl>
                             <ThumbMediaId><![CDATA[{8}]]></ThumbMediaId>
                           </Music>
+                             <MsgId>{9}</MsgId>
                         </xml>";
             }
         }
-        protected override bool VerifyParameter(out string msg)
-        {
-            msg = string.Empty;
-            if (string.IsNullOrEmpty(this.ThumbMediaId))
-            {
-                msg = "ThumbMediaId";
-                return false;
-            }
-            return true;
-        }
-        /// <summary>
-        /// 生成回复内容
-        /// </summary>
-        /// <returns></returns>
         protected override string GenerateContent()
         {
-            this.CreateTime = Common.GetNowTime();
-            return string.Format(this.Template, this.ToUserName, this.FromUserName, this.CreateTime, this.MsgType, this.Title, this.Description,this.MusicUrl,this.HQMusicUrl,this.ThumbMediaId);
+            return string.Format(this.Template, this.ToUserName, this.FromUserName, this.CreateTime, this.MsgType.ToString(), this.Title, this.Description, this.MusicUrl, this.HQMusicUrl, this.ThumbMediaId,this.MsgId);
         }
     }
 }

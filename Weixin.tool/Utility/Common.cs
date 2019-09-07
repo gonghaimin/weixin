@@ -69,11 +69,11 @@ namespace Weixin.Tool.Utility
         /// 得到当前时间戳
         /// </summary>
         /// <returns></returns>
-        public static string GetNowTime()
+        public static long GetNowTime()
         {
             DateTime timeStamp = new DateTime(1970, 1, 1);  //得到1970年的时间戳
             long time = (DateTime.UtcNow.Ticks - timeStamp.Ticks) / 10000000;
-            return time.ToString();
+            return time;
         }
         /// <summary>
         /// 读取请求对象的内容

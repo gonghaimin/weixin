@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Weixin.Tool.Handlers.Base;
 using Weixin.Tool.Messages;
+using Weixin.Tool.Messages.Base;
+using Weixin.Tool.Messages.RequestMessage;
+using Weixin.Tool.Messages.ResponseMessage;
 using Weixin.Tool.Utility;
 
 namespace Weixin.Tool.Handlers
@@ -12,29 +16,22 @@ namespace Weixin.Tool.Handlers
     /// </summary>
     public class TextHandler : IHandler
     {
-        /// <summary>
-        /// 请求的XML
-        /// </summary>
-        private string RequestXml { get; set; }
-        private SignModel sign { get; set; }
-        /// <summary>
-        /// 构造函数
-        /// </summary>
-        /// <param name="requestXml">请求的xml</param>
-        public TextHandler(string requestXml, SignModel model)
+        public TextHandler(string requestXml) : base(requestXml)
         {
-            this.RequestXml = requestXml;
-            this.sign = model;
+        }
+
+        public TextHandler(string requestXml, SignModel signModel) : base(requestXml, signModel)
+        {
         }
         /// <summary>
         /// 处理请求
         /// </summary>
         /// <returns></returns>
-        public string HandleRequest()
+        public override string HandleRequest()
         {
             string response = string.Empty;
-            TextMessage tm = TextMessage.LoadFromXml(RequestXml);
-            string Content = tm.Content.Trim();
+            var requestMessage = new RequestMessageText(this.RequestXml);
+            string Content = requestMessage.Content;
             if (string.IsNullOrEmpty(Content))
             {
                 response = "您什么都没输入，没法帮您啊，%>_<%。";
@@ -43,20 +40,9 @@ namespace Weixin.Tool.Handlers
             {
                 response = HandleOther(Content);
             }
-            tm.Content = response;
-            //进行发送者、接收者转换
-            string temp = tm.ToUserName;
-            tm.ToUserName = tm.FromUserName;
-            tm.FromUserName = temp;
-            response = tm.GetResponse();
-            if(this.sign != null)
-            {
-                MsgCryptUtility mc = new MsgCryptUtility(Common.Token, Common.encodingAESKey, Common.AppID);
-                string stmp = "";
-                var ret = mc.EncryptMsg(response, this.sign.timestamp, this.sign.nonce, ref stmp);
-                response = stmp;
-            }
-            return response;
+            var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageText>(requestMessage);
+            responseMessage.Content = response;
+            return responseMessage.GetResponse(this.SignModel);
         }
         /// <summary>
         /// 处理其他消息

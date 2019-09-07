@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Text;
 using System.Xml;
 using CommonService.Security;
 using Microsoft.AspNetCore.Authorization;
@@ -12,6 +13,8 @@ using Weixin.Core.Options;
 using Weixin.Data;
 using Weixin.Tool;
 using Weixin.Tool.Handlers;
+using Weixin.Tool.Handlers.Base;
+using Weixin.Tool.Messages.ResponseMessage;
 using Weixin.Tool.Utility;
 using Weixin.WebApi.Extensions;
 
@@ -31,16 +34,31 @@ namespace Weixin.WebApi.Controllers
             return string.Empty;
         }
         [HttpPost]
-        public ActionResult<string> Post([FromQuery]SignModel model)
+        public ActionResult<string> Post([FromQuery]SignModel signModel)
         {
-            if (CheckSignature.Check(model.signature, model.timestamp, model.nonce, Common.Token))
+            var res = string.Empty;
+            var error = string.Empty;
+            string requestXml = Common.ReadRequest(this.Request);
+            if (signModel != null &&!string.IsNullOrEmpty(signModel.signature)&& !CheckSignature.Check(signModel.signature, signModel.timestamp, signModel.nonce, Common.Token))
             {
-                string requestXml = Common.ReadRequest(this.Request);
-                IHandler handler = HandlerFactory.CreateHandler(requestXml, model);
-                var res = handler.HandleRequest();
-                return Content(res);
+                error = "验签失败";
             }
-            return null;
+            else
+            {
+                try
+                {
+                    var handler = HandlerFactory.CreateHandler(requestXml, signModel);
+                    res = handler.HandleRequest();
+                    return Content(res,Request.ContentType, Encoding.UTF8);
+                }
+                catch (Exception e)
+                {
+                    error = e.Message;
+                }
+            }
+            var defaultHandler = new DefaultHandler(requestXml,signModel);
+            res= defaultHandler.HandleRequest(new ResponseMessageText() { Content= error });
+            return Content(res, Request.ContentType, Encoding.UTF8);
         }
     }
    

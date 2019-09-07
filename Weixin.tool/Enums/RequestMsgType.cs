@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Weixin.Tool.Utility
+namespace Weixin.Tool.Enums
 {
-    public enum MsgTypeEnum
+    public enum RequestMsgType
     {
+        Unknown = -1,
         /// <summary>
         /// 文本消息
         /// </summary>
@@ -48,31 +49,4 @@ namespace Weixin.Tool.Utility
         news
     }
 
-    public enum EventEnum
-    {
-        /// <summary>
-        /// 订阅 和  用户未关注时，进行关注后的事件推送
-        /// </summary>
-        subscribe,
-        /// <summary>
-        /// 取消订阅)
-        /// </summary>
-        unsubscribe,
-        /// <summary>
-        /// 扫码,用户已关注时的事件推送
-        /// </summary>
-        SCAN,
-        /// <summary>
-        /// 点击菜单跳转链接时的事件推送
-        /// </summary>
-        VIEW,
-        /// <summary>
-        /// 上报地理位置事件
-        /// </summary>
-        LOCATION,
-        /// <summary>
-        /// 点击菜单拉取消息时的事件推送
-        /// </summary>
-        CLICK
-    }
 }

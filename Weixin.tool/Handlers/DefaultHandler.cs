@@ -9,20 +9,21 @@ using Weixin.Tool.Utility;
 
 namespace Weixin.Tool.Handlers
 {
-    public class ImageHandler : IHandler
+    public class DefaultHandler : IHandler
     {
-        public ImageHandler(string requestXml) : base(requestXml)
+        public DefaultHandler(string requestXml) : base(requestXml)
         {
         }
 
-        public ImageHandler(string requestXml, SignModel signModel) : base(requestXml, signModel)
+        public DefaultHandler(string requestXml, SignModel signModel) : base(requestXml, signModel)
         {
         }
+
         public override string HandleRequest()
         {
-            var requestMessage = new RequestMessageImage(this.RequestXml);
+            var requestMessage = new RequestMessageText(this.RequestXml);
             var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageText>(requestMessage);
-            responseMessage.Content = "床前明月光";
+            responseMessage.Content = "你发送的消息暂时不能处理";
             return responseMessage.GetResponse(this.SignModel);
         }
     }
