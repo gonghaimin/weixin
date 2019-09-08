@@ -5,7 +5,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.IO;
 
-namespace Yank.WeiXin.Robot.Utility
+namespace Weixin.Tool.Utility
 {
     class SecurityUtility
     {

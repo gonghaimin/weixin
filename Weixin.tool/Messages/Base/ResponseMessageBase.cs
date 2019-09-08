@@ -73,7 +73,7 @@ namespace Weixin.Tool.Messages.Base
                     var response= GenerateContent();
                     if (signModel != null && !string.IsNullOrEmpty(signModel.msg_signature))
                     {
-                        MsgCryptUtility mc = new MsgCryptUtility(Common.Token, Common.encodingAESKey, Common.AppID);
+                        MsgCryptUtility mc = new MsgCryptUtility(WeiXinContext.Config.Token, WeiXinContext.Config.EncodingAESKey, WeiXinContext.Config.AppID);
                         var ret = mc.EncryptMsg(response, signModel.timestamp, signModel.nonce, ref response);
                         if(ret != 0)
                         {

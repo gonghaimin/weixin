@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Yank.WeiXin.Robot.Utility
+namespace Weixin.Tool.Utility
 {
 	/// <summary>
 	/// 帮助类

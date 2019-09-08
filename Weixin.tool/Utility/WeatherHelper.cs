@@ -8,9 +8,9 @@ using System.Web;
 using Newtonsoft.Json;
 using System.Xml;
 
-namespace Yank.WeiXin.Robot
+namespace Weixin.Tool.Utility
 {
-    class WeatherHelper
+    public class WeatherHelper
     {
         /// <summary>
         /// 城市集合字段
@@ -103,98 +103,6 @@ namespace Yank.WeiXin.Robot
 								result = builder.ToString();
 							}
 						}
-						#region 天气json数据格式
-						/*
-                 
-                {
-   "weatherinfo": {
-       "city": "北京", 
-       "city_en": "beijing", 
-       "date_y": "2013年11月4日", 
-       "date": "", 
-       "week": "星期一", 
-       "fchh": "11", 
-       "cityid": "101010100", 
-       "temp1": "17℃~5℃", 
-       "temp2": "16℃~5℃", 
-       "temp3": "18℃~4℃", 
-       "temp4": "17℃~5℃", 
-       "temp5": "14℃~6℃", 
-       "temp6": "14℃~2℃", 
-       "tempF1": "62.6℉~41℉", 
-       "tempF2": "60.8℉~41℉", 
-       "tempF3": "64.4℉~39.2℉", 
-       "tempF4": "62.6℉~41℉", 
-       "tempF5": "57.2℉~42.8℉", 
-       "tempF6": "57.2℉~35.6℉", 
-       "weather1": "晴转多云", 
-       "weather2": "多云", 
-       "weather3": "多云转晴", 
-       "weather4": "晴转多云", 
-       "weather5": "多云转阴", 
-       "weather6": "阴转晴", 
-       "img1": "0", 
-       "img2": "1", 
-       "img3": "1", 
-       "img4": "99", 
-       "img5": "1", 
-       "img6": "0", 
-       "img7": "0", 
-       "img8": "1", 
-       "img9": "1", 
-       "img10": "2", 
-       "img11": "2", 
-       "img12": "0", 
-       "img_single": "0", 
-       "img_title1": "晴", 
-       "img_title2": "多云", 
-       "img_title3": "多云", 
-       "img_title4": "多云", 
-       "img_title5": "多云", 
-       "img_title6": "晴", 
-       "img_title7": "晴", 
-       "img_title8": "多云", 
-       "img_title9": "多云", 
-       "img_title10": "阴", 
-       "img_title11": "阴", 
-       "img_title12": "晴", 
-       "img_title_single": "晴", 
-       "wind1": "微风", 
-       "wind2": "微风", 
-       "wind3": "微风", 
-       "wind4": "微风", 
-       "wind5": "微风", 
-       "wind6": "北风4-5级", 
-       "fx1": "微风", 
-       "fx2": "微风", 
-       "fl1": "小于3级", 
-       "fl2": "小于3级", 
-       "fl3": "小于3级", 
-       "fl4": "小于3级", 
-       "fl5": "小于3级", 
-       "fl6": "4-5级", 
-       "index": "较冷", 
-       "index_d": "建议着大衣、呢外套加毛衣、卫衣等服装。体弱者宜着厚外套、厚毛衣。因昼夜温差较大，注意增减衣服。", 
-       "index48": "冷", 
-       "index48_d": "天气冷，建议着棉服、羽绒服、皮夹克加羊毛衫等冬季服装。年老体弱者宜着厚棉衣、冬大衣或厚羽绒服。", 
-       "index_uv": "中等", 
-       "index48_uv": "弱", 
-       "index_xc": "适宜", 
-       "index_tr": "适宜", 
-       "index_co": "舒适", 
-       "st1": "17", 
-       "st2": "5", 
-       "st3": "17", 
-       "st4": "5", 
-       "st5": "18", 
-       "st6": "6", 
-       "index_cl": "适宜", 
-       "index_ls": "适宜", 
-       "index_ag": "极不易发"
-   }
-}
-                */
-						#endregion
 					}
 					catch 
 					{
@@ -213,7 +121,7 @@ namespace Yank.WeiXin.Robot
         /// <summary>
         /// 内部类：城市
         /// </summary>
-        internal class City
+        public class City
         {
             /// <summary>
             /// 编码

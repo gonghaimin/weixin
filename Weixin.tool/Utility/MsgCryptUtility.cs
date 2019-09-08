@@ -6,6 +6,7 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Xml;
+using Weixin.Tool.Enums;
 
 namespace Weixin.Tool.Utility
 {
@@ -14,23 +15,9 @@ namespace Weixin.Tool.Utility
     /// </summary>
     public class MsgCryptUtility
     {
-        string m_sToken;
-        string m_sEncodingAESKey;
-        string m_sAppID;
-        enum WXBizMsgCryptErrorCode
-        {
-            WXBizMsgCrypt_OK = 0,
-            WXBizMsgCrypt_ValidateSignature_Error = -40001,
-            WXBizMsgCrypt_ParseXml_Error = -40002,
-            WXBizMsgCrypt_ComputeSignature_Error = -40003,
-            WXBizMsgCrypt_IllegalAesKey = -40004,
-            WXBizMsgCrypt_ValidateAppid_Error = -40005,
-            WXBizMsgCrypt_EncryptAES_Error = -40006,
-            WXBizMsgCrypt_DecryptAES_Error = -40007,
-            WXBizMsgCrypt_IllegalBuffer = -40008,
-            WXBizMsgCrypt_EncodeBase64_Error = -40009,
-            WXBizMsgCrypt_DecodeBase64_Error = -40010
-        };
+        private string m_sToken;
+        private string m_sEncodingAESKey;
+        private string m_sAppID;
 
         //构造函数
         // @param sToken: 公众平台上，开发者设置的Token
@@ -56,7 +43,7 @@ namespace Weixin.Tool.Utility
         {
             if (m_sEncodingAESKey.Length != 43)
             {
-                return (int)WXBizMsgCryptErrorCode.WXBizMsgCrypt_IllegalAesKey;
+                return (int)ReturnCode.不合法的EncodingAESKey;
             }
             XmlDocument doc = new XmlDocument();
             XmlNode root;
@@ -69,7 +56,7 @@ namespace Weixin.Tool.Utility
             }
             catch (Exception)
             {
-                return (int)WXBizMsgCryptErrorCode.WXBizMsgCrypt_ParseXml_Error;
+                return (int)ReturnCode.xml解析失败;
             }
             //verify signature
             int ret = 0;
@@ -82,16 +69,12 @@ namespace Weixin.Tool.Utility
             {
                 sMsg = Cryptography.AES_decrypt(sEncryptMsg, m_sEncodingAESKey, ref cpid);
             }
-            catch (FormatException)
-            {
-                return (int)WXBizMsgCryptErrorCode.WXBizMsgCrypt_DecodeBase64_Error;
-            }
             catch (Exception)
             {
-                return (int)WXBizMsgCryptErrorCode.WXBizMsgCrypt_DecryptAES_Error;
+                return (int)ReturnCode.Encrypt解密失败;
             }
             if (cpid != m_sAppID)
-                return (int)WXBizMsgCryptErrorCode.WXBizMsgCrypt_ValidateAppid_Error;
+                return (int)ReturnCode.不合法的APPID;
             return 0;
         }
 
@@ -106,7 +89,7 @@ namespace Weixin.Tool.Utility
         {
             if (m_sEncodingAESKey.Length != 43)
             {
-                return (int)WXBizMsgCryptErrorCode.WXBizMsgCrypt_IllegalAesKey;
+                return (int)ReturnCode.不合法的EncodingAESKey;
             }
             string raw = "";
             try
@@ -115,7 +98,7 @@ namespace Weixin.Tool.Utility
             }
             catch (Exception)
             {
-                return (int)WXBizMsgCryptErrorCode.WXBizMsgCrypt_EncryptAES_Error;
+                return (int)ReturnCode.Encrypt加密失败;
             }
             string MsgSigature = "";
             int ret = 0;
@@ -175,7 +158,7 @@ namespace Weixin.Tool.Utility
                 return 0;
             else
             {
-                return (int)WXBizMsgCryptErrorCode.WXBizMsgCrypt_ValidateSignature_Error;
+                return (int)ReturnCode.msg_signature验签失败;
             }
         }
 
@@ -207,7 +190,7 @@ namespace Weixin.Tool.Utility
             }
             catch (Exception)
             {
-                return (int)WXBizMsgCryptErrorCode.WXBizMsgCrypt_ComputeSignature_Error;
+                return (int)ReturnCode.msg_signature生成失败;
             }
             sMsgSignature = hash;
             return 0;

@@ -16,7 +16,7 @@ namespace Weixin.WebApi.Extensions
             string basePath = System.IO.Directory.GetCurrentDirectory();
             var connections = configuration.GetSection("Connections");
             var connStr = "Data source=" + Path.Combine(basePath, "mydb.db");
-            services.AddDbContext<DbContext, WeixinContext>(options => options.UseSqlite(connStr));
+            services.AddDbContext<DbContext, WeixinDbContext>(options => options.UseSqlite(connStr));
             services.AddSingleton(typeof(IHttpContextAccessor), typeof(HttpContextAccessor));
             services.AddScoped(typeof(IBaseRepository<>), typeof(EfRepository<>));
             services.AddScoped(typeof(WorkContext));

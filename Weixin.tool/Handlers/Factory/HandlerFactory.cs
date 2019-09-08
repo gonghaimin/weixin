@@ -18,11 +18,11 @@ namespace Weixin.Tool.Handlers.Base
         /// </summary>
         /// <param name="requestXml">请求的xml</param>
         /// <returns>IHandler对象</returns>
-        public static IHandler CreateHandler(string requestXml, SignModel signModel)
+        public IHandler CreateHandler(string requestXml, SignModel signModel)
         {
             if (signModel != null && !string.IsNullOrEmpty(signModel.msg_signature))
             {
-                MsgCryptUtility mc = new MsgCryptUtility(Common.Token, Common.encodingAESKey, Common.AppID);
+                MsgCryptUtility mc = new MsgCryptUtility(WeiXinContext.Config.Token, WeiXinContext.Config.EncodingAESKey, WeiXinContext.Config.AppID);
                 var ret = mc.DecryptMsg(signModel.msg_signature, signModel.timestamp, signModel.nonce, requestXml, ref requestXml);
                 if (ret != 0)
                 {

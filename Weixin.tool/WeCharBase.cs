@@ -19,35 +19,7 @@ namespace Weixin.Tool
             appSecret = "b4ffc8669785efff1fe00275eea1bee5";
         }
 
-        public static string AccessToken
-        {
-            get { return GetToken(); }
-        }
-
-
-        /// <summary>获取ccess_token</summary>
-        /// <retuWeixin></retuWeixin>
-        private static string GetToken()
-        {
-            try
-            {
-                var request = new HttpRequestMessage(HttpMethod.Get,string.Format(apiConfig.tokenApi, appId, appSecret));
-                var response = _client.SendAsync(request).Result;
-                var str = response.Content.ReadAsStringAsync().Result;
-                var dict=JsonConvert.DeserializeObject<Dictionary<string, object>>(str);
-                var accessToken = dict["access_token"];
-                if (accessToken == null)
-                {
-                    return string.Empty;
-                }
-                token = accessToken.ToString();
-                return accessToken.ToString();
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
-        }
+  
         public static string createMenu()
         {
             try

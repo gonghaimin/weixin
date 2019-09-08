@@ -9,7 +9,7 @@ using System.Xml.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 
-namespace Yank.WeiXin.Robot.Utility
+namespace Weixin.Tool.Utility
 {
 	class XmlUtility
 	{

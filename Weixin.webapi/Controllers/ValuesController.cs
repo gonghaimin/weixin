@@ -7,6 +7,7 @@ using Weixin.Core.Domain;
 using Weixin.Core.Options;
 using Weixin.Data;
 using Weixin.Tool;
+using Weixin.Tool.Utility;
 using Weixin.WebApi.Extensions;
 
 
@@ -35,7 +36,8 @@ namespace Weixin.WebApi.Controllers
             HttpContext.Session.SetString("test", "ghm");//存储在IDistributedCache
             var a = Users.Context;
             //Users.Insert(new User() { UserName = "ghm" });
-            var token = "22"; //WeCharBase.AccessToken;
+            var menus = CommonApi.GetMenu();
+            var token = WeiXinContext.AccessToken;
             return new string[] { token, AppsettingsUtility.GetSetting("Logging:LogLevel:Default") };
         }
 

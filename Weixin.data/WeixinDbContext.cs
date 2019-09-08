@@ -6,9 +6,9 @@ using System.Text;
 
 namespace Weixin.Data
 {
-    public class WeixinContext : DbContext
+    public class WeixinDbContext : DbContext
     {
-        public WeixinContext(DbContextOptions<WeixinContext> options):base(options)
+        public WeixinDbContext(DbContextOptions<WeixinDbContext> options):base(options)
         {
 
         }

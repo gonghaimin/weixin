@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Yank.WeiXin.Robot.Utility
+namespace Weixin.Tool.Utility
 {
 	class FileUtility
 	{

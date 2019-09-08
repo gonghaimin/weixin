@@ -24,10 +24,15 @@ namespace Weixin.WebApi.Controllers
     [ApiController]
     public class MPController : ControllerBase
     {
+        private readonly HandlerFactory _handlerFactory;
+        public MPController(HandlerFactory handlerFactory)
+        {
+            _handlerFactory = handlerFactory;
+        }
         [HttpGet]
         public ActionResult<string> Get(string signature, string timestamp, string nonce, string echostr)
         {
-            if (CheckSignature.Check(signature, timestamp, nonce, Common.Token))
+            if (CheckSignature.Check(signature, timestamp, nonce, WeiXinContext.Config.Token))
             {
                 return echostr;
             }
@@ -39,7 +44,7 @@ namespace Weixin.WebApi.Controllers
             var res = string.Empty;
             var error = string.Empty;
             string requestXml = Common.ReadRequest(this.Request);
-            if (signModel != null &&!string.IsNullOrEmpty(signModel.signature)&& !CheckSignature.Check(signModel.signature, signModel.timestamp, signModel.nonce, Common.Token))
+            if (signModel != null &&!string.IsNullOrEmpty(signModel.signature)&& !CheckSignature.Check(signModel.signature, signModel.timestamp, signModel.nonce, WeiXinContext.Config.Token))
             {
                 error = "验签失败";
             }
@@ -47,7 +52,7 @@ namespace Weixin.WebApi.Controllers
             {
                 try
                 {
-                    var handler = HandlerFactory.CreateHandler(requestXml, signModel);
+                    var handler = _handlerFactory.CreateHandler(requestXml, signModel);
                     res = handler.HandleRequest();
                     return Content(res,Request.ContentType, Encoding.UTF8);
                 }

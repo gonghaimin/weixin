@@ -15,6 +15,11 @@ using Microsoft.EntityFrameworkCore;
 using Weixin.Core.Options;
 using AuthService.JWT;
 using AuthService;
+using Weixin.Tool.Handlers.Base;
+using Weixin.Tool;
+using Weixin.Tool.Utility;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Weixin.WebApi
 {
@@ -46,6 +51,9 @@ namespace Weixin.WebApi
                 });
 
             });
+            services.AddHttpClient();
+            services.Configure<WeixinSetting>(Configuration.GetSection("WeiXin"));
+            services.AddScoped<HandlerFactory>();
             services.AddScoped(typeof(IAuthService), typeof(CookieAuthenticationService));
             services.Register(Configuration);
             services.AddCors();
@@ -77,7 +85,7 @@ namespace Weixin.WebApi
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IOptions<WeixinSetting> settings, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -109,8 +117,9 @@ namespace Weixin.WebApi
             //启动配置权限管道
             //UseAuthentication方法注册了AuthenticationMiddleware中间件
             app.UseAuthentication();
-           
-            
+
+            WeiXinContext.RegisterWX(settings, serviceProvider);
+
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
