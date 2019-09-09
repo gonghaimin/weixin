@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Xml.Linq;
+using Weixin.Tool.Models;
 using Weixin.Tool.Utility;
 using HttpUtility = Weixin.Tool.Utility.HttpUtility;
 

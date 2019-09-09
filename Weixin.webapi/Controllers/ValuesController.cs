@@ -45,7 +45,7 @@ namespace Weixin.WebApi.Controllers
         [Route("/api/values/createMenu")]
         public ActionResult<string> createMenu()
         {
-           return WeCharBase.createMenu();
+            return null;
         }
     }
 }

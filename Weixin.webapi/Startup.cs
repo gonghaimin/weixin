@@ -20,6 +20,7 @@ using Weixin.Tool;
 using Weixin.Tool.Utility;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Caching.Distributed;
+using Weixin.Tool.Models;
 
 namespace Weixin.WebApi
 {

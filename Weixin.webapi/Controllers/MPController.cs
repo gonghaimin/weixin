@@ -15,6 +15,7 @@ using Weixin.Tool;
 using Weixin.Tool.Handlers;
 using Weixin.Tool.Handlers.Base;
 using Weixin.Tool.Messages.ResponseMessage;
+using Weixin.Tool.Models;
 using Weixin.Tool.Utility;
 using Weixin.WebApi.Extensions;
 

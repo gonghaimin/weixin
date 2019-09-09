@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Weixin.Tool
+namespace Weixin.Tool.Models
 {
     public class WeixinSetting
     {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using Weixin.Tool.Enums;
+using Weixin.Tool.Models;
 using Weixin.Tool.Utility;
 
 namespace Weixin.Tool.Messages.Base

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Weixin.Tool
 {
-    public class apiConfig
+    public class ApiConfig
     {
         /// <summary>
         /// 获取token
@@ -13,7 +13,27 @@ namespace Weixin.Tool
         /// <summary>
         /// 创建菜单
         /// </summary>
-        public static string menuApi = " https://api.weixin.qq.com/cgi-bin/menu/create?access_token={0}";
+        public static string menucreate = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token={0}";
+        /// <summary>
+        /// 自定义菜单查询接口
+        /// </summary>
+        public static string menuget = "https://api.weixin.qq.com/cgi-bin/menu/get?access_token={0}";
+        /// <summary>
+        /// 自定义菜单删除接口
+        /// </summary>
+        public static string menudelete = "https://api.weixin.qq.com/cgi-bin/menu/delete?access_token={0}";
+        /// <summary>
+        /// 创建个性化菜单
+        /// </summary>
+        public static string menuaddconditional = "https://api.weixin.qq.com/cgi-bin/menu/addconditional?access_token={0}";
+        /// <summary>
+        /// 删除个性化菜单
+        /// </summary>
+        public static string menudelconditional = "https://api.weixin.qq.com/cgi-bin/menu/delconditional?access_token={0}";
+        /// <summary>
+        /// 获取自定义菜单配置接口
+        /// </summary>
+        public static string get_current_selfmenu_info = "https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info?access_token={0}";
         /// <summary>
         /// 添加客服帐号
         /// post

@@ -9,6 +9,7 @@ using Weixin.Tool.Messages;
 using Weixin.Tool.Messages.Base;
 using Weixin.Tool.Messages.RequestMessage;
 using Weixin.Tool.Messages.ResponseMessage;
+using Weixin.Tool.Models;
 using Weixin.Tool.Utility;
 
 namespace Weixin.Tool.Handlers
