@@ -10,7 +10,7 @@ namespace Weixin.Tool.WxResults
     //     /// 公众号 JSON 返回结果（用于菜单接口等）
     public class WxJsonResult : BaseJsonResult
     {
-        public override int errcode { get; set; }
+        public override int errcode { get; set; } = 0;
 
 
         public override ReturnCode ReturnCode

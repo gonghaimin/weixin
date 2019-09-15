@@ -6,24 +6,22 @@ using Weixin.Tool.Messages.Base;
 using Weixin.Tool.Messages.RequestMessage;
 using Weixin.Tool.Messages.ResponseMessage;
 using Weixin.Tool.Models;
+using Weixin.Tool.Services;
 using Weixin.Tool.Utility;
+using Newtonsoft.Json;
+using Weixin.Tool.Enums;
 
 namespace Weixin.Tool.Handlers
 {
     public class ImageHandler : IHandler
     {
-        public ImageHandler(string requestXml) : base(requestXml)
-        {
-        }
-
-        public ImageHandler(string requestXml, SignModel signModel) : base(requestXml, signModel)
-        {
-        }
         public override string HandleRequest()
         {
             var requestMessage = new RequestMessageImage(this.RequestXml);
             var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageText>(requestMessage);
-            responseMessage.Content = "床前明月光";
+            MaterialService materialService = new MaterialService();
+            var res=materialService.AddMaterial(UploadMediaFileType.image,requestMessage.PicUrl);
+            responseMessage.Content =JsonConvert.SerializeObject(res) ;
             return responseMessage.GetResponse(this.SignModel);
         }
     }

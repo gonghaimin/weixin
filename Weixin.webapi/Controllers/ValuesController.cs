@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
 using Weixin.Core.Domain;
 using Weixin.Core.Options;
@@ -22,7 +23,7 @@ namespace Weixin.WebApi.Controllers
     {
         private readonly IBaseRepository<User> Users;
         private IOptions<MyOwnModel> settings;
-
+ 
         public ValuesController(IBaseRepository<User> users, IOptions<MyOwnModel> settings, IOptionsSnapshot<MyOwnModel> namedOptionsAccessor)
         {
             this.Users = users;
@@ -36,7 +37,6 @@ namespace Weixin.WebApi.Controllers
             HttpContext.Session.SetString("test", "ghm");//存储在IDistributedCache
             var a = Users.Context;
             //Users.Insert(new User() { UserName = "ghm" });
-            var menus = CommonApi.GetMenu();
             var token = WeiXinContext.AccessToken;
             return new string[] { token, AppsettingsUtility.GetSetting("Logging:LogLevel:Default") };
         }

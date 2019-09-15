@@ -21,6 +21,10 @@ using Weixin.Tool.Utility;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Caching.Distributed;
 using Weixin.Tool.Models;
+using Weixin.Tool.Services;
+using System.Net.Http;
+using System.Net;
+using System.Linq;
 
 namespace Weixin.WebApi
 {
@@ -42,7 +46,7 @@ namespace Weixin.WebApi
                 options.SwaggerDoc("v1", new Info() { Title = "Swagger Test UI", Version = "v1" });
                 options.CustomSchemaIds(type => type.FullName); // 解决相同类名会报错的问题
                 options.IncludeXmlComments(Path.Combine(Directory.GetCurrentDirectory(), "Weixin.WebApi.xml")); // 标注要使用的 XML 文档
-                                                                                                                             //启用auth支持
+                                                                                                                //启用auth支持
                 options.AddSecurityDefinition("Bearer", new ApiKeyScheme
                 {
                     Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
@@ -52,9 +56,27 @@ namespace Weixin.WebApi
                 });
 
             });
-            services.AddHttpClient();
+
+            services.AddHttpClient("wexin", c => { })
+                 .ConfigurePrimaryHttpMessageHandler(messageHandler =>
+                 {
+                     var handler = new HttpClientHandler();
+                     if (handler.SupportsAutomaticDecompression)
+                     {
+                         handler.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
+                     }
+                     return handler;
+                 });
+
             services.Configure<WeixinSetting>(Configuration.GetSection("WeiXin"));
             services.AddScoped<HandlerFactory>();
+
+            var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes().Where(t => t.GetInterfaces().Contains(typeof(IService)))).ToList();
+
+            types.ForEach(type =>
+            {
+                services.AddSingleton(type);
+            });
             services.AddScoped(typeof(IAuthService), typeof(CookieAuthenticationService));
             services.Register(Configuration);
             services.AddCors();
@@ -63,7 +85,8 @@ namespace Weixin.WebApi
             services.AddOptions();
             services.Configure<MyOwnModel>(Configuration.GetSection("MyOwn"));
             //通过name注入不同options服务
-            services.Configure<MyOwnModel>("自定义配置", model => {
+            services.Configure<MyOwnModel>("自定义配置", model =>
+            {
                 model.Age = 1;
                 model.Name = "dsdf";
             });

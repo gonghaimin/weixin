@@ -9,14 +9,6 @@ namespace Weixin.Tool.Handlers
 {
     public class VideoHandler : IHandler
     {
-        public VideoHandler(string requestXml) : base(requestXml)
-        {
-        }
-
-        public VideoHandler(string requestXml, SignModel signModel) : base(requestXml, signModel)
-        {
-        }
-
         public override string HandleRequest()
         {
             throw new NotImplementedException();

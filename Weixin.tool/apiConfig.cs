@@ -7,6 +7,35 @@ namespace Weixin.Tool
     public class ApiConfig
     {
         /// <summary>
+        /// 获取微信API接口 IP地址
+        /// </summary>
+        public static string get_api_domain_ip = "https://api.weixin.qq.com/cgi-bin/get_api_domain_ip?access_token={0}";
+
+        /// <summary>
+        /// 获取微信服务器IP地址
+        /// </summary>
+        public static string getcallbackip = "https://api.weixin.qq.com/cgi-bin/getcallbackip?access_token={0}";
+
+        #region 网页授权
+        /// <summary>
+        ///1 网页授权，获取code
+        /// </summary>
+        public static string oauth2authorize = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={0}&redirect_uri={1}&response_type=code&scope={2}&state=STATE#wechat_redirect";
+        /// <summary>
+        ///2 网页授权, 通过code换取网页授权access_token
+        /// </summary>
+        public static string oauth2access_token = "https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code";
+        /// <summary>
+        ///3 网页授权，刷新access_token
+        /// </summary>
+        public static string oauth2refresh_token = "https://api.weixin.qq.com/sns/oauth2/refresh_token?appid={0}&grant_type=refresh_token&refresh_token={1}";
+        /// <summary>
+        ///4 网页授权，拉取用户信息(需scope为 snsapi_userinfo)
+        /// </summary>
+        public static string oauth2userinfo = "https://api.weixin.qq.com/sns/userinfo?access_token={0}&openid={1}&lang=zh_CN";
+        #endregion
+
+        /// <summary>
         /// 获取token
         /// </summary>
         public static string tokenApi = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}";
@@ -67,7 +96,7 @@ namespace Weixin.Tool
         /// 上传图文消息内的图片获取URL【订阅号与服务号认证后均可用】
         /// 请注意，本接口所上传的图片不占用公众号的素材库中图片数量的5000个的限制。图片仅支持jpg/png格式，大小必须在1MB以下。
         /// </summary>
-        public static string uploadMedia = "https://api.weixin.qq.com/cgi-bin/media/uploadimg?access_token={0}";
+        public static string uploadimg = "https://api.weixin.qq.com/cgi-bin/media/uploadimg?access_token={0}";
         /// <summary>
         /// 上传图文消息素材【订阅号与服务号认证后均可用】
         /// </summary>
@@ -172,7 +201,7 @@ namespace Weixin.Tool
         /// <summary>
         /// 获取素材总数
         /// </summary>
-        public static string materialget_materialcount = "https://api.weixin.qq.com/cgi-bin/material/get_materialcount?access_token={1}";
+        public static string materialget_materialcount = "https://api.weixin.qq.com/cgi-bin/material/get_materialcount?access_token={0}";
         /// <summary>
         /// 获取素材列表
         /// </summary>

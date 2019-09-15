@@ -16,7 +16,6 @@ namespace Weixin.Tool.Messages.Base
     {
         protected string MsgId { get; set; }
         protected abstract ResponseMsgType MsgType { get; }
-        protected SignModel SignModel { get; set; }
         /// <summary>
         /// 回复消息基本必填项校验
         /// </summary>

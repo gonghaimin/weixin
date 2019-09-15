@@ -16,6 +16,7 @@ using Weixin.Tool.Handlers;
 using Weixin.Tool.Handlers.Base;
 using Weixin.Tool.Messages.ResponseMessage;
 using Weixin.Tool.Models;
+using Weixin.Tool.Services;
 using Weixin.Tool.Utility;
 using Weixin.WebApi.Extensions;
 
@@ -26,9 +27,11 @@ namespace Weixin.WebApi.Controllers
     public class MPController : ControllerBase
     {
         private readonly HandlerFactory _handlerFactory;
-        public MPController(HandlerFactory handlerFactory)
+        private readonly UserService _userService;
+        public MPController(HandlerFactory handlerFactory,UserService userService)
         {
             _handlerFactory = handlerFactory;
+            _userService = userService;
         }
         [HttpGet]
         public ActionResult<string> Get(string signature, string timestamp, string nonce, string echostr)
@@ -62,8 +65,11 @@ namespace Weixin.WebApi.Controllers
                     error = e.Message;
                 }
             }
-            var defaultHandler = new DefaultHandler(requestXml,signModel);
-            res= defaultHandler.HandleRequest(new ResponseMessageText() { Content= error });
+            var defaultHandler = new DefaultHandler();
+            defaultHandler.RequestXml = requestXml;
+            defaultHandler.SignModel = signModel;
+            res = defaultHandler.HandleRequest(new ResponseMessageText() { Content= error });
+            
             return Content(res, Request.ContentType, Encoding.UTF8);
         }
     }

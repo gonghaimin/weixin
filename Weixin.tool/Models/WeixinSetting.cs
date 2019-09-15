@@ -10,5 +10,6 @@ namespace Weixin.Tool.Models
         public string EncodingAESKey { get; set; }
         public string AppID { get; set; }
         public string AppSecret { get; set; }
+        public string Oauth_redirect_uri { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using Weixin.Tool.Models;
 
 namespace Weixin.Tool.WxResults
 {
-    public class GetMenuResult: WxJsonResult
+    public class MenuResult : WxJsonResult
     {
         public MenuFull_ButtonGroup menu
         {

@@ -23,25 +23,34 @@ namespace Weixin.Tool
 
         private static IDistributedCache Cache;
 
-        public static IHttpClientFactory ClientFactory;
+        private static IHttpClientFactory ClientFactory;
+        public static HttpClient Client
+        {
+            get
+            {
+               return ClientFactory.CreateClient("weixin");
+            }
+        }
+
         private static string  key = "AccessToken";
         public static void RegisterWX(IOptions<WeixinSetting> settings, IServiceProvider serviceProvider)
         {
-            if (WeiXinContext.Cache == null)
+            if (Cache == null)
             {
-                WeiXinContext.Cache = serviceProvider.GetRequiredService< IDistributedCache>();
+                Cache = serviceProvider.GetRequiredService< IDistributedCache>();
             }
-            if (WeiXinContext.ClientFactory == null)
+            if (ClientFactory == null)
             {
-                WeiXinContext.ClientFactory= serviceProvider.GetRequiredService<IHttpClientFactory>();
+                ClientFactory= serviceProvider.GetRequiredService<IHttpClientFactory>();
             }
-            if (WeiXinContext.Config == null)
+            if (Config == null)
             {
-                WeiXinContext.Config = new WeixinSetting();
-                WeiXinContext.Config.AppID = settings.Value.AppID;
-                WeiXinContext.Config.AppSecret = settings.Value.AppSecret;
-                WeiXinContext.Config.EncodingAESKey = settings.Value.EncodingAESKey;
-                WeiXinContext.Config.Token = settings.Value.Token;
+                Config = new WeixinSetting();
+                Config.AppID = settings.Value.AppID;
+                Config.AppSecret = settings.Value.AppSecret;
+                Config.EncodingAESKey = settings.Value.EncodingAESKey;
+                Config.Token = settings.Value.Token;
+                Config.Oauth_redirect_uri = settings.Value.Oauth_redirect_uri;
             }
         }
         /// <summary>
@@ -57,7 +66,7 @@ namespace Weixin.Tool
         }
         public static void ClearAccessToken()
         {
-            WeiXinContext.Cache.Remove(key);
+            Cache.Remove(key);
         }
         /// <summary>
         /// 
@@ -68,12 +77,12 @@ namespace Weixin.Tool
         private static string GetAccessToken()
         {
             
-            var accessToken=WeiXinContext.Cache.GetString(key);
+            var accessToken=Cache.GetString(key);
             if (!string.IsNullOrEmpty(accessToken))
             {
                 return accessToken;
             }
-            string url = string.Format("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}", WeiXinContext.Config.AppID, WeiXinContext.Config.AppSecret);
+            string url = string.Format("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}", Config.AppID, Config.AppSecret);
             string result = HttpUtility.GetData(url);
 
             XDocument doc = XmlUtility.ParseJson(result, "root");
@@ -84,7 +93,7 @@ namespace Weixin.Tool
                 if (access_token != null)
                 {
                     var expires_Period = int.Parse(root.Element("expires_in").Value);
-                    WeiXinContext.Cache.SetString(key, access_token.Value, new DistributedCacheEntryOptions() { AbsoluteExpirationRelativeToNow=TimeSpan.FromSeconds(expires_Period) });
+                    Cache.SetString(key, access_token.Value, new DistributedCacheEntryOptions() { AbsoluteExpirationRelativeToNow=TimeSpan.FromSeconds(expires_Period) });
                     return access_token.Value;
                 }
             }

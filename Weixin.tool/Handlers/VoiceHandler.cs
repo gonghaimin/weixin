@@ -9,13 +9,6 @@ namespace Weixin.Tool.Handlers
 {
     public class VoiceHandler : IHandler
     {
-        public VoiceHandler(string requestXml) : base(requestXml)
-        {
-        }
-
-        public VoiceHandler(string requestXml, SignModel signModel) : base(requestXml, signModel)
-        {
-        }
 
         public override string HandleRequest()
         {

@@ -17,17 +17,11 @@ namespace Weixin.Tool.Handlers.Base
         /// <summary>
         /// 请求的XML
         /// </summary>
-        protected string RequestXml { get; set; }
-        protected SignModel SignModel { get; set; }
-        public IHandler(string requestXml)
-        {
-            this.RequestXml = requestXml;
-        }
-        public IHandler(string requestXml, SignModel signModel)
-        {
-            this.RequestXml = requestXml;
-            this.SignModel = signModel;
-        }
+        public string RequestXml { get; set; }
+        /// <summary>
+        /// 请求签名实体，用于接受消息解密和回复消息加密
+        /// </summary>
+        public SignModel SignModel { get; set; }
 
         /// <summary>
         /// 1、处理请求。

@@ -16,13 +16,6 @@ namespace Weixin.Tool.Handlers
 {
     public class EventHandler : IHandler
     {
-        public EventHandler(string requestXml) : base(requestXml)
-        {
-        }
-
-        public EventHandler(string requestXml, SignModel signModel) : base(requestXml, signModel)
-        {
-        }
         /// <summary>
         /// 处理请求
         /// </summary>

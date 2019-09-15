@@ -47,22 +47,26 @@ namespace Weixin.Tool.Handlers.Base
                         switch (msgType)
                         {
                             case RequestMsgType.text:
-                                handler = new TextHandler(requestXml, signModel);
+                                handler = new TextHandler();
                                 break;
                             case RequestMsgType.@event:
-                                handler = new EventHandler(requestXml, signModel);
+                                handler = new EventHandler();
                                 break;
                             case RequestMsgType.location:
-                                handler = new LocationHandler(requestXml, signModel);
+                                handler = new LocationHandler();
+                                break;
+                            case RequestMsgType.image:
+                                handler = new ImageHandler();
                                 break;
                             default:
-                                handler = new DefaultHandler(requestXml, signModel);
+                                handler = new DefaultHandler();
                                 break;
                         }
                     }
                 }
             }
-
+            handler.RequestXml = requestXml;
+            handler.SignModel = signModel;
             return handler;
         }
     }

@@ -12,14 +12,6 @@ namespace Weixin.Tool.Handlers
 {
     public class DefaultHandler : IHandler
     {
-        public DefaultHandler(string requestXml) : base(requestXml)
-        {
-        }
-
-        public DefaultHandler(string requestXml, SignModel signModel) : base(requestXml, signModel)
-        {
-        }
-
         public override string HandleRequest()
         {
             var requestMessage = new RequestMessageText(this.RequestXml);

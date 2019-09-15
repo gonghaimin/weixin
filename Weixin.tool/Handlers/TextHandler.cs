@@ -8,6 +8,7 @@ using Weixin.Tool.Messages.Base;
 using Weixin.Tool.Messages.RequestMessage;
 using Weixin.Tool.Messages.ResponseMessage;
 using Weixin.Tool.Models;
+using Weixin.Tool.Services;
 using Weixin.Tool.Utility;
 
 namespace Weixin.Tool.Handlers
@@ -17,13 +18,7 @@ namespace Weixin.Tool.Handlers
     /// </summary>
     public class TextHandler : IHandler
     {
-        public TextHandler(string requestXml) : base(requestXml)
-        {
-        }
-
-        public TextHandler(string requestXml, SignModel signModel) : base(requestXml, signModel)
-        {
-        }
+        private readonly UserService _userService = new UserService();
         /// <summary>
         /// 处理请求
         /// </summary>
@@ -43,6 +38,9 @@ namespace Weixin.Tool.Handlers
             }
             var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageText>(requestMessage);
             responseMessage.Content = response;
+
+            var user=_userService.GetUserInfo(requestMessage.FromUserName);
+            responseMessage.Content = Newtonsoft.Json.JsonConvert.SerializeObject(user);
             return responseMessage.GetResponse(this.SignModel);
         }
         /// <summary>

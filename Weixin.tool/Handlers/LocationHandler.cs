@@ -10,13 +10,6 @@ namespace Weixin.Tool.Handlers
 {
     public class LocationHandler : IHandler
     {
-        public LocationHandler(string requestXml) : base(requestXml)
-        {
-        }
-
-        public LocationHandler(string requestXml, SignModel signModel) : base(requestXml, signModel)
-        {
-        }
 
         public override string HandleRequest()
         {
