@@ -72,8 +72,4 @@ namespace Weixin.Tool.Pay.Models
         }
     }
 
-    public class AlipayRefundRequest : RefundRequest
-    {
-
-    }
 }

@@ -11,7 +11,7 @@ using System.Web;
 using System.Xml.Linq;
 using Weixin.Tool.Models;
 using Weixin.Tool.Utility;
-using HttpUtility = Weixin.Tool.Utility.HttpUtility;
+using HttpUtil = Weixin.Tool.Utility.HttpUtil;
 
 namespace Weixin.Tool
 {
@@ -83,7 +83,7 @@ namespace Weixin.Tool
                 return accessToken;
             }
             string url = string.Format("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}", Config.AppID, Config.AppSecret);
-            string result = HttpUtility.GetData(url);
+            string result = HttpUtil.GetData(url);
 
             XDocument doc = XmlUtility.ParseJson(result, "root");
             XElement root = doc.Root;

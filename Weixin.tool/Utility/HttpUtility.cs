@@ -12,7 +12,7 @@ namespace Weixin.Tool.Utility
 	/// <summary>
 	/// 帮助类
 	/// </summary>
-	class HttpUtility
+	class HttpUtil
 	{
         /// <summary>
         /// 发送请求

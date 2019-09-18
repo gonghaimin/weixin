@@ -77,9 +77,6 @@ namespace Weixin.Tool.Pay.Models
 
     }
 
-    public class AlipayRefundResponse : RefundResponse
-    {
-        public string OpenId { get; set; }
-    }
+
 
 }

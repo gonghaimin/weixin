@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Xml;
+using Weixin.Tool.Utility;
 
 namespace Weixin.Tool.Pay.PayUtil
 {
@@ -226,6 +227,23 @@ namespace Weixin.Tool.Pay.PayUtil
             prestr.Remove(nLen - 1, 1);
 
             return prestr.ToString();
+        }
+        public static String Sign(String content, String key)
+        {
+            String signStr = "";
+
+            if ("" == key)
+            {
+                throw new Exception("财付通签名key不能为空！");
+            }
+            if ("" == content)
+            {
+                throw new Exception("财付通签名内容不能为空");
+            }
+            signStr = content + "&key=" + key;
+
+            return Cryptography.MD5(signStr).ToUpper();
+
         }
     }
 }

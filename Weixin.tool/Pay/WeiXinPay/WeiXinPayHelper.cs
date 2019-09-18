@@ -1,23 +1,59 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Xml;
 using Weixin.Tool.Pay.Models;
+using Weixin.Tool.Pay.PayUtil;
 
 namespace Weixin.Tool.Pay.WeiXinPay
 {
     internal class WeiXinPayHelper
     {
+        /// <summary>
+        /// 统一支付的Url
+        /// </summary>
+        private static readonly string PayUrl = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+
+        /// <summary>
+        /// 退款的Url
+        /// </summary>
+        private static readonly string RefundUrl = "https://api.mch.weixin.qq.com/secapi/pay/refund";
+
+        /// <summary>
+        /// 红包的Url
+        /// </summary>
+        private static readonly string RedpackUrl = "https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack";
+
+        /// <summary>
+        /// 刷卡支付的Url
+        /// </summary>
+        private static readonly string MicropayUrl = "https://api.mch.weixin.qq.com/pay/micropay";
+
+        /// <summary>
+        /// 订单查询Url
+        /// </summary>
+        private static readonly string OrderQueryUrl = "https://api.mch.weixin.qq.com/pay/orderquery";
+
+        private static readonly String Success = "SUCCESS";
+
+        private static readonly String Fail = "FAIL";
+
+        private static readonly String Native1UrlFormat = "weixin://wxpay/bizpayurl?sign={0}&appid={1}&mch_id={2}&product_id={3}&time_stamp={4}&nonce_str={5}";
+
         private WeiXinPayConfig Config;
-        private bool isV3 = false;
-        private WeiXinPayHelperV3 wxPayV3;
+        private bool isSubCommercial;
+        private string appid;
         public WeiXinPayHelper(WeiXinPayConfig config)
         {
             Config = config;
-            isV3 = Config.Version.Equals("V3", StringComparison.OrdinalIgnoreCase);
-            if (isV3)
-            {
-                wxPayV3 = new WeiXinPayHelperV3(Config);
-            }
+            isSubCommercial = !String.IsNullOrEmpty(config.SubPartnerId);
+            appid = isSubCommercial ? config.AgentAppId : config.AppId;
         }
 
         /// <summary>
@@ -27,29 +63,95 @@ namespace Weixin.Tool.Pay.WeiXinPay
         /// <returns></returns>
         public String PayAction(WeiXinPayRequest request)
         {
-            if (isV3)
+            try
             {
-                return wxPayV3.PayAction(request);
-            }
+                String payparams = CreatePackage(request);
+                if (request.Trade_type.Equals(WXTradeType.PRENATIVE))
+                {
+                    var tmpNative1Params = XmlToDic(payparams);
+                    return String.Format(Native1UrlFormat, tmpNative1Params["sign"], appid, Config.PartnerId, request.Productid, tmpNative1Params["time_stamp"], tmpNative1Params["nonce_str"]);
+                }
 
-            String package = CreatePackage(request);
-            String timestamp = CommonUtil.GetTimestamp().ToString();
-            String noncestr = CommonUtil.CreateNoncestr();
-            String paySign = CreatePaySign(package, timestamp, noncestr, request.Productid);
-            if (!String.IsNullOrEmpty(request.Productid))
+
+                String res = HttpRequestUtil.Send("POST", PayUrl, payparams);
+                var tmpResult = XmlToDic(res);
+                if (tmpResult["return_code"] == Fail)
+                {
+                    return tmpResult["return_msg"];
+                }
+
+                var tmpSignResult = CommonUtil.FilterPara(tmpResult);
+                if (!IsMD5Sign(tmpSignResult, tmpResult["sign"]))
+                {
+                    return "签名验证失败";
+                }
+
+                if (tmpResult["result_code"] == Fail)
+                {
+                    var errMsg = "";
+                    if (!tmpResult.TryGetValue("err_code_des", out errMsg))
+                    {
+                        errMsg = GetErrMsg(tmpResult["err_code"]);
+                    }
+
+                    return errMsg;
+                }
+
+                if (tmpResult["trade_type"].Equals(WXTradeType.JSAPI.ToString(), StringComparison.OrdinalIgnoreCase))
+                {
+                    return JSApiPay(tmpResult["prepay_id"], request.IsMiniAppPay);
+                }
+
+                if (tmpResult["trade_type"].Equals(WXTradeType.NATIVE.ToString(), StringComparison.OrdinalIgnoreCase))
+                {
+                    return NativePay(tmpResult["prepay_id"], tmpResult["code_url"]);
+                }
+
+                return "提交参数错误";
+            }
+            catch
             {
-                return String.Format("weixin://wxpay/bizpayurl?sign={0}&appid={1}&productid={2}&timestamp={3}&noncestr={4}", paySign, Config.AppId, request.Productid, timestamp, noncestr);
+                return "提交参数错误";
             }
+        }
 
-            Dictionary<string, string> jsapi = new Dictionary<string, string>();
-            jsapi.Add("appId", Config.AppId);
-            jsapi.Add("timeStamp", timestamp);
-            jsapi.Add("nonceStr", noncestr);
-            jsapi.Add("package", package);
-            jsapi.Add("signType", "SHA1");
-            jsapi.Add("paySign", paySign);
+        /// <summary>
+        /// 获取jsapi支付的传输参数
+        /// </summary>
+        /// <param name="prepay_id">预支付ID</param>
+        /// <returns></returns>
+        private String JSApiPay(String prepay_id, bool isMiniAppPay = false)
+        {
+            String nonceStr = CommonUtil.CreateNoncestr();
+            String timeStamp = CommonUtil.GetTimestamp().ToString();
+
+            SortedDictionary<String, String> jsapi = new SortedDictionary<String, String>();
+            jsapi.Add("appId", isMiniAppPay && isSubCommercial ? Config.AppId : appid);
+            jsapi.Add("timeStamp", timeStamp);
+            jsapi.Add("nonceStr", nonceStr);
+            jsapi.Add("package", "prepay_id=" + prepay_id);
+            jsapi.Add("signType", "MD5");
+
+            string sign = CreatePaySign(jsapi);
+            jsapi.Add("paySign", sign);
 
             var entries = jsapi.Select(d => string.Format("\"{0}\": \"{1}\"", d.Key, d.Value));
+            return "{" + string.Join(",", entries.ToArray()) + "}";
+        }
+
+        /// <summary>
+        /// 获取原生支付的传输的参数
+        /// </summary>
+        /// <param name="prepay_id">预支付ID</param>
+        /// <param name="code_url">支付的url</param>
+        /// <returns></returns>
+        private String NativePay(String prepay_id, String code_url)
+        {
+            SortedDictionary<String, String> native = new SortedDictionary<String, String>();
+            native.Add("prepay_id", prepay_id);
+            native.Add("code_url", code_url);
+
+            var entries = native.Select(d => string.Format("\"{0}\": \"{1}\"", d.Key, d.Value));
             return "{" + string.Join(",", entries.ToArray()) + "}";
         }
 
@@ -60,73 +162,64 @@ namespace Weixin.Tool.Pay.WeiXinPay
         /// <returns></returns>
         public NativeResponse NativeCallbackRequest(HttpContext context)
         {
-            if (isV3)
-            {
-                return wxPayV3.NativeCallbackRequest(context);
-            }
-
             var result = new NativeResponse();
 
             SortedDictionary<String, String> xmlParams;
             SortedDictionary<String, String> param = CommonUtil.GetRequest(context, out xmlParams);
+            var tmpSignResult = CommonUtil.FilterPara(param);
+            if (!IsMD5Sign(tmpSignResult, param["sign"]))
+            {
+                result.RetCode = Fail;
+                result.RetErrMsg = "签名验证失败";
+            }
 
-            var verify = IsSHA1Sign(xmlParams);
-            //签名验证
-            if (verify.Item1)
-            {
-                result.RetCode = "0";
-                result.RetErrMsg = "ok";
-                result.OpenId = verify.Item3;
-                result.IsSubscribe = Int32.Parse(verify.Item4);
-                result.ProductId = verify.Item2;
-            }
-            else
-            {
-                result.RetCode = "10001";
-                result.RetErrMsg = "SHA1签名验证失败";
-            }
+            result.RetCode = Success;
+            result.RetErrMsg = "ok";
+            result.OpenId = param.ContainsKey("openid") ? param["openid"] : param["sub_openid"];
+            result.IsSubscribe = param["is_subscribe"] == "Y" ? 1 : 0;
+            result.ProductId = param["product_id"];
 
             return result;
-
         }
 
         /// <summary>
         /// 扫码支付返回给支付公司信息
         /// </summary>
         /// <param name="request">支付请求实例</param>
-        /// <param name="retCode">返回值,0成功,其他已retmsg为准</param>
+        /// <param name="retCode">返回值,SUCCESS成功,其他已retmsg为准</param>
         /// <param name="retMsg">错误提示信息</param>
         /// <returns></returns>
         public String NativeCallbackResponse(WeiXinPayRequest request, String retCode, String retMsg)
         {
-            if (isV3)
+            SortedDictionary<String, String> tmpParams = new SortedDictionary<String, String>();
+            tmpParams.Add("return_code", retCode);
+            tmpParams.Add("return_msg", retMsg);
+
+            if (retCode == Fail)
             {
-                return wxPayV3.NativeCallbackResponse(request, retCode, retMsg);
+                return CommonUtil.ArrayToXml(tmpParams);
             }
 
-            String package = CreatePackage(request);
-            String timestamp = CommonUtil.GetTimestamp().ToString();
+            request.Trade_type = WXTradeType.NATIVE;
+            var tmpNativeRes = PayAction(request);
+            if (!tmpNativeRes.Contains("prepay_id"))
+            {
+                tmpParams["return_code"] = Fail;
+                tmpParams["return_msg"] = tmpNativeRes;
+                return CommonUtil.ArrayToXml(tmpParams);
+            }
+
             String noncestr = CommonUtil.CreateNoncestr();
+            var native =JsonConvert.DeserializeObject <NativeRes>(tmpNativeRes);
+            tmpParams.Add("appid", appid);
+            tmpParams.Add("mch_id", Config.PartnerId);
+            tmpParams.Add("nonce_str", noncestr);
+            tmpParams.Add("prepay_id", native.prepay_id);
+            tmpParams.Add("result_code", retCode);
+            tmpParams.Add("err_code_des", retMsg);
 
-            SortedDictionary<String, String> param = new SortedDictionary<String, String>();
-            param.Add("appid", Config.AppId);
-            param.Add("appkey", Config.PaySignKey);
-            param.Add("package", package);
-            param.Add("timestamp", timestamp);
-            param.Add("noncestr", noncestr);
-            param.Add("retcode", retCode);
-            param.Add("reterrmsg", HttpUtility.UrlEncode(retMsg, System.Text.Encoding.GetEncoding("UTF-8")));
-            String paySign = CreatePaySign(param);
-
-            Dictionary<String, String> tmpParams = new Dictionary<String, String>();
-            tmpParams.Add("AppId", Config.AppId);
-            tmpParams.Add("Package", package);
-            tmpParams.Add("TimeStamp", timestamp);
-            tmpParams.Add("NonceStr", noncestr);
-            tmpParams.Add("RetCode", retCode);
-            tmpParams.Add("RetErrMsg", retMsg);
-            tmpParams.Add("AppSignature", paySign);
-            tmpParams.Add("SignMethod", "sha1");
+            string sign = CreatePaySign(tmpParams);
+            tmpParams.Add("sign", sign);
 
             return CommonUtil.ArrayToXml(tmpParams);
         }
@@ -138,62 +231,75 @@ namespace Weixin.Tool.Pay.WeiXinPay
         /// <returns></returns>
         public WeiXinPayResponse PayNotify(HttpContext context)
         {
-            if (isV3)
-            {
-                return wxPayV3.PayNotify(context);
-            }
-
             SortedDictionary<String, String> xmlParams;
             SortedDictionary<String, String> param = CommonUtil.GetRequest(context, out xmlParams);
-            var tmpParam = CommonUtil.FilterPara(param);
-            if (!IsMD5Sign(tmpParam, param["sign"]))
+
+            if (xmlParams["return_code"] == Fail)
             {
                 return new WeiXinPayResponse
                 {
-                    RetCode = "10002",
-                    RetMsg = "MD5签名验证失败"
+                    RetCode = Fail,
+                    RetMsg = xmlParams["return_msg"],
+                    OriginalParams = xmlParams
                 };
             }
 
-            var sha1Verify = IsSHA1Sign(xmlParams);
-            if (!sha1Verify.Item1)
+            var tmpParam = CommonUtil.FilterPara(xmlParams);
+            if (!IsMD5Sign(tmpParam, xmlParams["sign"]))
             {
                 return new WeiXinPayResponse
                 {
-                    RetCode = "10001",
-                    RetMsg = "SHA1签名验证失败"
+                    RetCode = Fail,
+                    RetMsg = "MD5签名验证失败",
+                    OriginalParams = xmlParams
                 };
+            }
+
+            if (xmlParams["result_code"] == Fail)
+            {
+                var errMsg = "";
+                if (!xmlParams.TryGetValue("err_code_des", out errMsg))
+                {
+                    errMsg = GetErrMsg(xmlParams["err_code"]);
+                }
+
+                return new WeiXinPayResponse
+                {
+                    RetCode = Fail,
+                    RetMsg = errMsg,
+                    OriginalParams = xmlParams
+                };
+            }
+
+            var openid = xmlParams.ContainsKey("sub_openid") ? xmlParams["sub_openid"] : "";
+            if (string.IsNullOrEmpty(openid))
+            {
+                openid = xmlParams.ContainsKey("openid") ? xmlParams["openid"] : "";
             }
 
             WeiXinPayResponse result = new WeiXinPayResponse()
             {
-                RetCode = "0",
+                RetCode = Success,
                 RetMsg = "ok",
-                BankType = param.ContainsKey("bank_type") ? param["bank_type"] : "",
-                TradeMode = param["trade_mode"],
-                TradeState = param["trade_state"],
-                PartnerId = param["partner"],
-                PayAmount = decimal.Parse(param["total_fee"]) / 100,
-                NotifyId = param["notify_id"],
-                TransactionID = param["transaction_id"],
-                OrderNO = param["out_trade_no"],
-                IsSubscribe = sha1Verify.Item4,
-                OpenId = sha1Verify.Item3,
-                OriginalParams = param
+                BankType = xmlParams.ContainsKey("bank_type") ? xmlParams["bank_type"] : "",
+                TradeMode = xmlParams["trade_type"],
+                PartnerId = xmlParams["mch_id"],
+                PayAmount = decimal.Parse(xmlParams["total_fee"]) / 100,
+                TransactionID = xmlParams["transaction_id"],
+                OrderNO = xmlParams["out_trade_no"],
+                IsSubscribe = xmlParams["is_subscribe"] == "Y" ? "1" : "0",
+                OpenId = openid,
+                OriginalParams = xmlParams
             };
 
             result.Buyer = result.OpenId;
 
-            if (param.ContainsKey("attach"))
+            if (xmlParams.ContainsKey("attach"))
             {
-                result.Attach = param["attach"];
-            }
-            if (param.ContainsKey("bank_billno"))
-            {
-                result.BankBillno = param["bank_billno"];
+                result.Attach = xmlParams["attach"];
             }
 
-            String paytime = param["time_end"];
+            String paytime = xmlParams["time_end"];
             paytime = paytime.Insert(4, "-");
             paytime = paytime.Insert(7, "-");
             paytime = paytime.Insert(10, " ");
@@ -207,264 +313,213 @@ namespace Weixin.Tool.Pay.WeiXinPay
 
         public WeiXinRefundResponse Refund(WeiXinRefundRequest request)
         {
-            if (isV3)
-            {
-                return wxPayV3.Refund(request);
-            }
-
             SortedDictionary<String, String> param = new SortedDictionary<String, String>();
-            param.Add("input_charset", request.InputCharset);
-            param.Add("partner", Config.PartnerId);
-            if (!String.IsNullOrEmpty(request.OutTradeNO))
+            String noncestr = CommonUtil.CreateNoncestr();
+            param.Add("appid", appid);
+            param.Add("mch_id", Config.PartnerId);
+            param.Add("nonce_str", noncestr);
+            if (isSubCommercial)
             {
-                param.Add("out_trade_no", request.OutTradeNO);
+                if (Config.IsMiniAppPay)
+                {
+                    param.Add("sub_appid", Config.AppId);
+                }
+                param.Add("sub_mch_id", Config.SubPartnerId);
             }
-            if (!String.IsNullOrEmpty(request.TransactionID))
-            {
-                param.Add("transaction_id", request.TransactionID);
-            }
+            param.Add("out_trade_no", request.OutTradeNO);
+            param.Add("transaction_id", request.TransactionID);
             param.Add("out_refund_no", request.RefundNO);
             param.Add("total_fee", request.PayAmount.ToString());
             param.Add("refund_fee", request.RefundPayAmount.ToString());
-            param.Add("op_user_id", request.Operator);
-            param.Add("op_user_passwd", request.OperatorPwd);
-
             String tmpPackageStr = CommonUtil.CreateLinkString(param);
-            String signValue = MD5SignUtil.Sign(tmpPackageStr, Config.PartnerKey).ToLower();
+            String signValue = CommonUtil.Sign(tmpPackageStr, Config.PartnerKey).ToLower();
             param.Add("sign", signValue);
 
-            String tmpEncodePackageStr = CommonUtil.CreateLinkString(param, true, request.InputCharset);
+            X509Certificate2 cert = new X509Certificate2(Config.CertFilePath, Config.PartnerId, X509KeyStorageFlags.MachineKeySet);
 
-            String requestUrl = TenpayConfig.RefundUrl + "?" + tmpEncodePackageStr;
-
-            //通信
-            TenpayHttpClient httpClient = new TenpayHttpClient();
-
-            //应答
-            ClientResponseHandler resHandler = new ClientResponseHandler();
-
-            httpClient.setCertInfo(Config.CertFilePath, Config.PartnerId);
-            //设置请求内容
-            httpClient.setReqContent(requestUrl);
-            //设置超时
-            httpClient.setTimeOut(30);
+            String tmpRes = HttpRequestUtil.Send("POST", RefundUrl, CommonUtil.ArrayToXml(param), 60, cert);
+            var tmpResult = XmlToDic(tmpRes);
 
             WeiXinRefundResponse res = new WeiXinRefundResponse();
-            string rescontent = "";
-            //后台调用
-            if (httpClient.call())
+            if (tmpResult["return_code"] == Fail)
             {
-                //获取结果
-                rescontent = httpClient.getResContent();
-
-                resHandler.setKey(Config.PartnerKey);
-                //设置结果参数
-                resHandler.setContent(rescontent);
-
-                //判断签名及结果
-                if (resHandler.isTenpaySign())
+                return new WeiXinRefundResponse
                 {
-                    res.RetCode = resHandler.getParameter("retcode");
-                    res.RetMsg = resHandler.getParameter("retmsg");
+                    RetCode = Fail,
+                    RetMsg = tmpResult["return_msg"]
+                };
+            }
 
-                    if (res.RetCode == "0")
-                    {
-                        res.OrderNO = resHandler.getParameter("out_trade_no");
-                        res.TransactionID = resHandler.getParameter("transaction_id");
-                        res.RefundNO = resHandler.getParameter("out_refund_no");
-                        res.RefundId = resHandler.getParameter("refund_id");
-                        res.RefundStatus = Int32.Parse(resHandler.getParameter("refund_status"));
-                        res.RefundChannel = Int32.Parse(resHandler.getParameter("refund_channel"));
-                        res.RefundAmount = decimal.Parse(resHandler.getParameter("refund_fee")) / 100;
-                    }
-                }
-                else
+            var tmpSignResult = CommonUtil.FilterPara(tmpResult);
+            if (!IsMD5Sign(tmpSignResult, tmpResult["sign"]))
+            {
+                return new WeiXinRefundResponse
                 {
-                    res.RetCode = "10001";
-                    res.RetMsg = "验证签名失败";
+                    RetCode = Fail,
+                    RetMsg = "签名验证失败"
+                };
+            }
+
+            if (tmpResult["result_code"] == Fail)
+            {
+                var errMsg = "";
+                if (!tmpResult.TryGetValue("err_code_des", out errMsg))
+                {
+                    errMsg = GetErrMsg(tmpResult["err_code"]);
                 }
 
-            }
-            else
-            {
-                res.RetCode = "10000";
-                res.RetMsg = "通信失败";
-            }
-
-            return res;
-        }
-
-        /// <summary>
-        /// 发货通知
-        /// </summary>
-        /// <param name="openId">用户标识</param>
-        /// <param name="transactionId">交易号</param>
-        /// <param name="orderId">订单号</param>
-        /// <returns></returns>
-        public Tuple<String, String> DeliverNotify(String openId, String transactionId, String orderId, String access_token = "")
-        {
-            try
-            {
-                String timestamp = CommonUtil.GetTimestamp().ToString();
-
-                if (String.IsNullOrEmpty(access_token))
+                return new WeiXinRefundResponse
                 {
-                    access_token = new CommonApi(Config.AppId, Config.AppSecret).GetToken();
-                }
-
-                SortedDictionary<String, String> param = new SortedDictionary<String, String>();
-                param.Add("appid", Config.AppId);
-                param.Add("appkey", Config.PaySignKey);
-                param.Add("openid", openId);
-                param.Add("transid", transactionId);
-                param.Add("out_trade_no", orderId);
-                param.Add("deliver_timestamp", timestamp);
-                param.Add("deliver_status", "1");
-                param.Add("deliver_msg", "ok");
-                String appSignature = CreatePaySign(param);
-
-                var result = Custom.DeliverNotify(Config.AppId, openId, transactionId, orderId, timestamp, appSignature, access_token);
-                return Tuple.Create<String, String>(((Int32)result.errcode).ToString(), result.errmsg);
+                    RetCode = Fail,
+                    RetMsg = errMsg
+                };
             }
-            catch
+
+            return new WeiXinRefundResponse
             {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// 告警
-        /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        public Tuple<String, String, String> Alarm(HttpContext context)
-        {
-            SortedDictionary<String, String> xmlParams;
-            SortedDictionary<String, String> param = CommonUtil.GetRequest(context, out xmlParams);
-
-            if (xmlParams.Count > 0)
-            {
-                String timeStamp = xmlParams["TimeStamp"];
-                String errortype = xmlParams["ErrorType"];
-                String description = xmlParams["Description"];
-                String alarmcontent = xmlParams["AlarmContent"];
-                String appSignature = xmlParams["AppSignature"];
-                SortedDictionary<String, String> tmpParam = new SortedDictionary<String, String>();
-                tmpParam.Add("appid", Config.AppId);
-                tmpParam.Add("appkey", Config.PaySignKey);
-                tmpParam.Add("errortype", errortype);
-                tmpParam.Add("description", description);
-                tmpParam.Add("alarmcontent", alarmcontent);
-                tmpParam.Add("timestamp", timeStamp);
-
-                if (appSignature == CreatePaySign(tmpParam))
-                {
-                    return Tuple.Create<String, String, String>(errortype, description, alarmcontent);
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// 维权通知
-        /// </summary>
-        /// <param name="context">通知上下文</param>
-        /// <returns>维权信息</returns>
-        public FeedBack FeedBack(HttpContext context)
-        {
-            FeedBack feed = new FeedBack();
-            if (context.Request.InputStream.Length == 0)
-            {
-                return null;
-            }
-
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(context.Request.InputStream);
-            XmlNode root = xmlDoc.SelectSingleNode("xml");
-            XmlNodeList xnl = root.ChildNodes;
-            String timestamp = "";
-            String sign = "";
-
-            foreach (XmlNode xnf in xnl)
-            {
-
-                switch (xnf.Name)
-                {
-                    case "OpenId":
-                        feed.OpenId = xnf.InnerText; break;
-                    case "TimeStamp":
-                        timestamp = xnf.InnerText; break;
-                    case "MsgType":
-                        feed.MsgType = xnf.InnerText; break;
-                    case "FeedbackId":
-                        feed.FeedBackId = xnf.InnerText; break;
-                    case "TransId":
-                        feed.TransactionID = xnf.InnerText; break;
-                    case "Reason":
-                        feed.Reason = xnf.InnerText; break;
-                    case "Solution":
-                        feed.Solution = xnf.InnerText; break;
-                    case "ExtInfo":
-                        feed.ExtInfo = xnf.InnerText; break;
-                    case "AppSignature":
-                        sign = xnf.InnerText; break;
-                    case "PicInfo":
-                        var tmpItems = root.SelectNodes("PicInfo/item");
-                        if (tmpItems != null)
-                        {
-                            for (int i = 0; i < tmpItems.Count; i++)
-                            {
-                                feed.PicInfo.Add(tmpItems[0].SelectSingleNode("PicUrl").InnerText);
-                            }
-                        }
-                        break;
-                }
-            }
-
-            SortedDictionary<String, String> tmpParam = new SortedDictionary<String, String>();
-            tmpParam.Add("appid", Config.AppId);
-            tmpParam.Add("appkey", Config.PaySignKey);
-            tmpParam.Add("timestamp", timestamp);
-
-            if (sign == CreatePaySign(tmpParam))
-            {
-                return feed;
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// 维权通知的处理结果
-        /// </summary>
-        /// <param name="openId">用户标识</param>
-        /// <param name="feedBackId">投诉单号</param>
-        /// <returns></returns>
-        public Tuple<String, String> UpdateFeedBack(String openId, String feedBackId)
-        {
-            String access_token = new CommonApi(Config.AppId, Config.AppSecret).GetToken();
-
-            var result = Custom.UpdateFeedBack(access_token, openId, feedBackId);
-            return Tuple.Create<String, String>(((Int32)result.errcode).ToString(), result.errmsg);
+                RetCode = "0",
+                RefundTime = DateTime.Now,
+                OrderNO = tmpResult["out_trade_no"],
+                TransactionID = tmpResult["transaction_id"],
+                RefundNO = tmpResult["out_refund_no"],
+                RefundId = tmpResult["refund_id"],
+                RefundAmount = decimal.Parse(tmpResult["refund_fee"]) / 100
+            };
         }
 
         public RedpackResponse SendRedpack(RedpackRequest request)
         {
-            if (isV3)
+            try
             {
-                return wxPayV3.SendRedpack(request);
+                SortedDictionary<String, String> param = new SortedDictionary<String, String>();
+                String noncestr = CommonUtil.CreateNoncestr();
+                String timeStamp = CommonUtil.GetTimestamp().ToString();
+                if (timeStamp.Length >= 10)
+                {
+                    timeStamp = timeStamp.Substring(timeStamp.Length - 10);
+                }
+                else
+                {
+                    timeStamp = timeStamp.PadLeft(10, '0');
+                }
+                var mchId = isSubCommercial ? Config.SubPartnerId : Config.PartnerId;
+                string billno = mchId + DateTime.Now.ToString("yyyyMMdd") + timeStamp;
+                param.Add("nonce_str", noncestr);
+                param.Add("mch_billno", billno);
+                param.Add("mch_id", mchId);
+                param.Add("wxappid", appid);
+                param.Add("send_name", request.SendName);
+                param.Add("re_openid", request.OpenId);
+                param.Add("total_amount", (request.Amount * 100).ToString());
+                param.Add("total_num", "1");
+                param.Add("wishing", request.Wishing);
+                param.Add("client_ip", request.ClientIP);
+                param.Add("act_name", request.ActivityName);
+                param.Add("remark", request.Remark);
+                String tmpPackageStr = CommonUtil.CreateLinkString(param);
+                String signValue = CommonUtil.Sign(tmpPackageStr, Config.PartnerKey);
+                param.Add("sign", signValue);
+
+                ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
+                X509Certificate cer = new X509Certificate(Config.CertFilePath, mchId, X509KeyStorageFlags.PersistKeySet | X509KeyStorageFlags.MachineKeySet);
+
+                String tmpRes = HttpRequestUtil.Send("POST", RedpackUrl, CommonUtil.ArrayToXml(param), 10, cer);
+                var tmpResult = XmlToDic(tmpRes);
+                if (tmpResult["return_code"] == Fail)
+                {
+                    return new RedpackResponse
+                    {
+                        RetCode = Fail,
+                        RetMsg = tmpResult["return_msg"]
+                    };
+                }
+
+                if (tmpResult["result_code"] == Fail)
+                {
+                    var errMsg = "";
+                    if (!tmpResult.TryGetValue("err_code_des", out errMsg))
+                    {
+                        errMsg = GetErrMsg(tmpResult["err_code"]);
+                    }
+
+                    return new RedpackResponse
+                    {
+                        RetCode = Fail,
+                        RetMsg = errMsg
+                    };
+                }
+
+                return new RedpackResponse
+                {
+                    SendListId = tmpResult["send_listid"]
+                };
             }
-            return null;
+            catch (Exception ex)
+            {
+                return new RedpackResponse
+                {
+                    RetCode = Fail,
+                    RetMsg = ex.Message
+                };
+            }
         }
 
+
+        /// <summary>
+        /// 刷卡支付
+        /// </summary>
+        /// <param name="request"></param>
         public WeiXinPayResponse Micropay(WeiXinPayRequest request)
         {
-            if (isV3)
+            try
             {
-                return wxPayV3.Micropay(request);
+                SortedDictionary<String, String> param = new SortedDictionary<String, String>();
+                String noncestr = CommonUtil.CreateNoncestr();
+                String timeStamp = CommonUtil.GetTimestamp().ToString();
+                if (timeStamp.Length >= 10)
+                {
+                    timeStamp = timeStamp.Substring(timeStamp.Length - 10);
+                }
+                else
+                {
+                    timeStamp = timeStamp.PadLeft(10, '0');
+                }
+                param.Add("appid", appid);
+                if (isSubCommercial)
+                {
+                    if (Config.IsMiniAppPay)
+                    {
+                        param.Add("sub_appid", Config.AppId);
+                    }
+                    param.Add("sub_mch_id", Config.SubPartnerId);
+                }
+                param.Add("mch_id", Config.PartnerId);
+                param.Add("nonce_str", noncestr);
+                param.Add("body", request.ProductDesc);
+                param.Add("out_trade_no", request.OutTradeNO);
+                param.Add("total_fee", request.PayAmount.ToString());
+                if (!string.IsNullOrEmpty(request.Attach))
+                {
+                    param.Add("attach", request.Attach);
+                }
+                param.Add("spbill_create_ip", request.ClientIP);
+                param.Add("auth_code", request.AuthCode);
+                String tmpPackageStr = CommonUtil.CreateLinkString(param);
+                String signValue = CommonUtil.Sign(tmpPackageStr, Config.PartnerKey);
+                param.Add("sign", signValue);
+                String tmpRes = HttpRequestUtil.Send("POST", MicropayUrl, CommonUtil.ArrayToXml(param), 600);
+
+                return ConvertToPayResponse(tmpRes);
+
             }
-            return null;
+            catch (Exception ex)
+            {
+                return new WeiXinPayResponse
+                {
+                    RetCode = Fail,
+                    RetMsg = ex.Message
+                };
+            }
         }
 
         /// <summary>
@@ -473,51 +528,129 @@ namespace Weixin.Tool.Pay.WeiXinPay
         /// <returns></returns>
         public WeiXinPayResponse SearchOrder(PayOrderSearchRequest request)
         {
-            if (isV3)
+            SortedDictionary<String, String> param = new SortedDictionary<String, String>();
+            String noncestr = CommonUtil.CreateNoncestr();
+            var mchId = isSubCommercial ? Config.SubPartnerId : Config.PartnerId;
+            param.Add("appid", appid);
+            if (isSubCommercial)
             {
-                return wxPayV3.SearchOrder(request);
+                if (Config.IsMiniAppPay)
+                {
+                    param.Add("sub_appid", Config.AppId);
+                }
+                param.Add("sub_mch_id", Config.SubPartnerId);
             }
-            return null;
+            param.Add("mch_id", Config.PartnerId);
+            param.Add("nonce_str", noncestr);
+            if (!string.IsNullOrEmpty(request.TransactionID))
+            {
+                param.Add("transaction_id", request.TransactionID);
+            }
+
+            if (!string.IsNullOrEmpty(request.OutTradeNO))
+            {
+                param.Add("out_trade_no", request.OutTradeNO);
+            }
+
+            String tmpPackageStr = CommonUtil.CreateLinkString(param);
+            String signValue = CommonUtil.Sign(tmpPackageStr, Config.PartnerKey);
+            param.Add("sign", signValue);
+            String tmpRes = HttpRequestUtil.Send("POST", OrderQueryUrl, CommonUtil.ArrayToXml(param));
+            return ConvertToPayResponse(tmpRes);
+        }
+
+        private WeiXinPayResponse ConvertToPayResponse(string postResult)
+        {
+            var xmlParams = XmlToDic(postResult);
+            if (xmlParams["return_code"] == Fail)
+            {
+                return new WeiXinPayResponse
+                {
+                    RetCode = Fail,
+                    RetMsg = xmlParams["return_msg"]
+                };
+            }
+
+            if (xmlParams["result_code"] == Fail)
+            {
+                return new WeiXinPayResponse
+                {
+                    RetCode = xmlParams["err_code"],
+                    RetMsg = xmlParams["err_code_des"]
+                };
+            }
+
+            if (xmlParams.ContainsKey("trade_state") && xmlParams["trade_state"] != "SUCCESS")
+            {
+                return new WeiXinPayResponse
+                {
+                    RetCode = xmlParams["trade_state"],
+                    RetMsg = xmlParams["trade_state_desc"]
+                };
+            }
+
+            var tmpParam = CommonUtil.FilterPara(xmlParams);
+            if (!IsMD5Sign(tmpParam, xmlParams["sign"]))
+            {
+                return new WeiXinPayResponse
+                {
+                    RetCode = Fail,
+                    RetMsg = "MD5签名验证失败",
+                    OriginalParams = xmlParams
+                };
+            }
+
+            var openid = xmlParams.ContainsKey("sub_openid") ? xmlParams["sub_openid"] : "";
+            if (string.IsNullOrEmpty(openid))
+            {
+                openid = xmlParams.ContainsKey("openid") ? xmlParams["openid"] : "";
+            }
+
+            WeiXinPayResponse result = new WeiXinPayResponse()
+            {
+                RetCode = Success,
+                RetMsg = "ok",
+                BankType = xmlParams.ContainsKey("bank_type") ? xmlParams["bank_type"] : "",
+                TradeMode = xmlParams.ContainsKey("trade_type") ? xmlParams["trade_type"] : "",
+                PartnerId = xmlParams["mch_id"],
+                PayAmount = xmlParams.ContainsKey("total_fee") ? decimal.Parse(xmlParams["total_fee"]) / 100 : 0,
+                TransactionID = xmlParams["transaction_id"],
+                OrderNO = xmlParams["out_trade_no"],
+                OpenId = openid,
+                OriginalParams = xmlParams,
+            };
+
+            result.Buyer = result.OpenId;
+
+            if (xmlParams.ContainsKey("attach"))
+            {
+                result.Attach = xmlParams["attach"];
+            }
+
+            String paytime = xmlParams["time_end"];
+            paytime = paytime.Insert(4, "-");
+            paytime = paytime.Insert(7, "-");
+            paytime = paytime.Insert(10, " ");
+            paytime = paytime.Insert(13, ":");
+            paytime = paytime.Insert(16, ":");
+            result.PayTime = DateTime.Parse(paytime);
+
+            return result;
+        }
+
+        private static bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
+        {
+            if (errors == SslPolicyErrors.None)
+                return true;
+            return false;
         }
 
         private bool IsMD5Sign(SortedDictionary<String, String> param, String sign)
         {
             String tmpPackageStr = CommonUtil.CreateLinkString(param);
-            String signValue = MD5SignUtil.Sign(tmpPackageStr, Config.PartnerKey);
+            String signValue = CommonUtil.Sign(tmpPackageStr, Config.PartnerKey);
             return signValue == sign;
         }
-
-        private Tuple<Boolean, String, String, String> IsSHA1Sign(SortedDictionary<String, String> xmlParam)
-        {
-            String productId = "";
-            if (xmlParam.Count > 0)
-            {
-                String timeStamp = xmlParam["TimeStamp"];
-                String nonceStr = xmlParam["NonceStr"];
-                String appSignature = xmlParam["AppSignature"];
-                String openId = xmlParam["OpenId"];
-                String isSubscribe = xmlParam["IsSubscribe"];
-
-                SortedDictionary<String, String> param = new SortedDictionary<String, String>();
-                param.Add("appid", Config.AppId);
-                param.Add("appkey", Config.PaySignKey);
-                productId = xmlParam.ContainsKey("ProductId") ? xmlParam["ProductId"] : "";
-                if (!String.IsNullOrEmpty(productId))
-                {
-                    param.Add("productid", productId);
-                }
-                param.Add("timestamp", timeStamp);
-                param.Add("noncestr", nonceStr);
-                param.Add("openid", openId);
-                param.Add("issubscribe", isSubscribe);
-
-                return Tuple.Create<Boolean, String, String, String>(appSignature == CreatePaySign(param), productId, openId, isSubscribe);
-            }
-
-            return Tuple.Create<Boolean, String, String, String>(false, productId, "", "");
-
-        }
-
 
 
         /// <summary>
@@ -527,7 +660,7 @@ namespace Weixin.Tool.Pay.WeiXinPay
         private String CreatePaySign(String package, String timestamp, String noncestr, String productid)
         {
             SortedDictionary<String, String> param = new SortedDictionary<String, String>();
-            param.Add("appid", Config.AppId);
+            param.Add("appid", appid);
             param.Add("timestamp", timestamp);
             param.Add("noncestr", noncestr);
             if (String.IsNullOrEmpty(productid))
@@ -546,7 +679,8 @@ namespace Weixin.Tool.Pay.WeiXinPay
         private String CreatePaySign(SortedDictionary<String, String> param)
         {
             String tmpStr = CommonUtil.CreateLinkString(param);
-            return SHA1Util.Sha1(tmpStr);
+            String signValue = CommonUtil.Sign(tmpStr, Config.PartnerKey);
+            return signValue;
         }
 
         /// <summary>
@@ -558,37 +692,131 @@ namespace Weixin.Tool.Pay.WeiXinPay
         {
             SortedDictionary<String, String> param = CreatePayParams(request);
             String tmpPackageStr = CommonUtil.CreateLinkString(param);
-            String signValue = MD5SignUtil.Sign(tmpPackageStr, Config.PartnerKey);
-            String tmpEncodePackageStr = CommonUtil.CreateLinkString(param, true, request.InputCharset);
+            String signValue = CommonUtil.Sign(tmpPackageStr, Config.PartnerKey);
+            param.Add("sign", signValue);
 
-            return tmpEncodePackageStr + "&sign=" + signValue;
+            return CommonUtil.ArrayToXml(param);
         }
 
         private SortedDictionary<String, String> CreatePayParams(WeiXinPayRequest request)
         {
             SortedDictionary<String, String> param = new SortedDictionary<String, String>();
-            param.Add("bank_type", request.BankType);
-            param.Add("body", request.ProductDesc);
-            param.Add("partner", Config.PartnerId);
-            param.Add("out_trade_no", request.OutTradeNO);
-            param.Add("total_fee", request.PayAmount.ToString());
-            param.Add("fee_type", "1");
-            param.Add("notify_url", request.NotifyUrl);
-            param.Add("spbill_create_ip", request.ClientIP);
-            param.Add("input_charset", request.InputCharset);
-
-            if (request.StartTime.HasValue && request.ExpireTime.HasValue)
+            String noncestr = CommonUtil.CreateNoncestr();
+            String timestamp = CommonUtil.GetTimestamp().ToString();
+            param.Add("appid", appid);
+            param.Add("mch_id", Config.PartnerId);
+            param.Add("nonce_str", noncestr);
+            if (isSubCommercial)
             {
-                param.Add("time_start", request.StartTime.Value.ToString("yyyyMMddHHmmss"));
-                param.Add("time_expire", request.ExpireTime.Value.ToString("yyyyMMddHHmmss"));
+                if (Config.IsMiniAppPay)
+                {
+                    param.Add("sub_appid", Config.AppId);
+                }
+                param.Add("sub_mch_id", Config.SubPartnerId);
             }
 
-            if (!string.IsNullOrEmpty(request.Attach))
+            switch (request.Trade_type)
             {
-                param.Add("attach", request.Attach);
+                case WXTradeType.JSAPI:
+                    if (isSubCommercial && Config.IsMiniAppPay)
+                    {
+                        param.Add("sub_openid", request.OpenId);
+                    }
+                    else
+                    {
+                        param.Add("openid", request.OpenId);
+                    }
+                    break;
+                case WXTradeType.PRENATIVE:
+                    param.Add("time_stamp", timestamp);
+                    param.Add("product_id", request.Productid);
+                    break;
+                case WXTradeType.NATIVE:
+                    param.Add("product_id", request.Productid);
+                    break;
+
+            }
+
+            if (!request.Trade_type.Equals(WXTradeType.PRENATIVE))
+            {
+                param.Add("body", request.ProductDesc);
+                param.Add("out_trade_no", request.OutTradeNO);
+                param.Add("total_fee", request.PayAmount.ToString());
+                param.Add("spbill_create_ip", request.ClientIP);
+                param.Add("notify_url", request.NotifyUrl);
+                param.Add("trade_type", request.Trade_type.ToString());
+
+                if (!String.IsNullOrEmpty(request.Attach))
+                {
+                    param.Add("attach", request.Attach);
+                }
+                if (request.StartTime.HasValue && request.ExpireTime.HasValue)
+                {
+                    param.Add("time_start", request.StartTime.Value.ToString("yyyyMMddHHmmss"));
+                    param.Add("time_expire", request.ExpireTime.Value.ToString("yyyyMMddHHmmss"));
+                }
             }
 
             return param;
         }
+
+        private SortedDictionary<String, String> XmlToDic(String res)
+        {
+            SortedDictionary<String, String> result = new SortedDictionary<String, String>();
+
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(res);
+            XmlNode root = xmlDoc.SelectSingleNode("xml");
+            XmlNodeList xnl = root.ChildNodes;
+
+            foreach (XmlNode xnf in xnl)
+            {
+                result.Add(xnf.Name, xnf.InnerText);
+            }
+
+            return result;
+        }
+
+        private static String GetErrMsg(String errCode)
+        {
+            switch (errCode.ToUpper())
+            {
+                case "SYSTEMERROR":
+                    return "接口后台错误";
+                case "INVALID_TRANSACTIONID":
+                    return "无效transaction_id";
+                case "PARAM_ERROR":
+                    return "提交参数错误";
+                case "ORDERPAID":
+                    return "订单已支付";
+                case "OUT_TRADE_NO_USED":
+                    return "商户订单号重复";
+                case "NOAUTH":
+                    return "商户无权限";
+                case "NOTENOUGH":
+                    return "余额不足";
+                case "NOTSUPORTCARD":
+                    return "不支持卡类型";
+                case "ORDERCLOSED":
+                    return "订单已关闭";
+                case "BANKERROR":
+                    return "银行系统异常";
+                case "REFUND_FEE_INVALID":
+                    return "退款金额大于支付金额";
+                case "ORDERNOEXIST":
+                    return "订单不存在";
+                default:
+                    return errCode;
+            }
+
+
+        }
+    }
+
+    internal class NativeRes
+    {
+        public String prepay_id { get; set; }
+
+        public String code_url { get; set; }
     }
 }
