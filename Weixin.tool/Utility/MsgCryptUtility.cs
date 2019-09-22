@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
@@ -448,6 +449,18 @@ namespace Weixin.Tool.Utility
             {
                 return null;
             }
+        }
+        public static string CalcHMACSHA256Hash(string content, string salt)
+        {
+            string result = "";
+            var enc = Encoding.Default;
+            byte[]
+            baText2BeHashed = enc.GetBytes(content),
+            baSalt = enc.GetBytes(salt);
+            System.Security.Cryptography.HMACSHA256 hasher = new HMACSHA256(baSalt);
+            byte[] baHashedText = hasher.ComputeHash(baText2BeHashed);
+            result = string.Join("", baHashedText.ToList().Select(b => b.ToString("x2")).ToArray());
+            return result;
         }
     }
 }

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Xml;
@@ -13,7 +14,8 @@ namespace Weixin.Tool.Pay.PayUtil
 {
     public class CommonUtil
     {
-
+        public const string SIGN_TYPE_MD5 = "MD5";
+        public const string SIGN_TYPE_HMAC_SHA256 = "HMAC-SHA256";
         public static String CreateNoncestr(int length = 16)
         {
             String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -228,7 +230,7 @@ namespace Weixin.Tool.Pay.PayUtil
 
             return prestr.ToString();
         }
-        public static String Sign(String content, String key)
+        public static String Sign(String content, String key,string sign_type= SIGN_TYPE_MD5)
         {
             String signStr = "";
 
@@ -241,9 +243,20 @@ namespace Weixin.Tool.Pay.PayUtil
                 throw new Exception("财付通签名内容不能为空");
             }
             signStr = content + "&key=" + key;
-
-            return Cryptography.MD5(signStr).ToUpper();
+            if(sign_type== SIGN_TYPE_MD5)
+            {
+                return Cryptography.MD5(signStr).ToUpper();
+            }
+            else if (sign_type == SIGN_TYPE_HMAC_SHA256)
+            {
+                return Cryptography.CalcHMACSHA256Hash(signStr,key);
+            }
+            else
+            {
+                throw new Exception("sign_type 不合法");
+            }
 
         }
+    
     }
 }

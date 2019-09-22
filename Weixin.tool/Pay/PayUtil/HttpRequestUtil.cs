@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Net;
+using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
@@ -20,8 +21,20 @@ namespace Weixin.Tool.Pay.PayUtil
                  .Execute(() => SendCore(verb, url, postData, timeout, cer));
             return result;
         }
+
+        public static bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
+        {
+            //直接确认，否则打不开    
+            return true;
+        }
         private static string SendCore(string verb, string url, string postData, int timeout = 10, X509Certificate cer = null)
         {
+            //设置https验证方式
+            if (url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
+            {
+                ServicePointManager.ServerCertificateValidationCallback =
+                        new RemoteCertificateValidationCallback(CheckValidationResult);
+            }
             HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
             req.Timeout = timeout * 1000;
 

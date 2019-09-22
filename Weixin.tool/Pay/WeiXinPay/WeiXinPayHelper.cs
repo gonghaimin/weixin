@@ -15,6 +15,7 @@ namespace Weixin.Tool.Pay.WeiXinPay
 {
     internal class WeiXinPayHelper
     {
+       
         /// <summary>
         /// 统一支付的Url
         /// </summary>
@@ -504,6 +505,7 @@ namespace Weixin.Tool.Pay.WeiXinPay
                 }
                 param.Add("spbill_create_ip", request.ClientIP);
                 param.Add("auth_code", request.AuthCode);
+                param.Add("sign_type", CommonUtil.SIGN_TYPE_MD5);//签名类型
                 String tmpPackageStr = CommonUtil.CreateLinkString(param);
                 String signValue = CommonUtil.Sign(tmpPackageStr, Config.PartnerKey);
                 param.Add("sign", signValue);
@@ -526,7 +528,7 @@ namespace Weixin.Tool.Pay.WeiXinPay
         /// 查询交易订单
         /// </summary>
         /// <returns></returns>
-        public WeiXinPayResponse SearchOrder(PayOrderSearchRequest request)
+        public WeiXinPayResponse OrderQuery(PayOrderSearchRequest request)
         {
             SortedDictionary<String, String> param = new SortedDictionary<String, String>();
             String noncestr = CommonUtil.CreateNoncestr();

@@ -62,7 +62,7 @@ namespace Weixin.Tool.Pay.Handlers
         /// 查询交易订单
         /// </summary>
         /// <returns></returns>
-        PayResponse SearchOrder(PayOrderSearchRequest request);
+        PayResponse OrderQuery(PayOrderSearchRequest request);
 
 
     }
@@ -125,7 +125,7 @@ namespace Weixin.Tool.Pay.Handlers
         /// 查询交易订单
         /// </summary>
         /// <returns></returns>
-        public abstract PayResponse SearchOrder(PayOrderSearchRequest request);
+        public abstract PayResponse OrderQuery(PayOrderSearchRequest request);
 
 
     

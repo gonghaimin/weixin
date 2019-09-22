@@ -60,9 +60,9 @@ namespace Weixin.Tool.Pay.Handlers
         /// 查询交易订单
         /// </summary>
         /// <returns></returns>
-        public override PayResponse SearchOrder(PayOrderSearchRequest request)
+        public override PayResponse OrderQuery(PayOrderSearchRequest request)
         {
-            return weixin.SearchOrder(request);
+            return weixin.OrderQuery(request);
         }
 
     }
