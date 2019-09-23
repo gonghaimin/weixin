@@ -1,20 +1,56 @@
-﻿using StackExchange.Redis;
+﻿using Microsoft.Extensions.Caching.Redis;
+using Microsoft.Extensions.Options;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace RedisHelper
 {
     public class RedisHelper
     {
-        private ConnectionMultiplexer redis { get; set; }
-        public IDatabase db { get; set; }
-        public RedisHelper(string connection)
+        private readonly RedisCacheOptions _options;
+        private volatile ConnectionMultiplexer _connection;
+        private readonly SemaphoreSlim _connectionLock = new SemaphoreSlim(1, 1);
+        private IDatabase _cache;
+        private void Connect()
         {
-            redis = ConnectionMultiplexer.Connect(connection);
-            db = redis.GetDatabase();
+            if (_cache == null)
+            {
+                _connectionLock.Wait();
+                try
+                {
+                    if (_cache == null)
+                    {
+                        if (_options.ConfigurationOptions != null)
+                        {
+                            _connection = ConnectionMultiplexer.Connect(_options.ConfigurationOptions);
+                        }
+                        else
+                        {
+                            _connection = ConnectionMultiplexer.Connect(_options.Configuration);
+                        }
+                        _cache = _connection.GetDatabase();
+                    }
+                }
+                finally
+                {
+                    _connectionLock.Release();
+                }
+            }
         }
-
+        private readonly string _instance;
+        public RedisHelper(IOptions<RedisCacheOptions> optionsAccessor)
+        {
+            if (optionsAccessor == null)
+            {
+                throw new ArgumentNullException("optionsAccessor");
+            }
+            _options = optionsAccessor.Value;
+            _instance = (_options.InstanceName ?? string.Empty);
+            Connect();
+        }
         /// <summary>
         /// 增加/修改
         /// </summary>
@@ -23,7 +59,7 @@ namespace RedisHelper
         /// <returns></returns>
         public bool SetValue(string key, string value)
         {
-            return db.StringSet(key, value);
+            return _cache.StringSet(key, value);
         }
 
         /// <summary>
@@ -33,7 +69,7 @@ namespace RedisHelper
         /// <returns></returns>
         public string GetValue(string key)
         {
-            return db.StringGet(key);
+            return _cache.StringGet(key);
         }
 
         /// <summary>
@@ -43,7 +79,7 @@ namespace RedisHelper
         /// <returns></returns>
         public bool DeleteKey(string key)
         {
-            return db.KeyDelete(key);
+            return _cache.KeyDelete(key);
         }
     }
 }

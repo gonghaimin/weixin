@@ -6,6 +6,7 @@ using System.Text;
 using System.Xml;
 using CommonService.Security;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Weixin.Core.Domain;
@@ -45,6 +46,7 @@ namespace Weixin.webapi.Controllers
         [Route("/api/Menu/CreateMenu")]
         public ActionResult<WxJsonResult> CreateMenu()
         {
+
             return _menuService.CreateMenu();
         }
  
