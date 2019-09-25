@@ -68,8 +68,8 @@ namespace AuthService.JWT
             {
                 if(payLoad[key] != null)
                 {
-                    var tempClaim = new Claim(key, payLoad[key]?.ToString());
-                    claims.Add(tempClaim);
+                    var claim = new Claim(key, payLoad[key]?.ToString());
+                    claims.Add(claim);
                 }
             }
 

@@ -53,10 +53,10 @@ namespace PubSub
 
             protected virtual void OnMessaging(string channel, string message)
             {
-                var tempHandler = OnMessage;
-                if (tempHandler != null)
+                var handler = OnMessage;
+                if (handler != null)
                 {
-                    tempHandler(channel, message);
+                    handler(channel, message);
                 }
             }
 
@@ -81,10 +81,10 @@ namespace PubSub
 
             public void RaiseMessageEvent(string channel, string message)
             {
-                Action<string, string> tempHandler = MessageArrived;
-                if (tempHandler != null)
+                Action<string, string> handler = MessageArrived;
+                if (handler != null)
                 {
-                    tempHandler(channel, message);
+                    handler(channel, message);
                 }
             }
         }

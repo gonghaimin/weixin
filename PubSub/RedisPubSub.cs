@@ -72,7 +72,7 @@ namespace PubSub
             {
                 _queue.Enqueue(()=> {
                     onMessage(redisChannel, value);
-                }).Wait();
+                });
             };
 
             _channel = channel;
