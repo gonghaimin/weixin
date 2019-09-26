@@ -27,6 +27,11 @@ namespace GoogleAuthenticatorWeb
             {
                 r.Configuration = Configuration["Redis:ConnectionString"];
             });
+            //services.AddSession(config=> {
+            //    config.Cookie = new Microsoft.AspNetCore.Http.CookieBuilder() { Expiration=TimeSpan.FromMinutes(5) };
+            //    config.IdleTimeout = TimeSpan.FromMinutes(3);
+            //});
+            services.AddSession();
             services.AddRazorPages();
         }
 
@@ -41,7 +46,7 @@ namespace GoogleAuthenticatorWeb
             {
                 app.UseExceptionHandler("/Error");
             }
-
+            app.UseSession();
             app.UseStaticFiles();
 
             app.UseRouting();

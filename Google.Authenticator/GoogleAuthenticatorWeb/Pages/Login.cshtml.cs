@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using GoogleAuthenticatorWeb.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Caching.Distributed;
@@ -14,38 +15,72 @@ using static GoogleAuthenticator.GoogleAuthenticator;
 
 namespace GoogleAuthenticatorWeb.Pages
 {
-    public class IndexModel : PageModel
+    public class LoginModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly ILogger<LoginModel> _logger;
         private readonly IDistributedCache _cache;
-        public IndexModel(ILogger<IndexModel> logger, IDistributedCache cache)
+        public LoginModel(ILogger<LoginModel> logger, IDistributedCache cache)
         {
             _logger = logger;
             _cache = cache;
         }
         [BindProperty]
         public new User User { get; set; }
+        [BindProperty]
+        public bool IsLogin { get { return User != null; } } 
         public string QrCodeImageUrl { get; set; }
+        public string Token { get; set; }
+        public string SecretKey { get; set; }
+        public string Msg { get; set; }
         public void OnGet()
         {
-    
+            HttpContext.Session.SetString("test", "ghm");//存储在IDistributedCache
+            var str = HttpContext.Session.GetString("user");
+            if (!string.IsNullOrEmpty(str))
+            {
+                User = JsonConvert.DeserializeObject<User>(str);
+            }
+
         }
-        public void OnPostAsync()
+        public void OnPostLoginAsync()
         {
-            var key = Md5EncryptStr32(User.Name+User.PassWord);
+            if (!ModelState.IsValid)
+            {
+                return;
+            }
+            var key = Md5EncryptStr32(User.Name + User.PassWord);
             var cachestr = _cache.GetString(key);
-            if (string.IsNullOrEmpty(cachestr))
+            if (!string.IsNullOrEmpty(cachestr))
+            {
+                User = JsonConvert.DeserializeObject<User>(cachestr);
+            }
+            else
+            {
+                cachestr = JsonConvert.SerializeObject(User);
+                _cache.SetString(key, cachestr);
+                HttpContext.Session.SetString("user", cachestr);
+            }
+            if (string.IsNullOrEmpty(User.SecretKey))
             {
                 TwoFactorAuthenticator ga = new TwoFactorAuthenticator();
                 var setupCode = ga.GenerateSetupCode(User.Name);
                 QrCodeImageUrl = setupCode.QrCodeImageUrl;
-                User.SecretKey = setupCode.SecretKey;
-                _cache.SetString(key, JsonConvert.SerializeObject(User));
+                SecretKey = setupCode.SecretKey;
             }
-            else
+        }
+        public void OnPostStepAsync()
+        {
+            if (!string.IsNullOrEmpty(Token))
             {
-                User = JsonConvert.DeserializeObject<User>(cachestr);
-
+                TwoFactorAuthenticator ga = new TwoFactorAuthenticator();
+                if(ga.ValidateTwoFactorPIN(User.SecretKey, Token))
+                {
+                    Msg = "登录成功";
+                }
+                else
+                {
+                    Msg = "登录失败";
+                }
             }
         }
         //对密码进行MD5加密

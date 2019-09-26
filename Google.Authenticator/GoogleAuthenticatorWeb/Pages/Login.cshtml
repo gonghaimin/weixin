@@ -1,0 +1,52 @@
+﻿@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <div class="row">
+        <div class="col-md-4">
+            @if (!Model.IsLogin)
+            {
+                <form method="post">
+                    <div class="form-group">
+                        <label asp-for="User.Name" class="control-label"></label>
+                        <input asp-for="User.Name" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="User.PassWord" class="control-label"></label>
+                        <input asp-for="User.PassWord" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" asp-page-handler="login" />
+                    </div>
+                </form>
+            }
+            else
+            {
+                @if (!string.IsNullOrEmpty(Model.User.SecretKey))
+                {
+                    <div>请输入动态验证码</div>
+                    <form method="post">
+                        <div class="form-group">
+                            <input asp-for="Token" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary" asp-page-handler="step" />
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    <p>
+                        <strong>Name:</strong><code>@Model.User.Name</code><br />
+                        <strong>PassWord:</strong><code>@Model.User.PassWord</code><br />
+                        <strong>SecretKey:</strong><code>@Model.SecretKey</code><br />
+                        <img src="@Model.QrCodeImageUrl" />
+                    </p>
+                }
+            }
+        </div>
+    </div>
+</div>
