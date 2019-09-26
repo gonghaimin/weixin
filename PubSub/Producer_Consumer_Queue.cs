@@ -22,8 +22,8 @@ namespace PubSub
 
         private volatile static ConcurrentQueue<WorkItem> _queue = new ConcurrentQueue<WorkItem>();
         private volatile int _flag = 0;
-        private volatile bool _isDispose = false;
         private SemaphoreSlim _semaphore = null;
+        private EventWaitHandle _handle = new EventWaitHandle(false, EventResetMode.AutoReset);
         private TaskCreationOptions taskOption
         {
             get
@@ -48,7 +48,10 @@ namespace PubSub
         /// 最大任务数量
         /// </summary>
         public int Limt { get; set; } = Environment.ProcessorCount;
-
+        /// <summary>
+        /// 是否是密集型生产消息
+        /// </summary>
+        public bool IsIntensive { get; set; } = false;
         public void Enqueue(Action action)
         {
             WorkItem workItem = new WorkItem();
@@ -58,6 +61,7 @@ namespace PubSub
             {
                 workItem.RetryCount = WorkRetryCount.Value;
             }
+            
             ProducerHandler(workItem);
         }
         /// <summary>
@@ -66,15 +70,18 @@ namespace PubSub
         /// <param name="work"></param>
         private void ProducerHandler(WorkItem work)
         {
+            if (IsIntensive)
+            {
+                _handle.Set();
+            }
             _queue.Enqueue(work);
             if (Interlocked.CompareExchange(ref _flag, 1, 0) == 0)
             {
-                //WriteLog("启动一个task提取消息并创建任务");
+                WriteLog("启动一个task提取消息并创建任务");
                 if (_semaphore == null)
                 {
                     _semaphore = new SemaphoreSlim(this.Limt);
                 }
-                _isDispose = false;
                 ConsumerHandler();
             }
         }
@@ -86,10 +93,10 @@ namespace PubSub
         {
             Task.Factory.StartNew((arg) =>
             {
-                while (!_isDispose)
+                while (true)
                 {
                     _semaphore.Wait();
-                    //WriteLog("队列消息个数：" + _queue.Count);
+                    WriteLog("队列消息个数：" + _queue.Count);
                     WorkItem work;
                     if (_queue.TryDequeue(out work))
                     {
@@ -98,7 +105,7 @@ namespace PubSub
                             try
                             {
                                 work.Execute.Invoke();
-                                //WriteLog("消息消息：" + work.WorkId + "---线程ID：" + Thread.CurrentThread.ManagedThreadId);
+                                WriteLog("消息消息：" + work.WorkId + "---线程ID：" + Thread.CurrentThread.ManagedThreadId);
                             }
                             catch (Exception e)
                             {
@@ -109,7 +116,7 @@ namespace PubSub
                                 }
                                 else
                                 {
-                                    //WriteLog(e.Message);
+                                    WriteLog(e.Message);
                                 }
                             }
 
@@ -124,15 +131,25 @@ namespace PubSub
                     }
                     if (_queue.IsEmpty)
                     {
-                        //WriteLog("消息处理完成");
-                        Task.Delay(5000).Wait();
-                        _isDispose = _queue.IsEmpty;
+                        WriteLog("消息处理完成");
+                        if (IsIntensive)
+                        {
+                            _handle.WaitOne();//没有消息可处理时，阻塞线程，释放cpu
+                        }
+                        else
+                        {
+                            SpinWait.SpinUntil(() => !_queue.IsEmpty, 10000);//休眠10秒，如果仍然没有消息，则释放线程
+                            if (_queue.IsEmpty)
+                            {
+                                break;
+                            }
+                        }
                     }
                 }
             }, taskOption).ContinueWith(t =>
             {
                 Interlocked.CompareExchange(ref _flag, 0, 1);
-                //WriteLog("注销任务");
+                WriteLog("注销任务");
             });
         }
 
@@ -155,19 +172,20 @@ namespace PubSub
             wt.Limt = 10;
             wt.MaxRetryCount = 3;
             wt.IsLongRunning = false;
-
+            wt.IsIntensive = true;
             int i = 0;
             while (true)
             {
                 i++;
-                Thread.Sleep(1000);
+                Thread.Sleep(500);
+                var num = i;
                 var action = new Action(() =>
                 {
                     Thread.Sleep(1000);
-                    Console.WriteLine("消费消息:" + DateTime.Now);
+                    Console.WriteLine("消费消息:" + num);
                 });
                 wt.Enqueue(action);
-                if (i > 50)
+                if (i > 20)
                 {
                     break;
                 }
@@ -177,6 +195,7 @@ namespace PubSub
                 var input = Console.ReadLine();
                 var action = new Action(() =>
                 {
+                    Thread.Sleep(2000);
                     Console.WriteLine("消费消息:" + input);
                 });
                 wt.Enqueue(action);

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -46,6 +47,30 @@ namespace Weixin.WebApi.Controllers
         public ActionResult<string> createMenu()
         {
             return null;
+        }
+
+        [HttpGet]
+        [Route("/api/values/auth")]
+        public ActionResult auth()
+        {
+            string[] keywords = { "Android", "iPhone", "iPod", "iPad", "Windows Phone", "MQQBrowser" };
+            var phoneType = "";
+            var agent = HttpContext.Request.Headers["User-Agent"][0];
+            foreach (string item in keywords)
+            {
+                if (agent.Contains(item)){
+                    phoneType = item;
+                    break;
+                }
+            }
+            if(phoneType == "iPhone" || phoneType == "iPod" || phoneType == "iPad")
+            {
+                return Redirect("https://itunes.apple.com/cn/app/google-authenticator/id388497605");
+            }
+            else
+            {
+                return Redirect("https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2");
+            }
         }
     }
 }

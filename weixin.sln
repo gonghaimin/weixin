@@ -23,6 +23,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PubSub", "PubSub\PubSub.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logger", "Logger\Logger.csproj", "{4201CFD0-FA54-476F-BC25-83D178477F6B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{C87B42BB-3C28-485B-BF5B-8716E033FE66}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Google.Authenticator", "Google.Authenticator", "{02AA7D2C-9BFE-42D6-BA40-DCE8D6AF5076}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleAuthenticator", "Google.Authenticator\GoogleAuthenticator\GoogleAuthenticator.csproj", "{7EBF983F-F9DF-42FD-99DA-2A8F85DBF1FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleAuthenticatorWeb", "Google.Authenticator\GoogleAuthenticatorWeb\GoogleAuthenticatorWeb.csproj", "{E1CA2595-DBCB-4C44-9A11-8B5E5E29461D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,9 +77,25 @@ Global
 		{4201CFD0-FA54-476F-BC25-83D178477F6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4201CFD0-FA54-476F-BC25-83D178477F6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4201CFD0-FA54-476F-BC25-83D178477F6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C87B42BB-3C28-485B-BF5B-8716E033FE66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C87B42BB-3C28-485B-BF5B-8716E033FE66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C87B42BB-3C28-485B-BF5B-8716E033FE66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C87B42BB-3C28-485B-BF5B-8716E033FE66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EBF983F-F9DF-42FD-99DA-2A8F85DBF1FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EBF983F-F9DF-42FD-99DA-2A8F85DBF1FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EBF983F-F9DF-42FD-99DA-2A8F85DBF1FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EBF983F-F9DF-42FD-99DA-2A8F85DBF1FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1CA2595-DBCB-4C44-9A11-8B5E5E29461D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1CA2595-DBCB-4C44-9A11-8B5E5E29461D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1CA2595-DBCB-4C44-9A11-8B5E5E29461D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1CA2595-DBCB-4C44-9A11-8B5E5E29461D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7EBF983F-F9DF-42FD-99DA-2A8F85DBF1FA} = {02AA7D2C-9BFE-42D6-BA40-DCE8D6AF5076}
+		{E1CA2595-DBCB-4C44-9A11-8B5E5E29461D} = {02AA7D2C-9BFE-42D6-BA40-DCE8D6AF5076}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {27683751-6889-43BF-B3A1-FC9AEF441C15}

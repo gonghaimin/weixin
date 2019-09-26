@@ -11,43 +11,45 @@ using Weixin.Tool.Utility;
 
 namespace Weixin.webapi.Controllers
 {
-    [Route("api/[controller]")]
-    public class PayController : Controller
-    {
-        // GET: api/<controller>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-        [HttpPost]
-        public string CreateWeChatPay()
-        {
-            var weiXinPayRequest = new WeiXinPayRequest
-            {
-                Productid ="",
-                ClientIP = HttpContext.GetUserIp(),
-                Fee = 12,
-                InputCharset = "UTF-8",
-                NotifyUrl = "",
-                OutTradeNO ="",
-                ProductDesc = "",
-                Trade_type = WXTradeType.JSAPI,
-                OpenId = "",
-                IsMiniAppPay = true
-            };
-            //IPayHandler 开发时应通过依赖注入的方式注入
-            PayConfig payConfig = new PayConfig();
-            IPayHandler payHandler = PayHandler.GetInstance(payConfig);
-            return payHandler.PayAction(weiXinPayRequest);
-        }
-        [HttpPost]
-        public string WeChatNotify()
-        {
-            PayConfig payConfig = new PayConfig();
-            IPayHandler payHandler = PayHandler.GetInstance(payConfig);
-            var result = payHandler.PayNotify(HttpContext) as WeiXinPayResponse;
-            return result.RetCode;
-        }
-    }
+    //[Route("api/[controller]")]
+    //[ApiController]
+    //public class PayController : ControllerBase
+    //{
+    //    // GET: api/<controller>
+    //    [HttpGet]
+    //    public IEnumerable<string> Get()
+    //    {
+    //        return new string[] { "value1", "value2" };
+    //    }
+    //    [HttpPost]
+    //    public string CreateWeChatPay()
+    //    {
+    //        var weiXinPayRequest = new WeiXinPayRequest
+    //        {
+    //            Productid ="",
+    //            ClientIP = HttpContext.GetUserIp(),
+    //            Fee = 12,
+    //            InputCharset = "UTF-8",
+    //            NotifyUrl = "",
+    //            OutTradeNO ="",
+    //            ProductDesc = "",
+    //            Trade_type = WXTradeType.JSAPI,
+    //            OpenId = "",
+    //            IsMiniAppPay = true
+    //        };
+    //        //IPayHandler 开发时应通过依赖注入的方式注入
+    //        PayConfig payConfig = new PayConfig();
+    //        IPayHandler payHandler = PayHandler.GetInstance(payConfig);
+    //        return payHandler.PayAction(weiXinPayRequest);
+    //    }
+    //    [HttpPost]
+    //    public string WeChatNotify()
+    //    {
+    //        PayConfig payConfig = new PayConfig();
+    //        IPayHandler payHandler = PayHandler.GetInstance(payConfig);
+    //        var result = payHandler.PayNotify(HttpContext) as WeiXinPayResponse;
+    //        return result.RetCode;
+    //    }
+    //}
+
 }
