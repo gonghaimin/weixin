@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GoogleAuthenticatorWeb.Models
 {
-    public class User
+    public class LoginUser
     {
         /// <summary>
         /// 账号

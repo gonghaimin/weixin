@@ -19,6 +19,10 @@ namespace GoogleAuthenticator
         /// </summary>
         public string SecretKey { get; internal set; }
         /// <summary>
+        /// 加密后的秘钥
+        /// </summary>
+        public string EncodedSecretKey { get; internal set; }
+        /// <summary>
         /// base64 image string
         /// </summary>
         public string QrCodeImageBase64 { get; internal set; }

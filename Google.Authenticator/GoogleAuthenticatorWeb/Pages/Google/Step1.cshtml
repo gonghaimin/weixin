@@ -1,0 +1,17 @@
+﻿@page "{key}"
+@model GoogleAuthenticatorWeb.Pages.Google.Step1Model
+@{
+    ViewData["Title"] = "Step1";
+}
+
+<h1>请扫描下方二维码下载谷歌验证器。如果您已安装，请前往下一步</h1>
+<div>
+    <dl>
+        <dt>安卓系统</dt>
+        <dd><img src="~/1569566907.png" /></dd>
+        <dt>IOS系统</dt>
+        <dd><img src="~/1569567108.png" /></dd>
+    </dl>
+    <a href="/Google/Step2/@Model.unid">下一步</a>
+</div>
+

@@ -69,7 +69,7 @@ namespace Weixin.WebApi.Controllers
             }
             else
             {
-                return Redirect("https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2");
+                return Redirect("https://a.app.qq.com/o/simple.jsp?pkgname=com.google.android.apps.authenticator2");
             }
         }
     }
