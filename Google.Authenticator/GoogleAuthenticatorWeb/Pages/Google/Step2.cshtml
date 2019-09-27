@@ -6,7 +6,7 @@
 
 <h1>请使用谷歌验证器扫描下方二维码，成功后您会获得一个6位数字的双重验证码，改验证码每30秒改变一次</h1>
 <div>
-    <img src="@Model.CodeData.QrCodeImageUrl" />
+    <img src="@Model.CodeData.QrCodeImageBase64Url" />
 </div>
 <div>
     <code>@Model.CodeData.EncodedSecretKey</code>复制

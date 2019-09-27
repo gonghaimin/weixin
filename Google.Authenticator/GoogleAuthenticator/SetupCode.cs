@@ -15,7 +15,7 @@ namespace GoogleAuthenticator
         /// </summary>
         public string Issuer { get; internal set; }
         /// <summary>
-        /// 秘钥
+        /// 明文秘钥
         /// </summary>
         public string SecretKey { get; internal set; }
         /// <summary>
@@ -29,10 +29,10 @@ namespace GoogleAuthenticator
         /// <summary>
         /// base64 image url
         /// </summary>
-        public string QrCodeImageUrl { get; internal set; }
+        public string QrCodeImageBase64Url { get; internal set; }
         /// <summary>
         /// 二维码中的内容
         /// </summary>
-        public string Otpauth { get; internal set; }
+        public string QrCodeContent { get; internal set; }
     }
 }

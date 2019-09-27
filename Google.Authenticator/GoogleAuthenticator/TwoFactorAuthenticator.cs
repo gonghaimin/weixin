@@ -33,15 +33,24 @@ namespace GoogleAuthenticator
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="account">Account Title</param>
+        /// <param name="account">Account</param>
         /// <param name="qRPixelsPerModule">Number of pixels per QR Module (2 = ~120x120px QRCode)</param>
         /// <param name="issuer">Issuer ID (the name of the system, i.e. 'MyApp'), can be omitted but not recommended https://github.com/google/google-authenticator/wiki/Key-Uri-Format </param>
         /// <returns></returns>
-        public SetupCode GenerateSetupCode(string account, int qRPixelsPerModule = 4, string issuer = null)
+        public SetupCode GenerateSetupCode(string account, int qRPixelsPerModule = 3, string issuer = null)
         {
             var secretKey = Guid.NewGuid().ToString().Replace("-", "");
             return GenerateSetupCode(account, secretKey, false, qRPixelsPerModule, issuer);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="account">Account</param>
+        /// <param name="secretKey">Account Secret Key</param>
+        /// <param name="secretIsBase32">Flag saying if accountSecretKey is in Base32 format or original secret</param>
+        /// <param name="qRPixelsPerModule">Number of pixels per QR Module (2 pixels give ~ 100x100px QRCode)</param>
+        /// <param name="issuer"></param>
+        /// <returns></returns>
         public SetupCode GenerateSetupCode(string account, string secretKey, bool secretIsBase32, int qRPixelsPerModule = 0, string issuer = null)
         {
             secretKey = secretIsBase32 ? Base32String.Base32Decode(secretKey) : secretKey;
@@ -67,7 +76,7 @@ namespace GoogleAuthenticator
             }
             var setupCode = new SetupCode();
             setupCode.Account = account;
-            setupCode.Otpauth = provisionUrl;
+            setupCode.QrCodeContent = provisionUrl;
             setupCode.Issuer = issuer;
             setupCode.SecretKey = secretKey;
             setupCode.EncodedSecretKey = encodedSecretKey;
@@ -81,7 +90,7 @@ namespace GoogleAuthenticator
                 {
                     qrCodeImage.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
                     setupCode.QrCodeImageBase64 = Convert.ToBase64String(ms.ToArray());
-                    setupCode.QrCodeImageUrl = "data:image/png;base64," + setupCode.QrCodeImageBase64;
+                    setupCode.QrCodeImageBase64Url = "data:image/png;base64," + setupCode.QrCodeImageBase64;
                 }
             }
             return setupCode;
@@ -253,7 +262,7 @@ namespace GoogleAuthenticator
          0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, // 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o' 
          0x0F, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, // 'p', 'q', 'r', 's', 't', 'u', 'v', 'w' 
          0x17, 0x18, 0x19, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF // 'x', 'y', 'z', '{', '|', '}', '~', 'DEL' 
-     };
+         };
         /// <summary>
         /// 编码
         /// </summary>
