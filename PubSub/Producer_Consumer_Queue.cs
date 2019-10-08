@@ -51,7 +51,7 @@ namespace PubSub
         /// <summary>
         /// 是否是密集型生产消息
         /// </summary>
-        public bool IsIntensive { get; set; } = false;
+        public bool IsIntensive { get; set; } = true;
         public void Enqueue(Action action)
         {
             WorkItem workItem = new WorkItem();
@@ -138,10 +138,10 @@ namespace PubSub
                         }
                         else
                         {
-                            SpinWait.SpinUntil(() => !_queue.IsEmpty, 10000);//休眠10秒，如果仍然没有消息，则释放线程
-                            if (_queue.IsEmpty)
+                            //休眠10秒，如果仍然没有消息，则释放线程
+                            if (!SpinWait.SpinUntil(() => !_queue.IsEmpty, 10000))
                             {
-                                break;
+                                return;
                             }
                         }
                     }
