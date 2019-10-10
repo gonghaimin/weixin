@@ -16,7 +16,7 @@ namespace Weixin.Tool.Messages.ResponseMessage
         /// <summary>
         ///图文消息个数；当用户发送文本、图片、视频、图文、地理位置这五种消息时，开发者只能回复1条图文消息；其余场景最多可回复8条图文消息
         /// </summary>
-        public int ArticleCount { get; set; } = 1;
+        public int ArticleCount { get { return Articles!=null? Articles.Count():0; } set { } } 
         /// <summary>
         /// 图文消息信息，注意，如果图文数超过限制，则将只发限制内的条数
         /// </summary>
