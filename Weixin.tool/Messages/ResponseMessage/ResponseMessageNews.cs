@@ -10,49 +10,37 @@ namespace Weixin.Tool.Messages.ResponseMessage
     /// <summary>
     /// 图文消息
     /// </summary>
-    public class ResponseMessageNews : ResponseMessageBase
+    public class ResponseMessageNews : ResponseMessageBase, IResponseMessageBase, IMessageBase
     {
-        protected override ResponseMsgType MsgType => ResponseMsgType.News;
-        /// <summary>
-        ///图文消息个数；当用户发送文本、图片、视频、图文、地理位置这五种消息时，开发者只能回复1条图文消息；其余场景最多可回复8条图文消息
-        /// </summary>
-        public int ArticleCount { get { return Articles!=null? Articles.Count():0; } set { } } 
-        /// <summary>
-        /// 图文消息信息，注意，如果图文数超过限制，则将只发限制内的条数
-        /// </summary>
-        public List<Article> Articles { get; set; }
-        /// <summary>
-        /// 模板
-        /// </summary>
-        public string Template
+        public override ResponseMsgType MsgType => ResponseMsgType.News;
+
+        public int ArticleCount
         {
             get
             {
-                return $@"<xml>
-                          <ToUserName><![CDATA[{0}]]></ToUserName>
-                          <FromUserName><![CDATA[{1}]]></FromUserName>
-                          <CreateTime>{2}</CreateTime>
-                          <MsgType><![CDATA[{3}]]></MsgType>
-                          <ArticleCount>{4}</ArticleCount>
-                          <Articles>
-                            {string.Join("", this.Articles.Select(item =>
-                                {
-                                    return $@" <item>
-                                              < Title >< ![CDATA[{ item.Title}]]></Title>
-                                              <Description><![CDATA[{item.Description}]]></Description>
-                                              <PicUrl><![CDATA[{item.PicUrl}]]></PicUrl>
-                                              <Url><![CDATA[{item.Url}]]></Url>
-                                            </item>";
-                                }))}
-                           
-                          </Articles>
-                         <MsgId>{5}</MsgId>
-                        </xml>";
+                if (Articles != null)
+                {
+                    return Articles.Count;
+                }
+                return 0;
+            }
+            set
+            {
             }
         }
-        protected override string GenerateContent()
+
+        /// <summary>
+        /// 文章列表，微信客户端只能输出前10条（可能未来数字会有变化，出于视觉效果考虑，建议控制在8条以内）
+        /// </summary>
+        public List<Article> Articles
         {
-            return string.Format(this.Template, this.ToUserName, this.FromUserName, this.CreateTime, this.MsgType.ToString(), this.ArticleCount,this.MsgId);
+            get;
+            set;
+        }
+
+        public ResponseMessageNews()
+        {
+            Articles = new List<Article>();
         }
     }
     public class Article

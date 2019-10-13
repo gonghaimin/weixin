@@ -24,5 +24,7 @@ namespace Weixin.Tool.Enums
         Voice = 4,
         [Description("视频")]
         Video = 5,
+
+        NoResponse=6
     }
 }

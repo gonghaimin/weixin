@@ -10,43 +10,48 @@ namespace Weixin.Tool.Messages.RequestMessage
     /// <summary>
     /// 地理位置消息
     /// </summary>
-    public class RequestMessageLocation : RequestMessageBase
+    public class RequestMessageLocation : RequestMessageBase, IRequestMessageBase, IMessageBase
     {
-        public RequestMessageLocation(string xml) : base(xml)
+        public override RequestMsgType MsgType => RequestMsgType.location;
+
+        /// <summary>
+        /// 地理位置纬度
+        /// </summary>
+        public double Location_X
         {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// 地理位置经度
+        /// </summary>
+        public double Location_Y
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// 地图缩放大小
+        /// </summary>
+        public int Scale
+        {
+            get;
+            set;
         }
 
         /// <summary>
         /// 地理位置信息
         /// </summary>
-        public string Label { get; set; }
-        /// <summary>
-        /// 地图缩放大小
-        /// </summary>
-        public string Scale { get; set; }
-        /// <summary>
-        /// 地理位置经度
-        /// </summary>
-        public string Location_Y { get; set; }
-        /// <summary>
-        /// 地理位置维度
-        /// </summary>
-        public string Location_X { get; set; }
-        public override RequestMsgType MsgType => RequestMsgType.location;
-
-        protected override void PerfectMessage(string xml)
+        public string Label
         {
-            if (!string.IsNullOrEmpty(xml))
-            {
-                XElement element = XElement.Parse(xml);
-                if (element != null)
-                {
-                    this.Label = element.Element("Label")?.Value;
-                    this.Scale = element.Element("Scale")?.Value;
-                    this.Location_Y = element.Element("Location_Y")?.Value;
-                    this.Location_X = element.Element("Location_X")?.Value;
-                }
-            }
+            get;
+            set;
+        }
+
+        public RequestMessageLocation()
+        {
         }
     }
 }

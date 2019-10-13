@@ -11,33 +11,30 @@ namespace Weixin.Tool.Messages.RequestMessage
     /// <summary>
     /// 图片消息
     /// </summary>
-    public class RequestMessageImage : RequestMessageBase
+    public class RequestMessageImage : RequestMessageBase, IRequestMessageBase, IMessageBase
     {
-        public RequestMessageImage(string xml) : base(xml)
+        public override RequestMsgType MsgType => RequestMsgType.image;
+
+        /// <summary>
+        /// 图片消息媒体id，可以调用多媒体文件下载接口拉取数据。
+        /// </summary>
+        public string MediaId
         {
+            get;
+            set;
         }
 
         /// <summary>
-        /// 图片链接（由系统生成）
+        /// 图片链接
         /// </summary>
-        public string PicUrl { get; set; }
-        /// <summary>
-        /// 图片消息媒体id
-        /// </summary>
-        public string MediaId { get; set; }
-        public override RequestMsgType MsgType => RequestMsgType.image;
-
-        protected override void PerfectMessage(string xml)
+        public string PicUrl
         {
-            if (!string.IsNullOrEmpty(xml))
-            {
-                XElement element = XElement.Parse(xml);
-                if (element != null)
-                {
-                    this.PicUrl = element.Element("PicUrl").Value;
-                    this.MediaId = element.Element(Common.MediaId).Value;
-                }
-            }
+            get;
+            set;
+        }
+
+        public RequestMessageImage()
+        {
         }
     }
 }

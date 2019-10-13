@@ -9,31 +9,33 @@ using Weixin.Tool.Utility;
 namespace Weixin.Tool.Messages.RequestMessage
 {
     /// <summary>
-    /// 文本消息
+    /// 文本类型消息
     /// </summary>
-    public class RequestMessageText : RequestMessageBase
+    public class RequestMessageText : RequestMessageBase, IRequestMessageBase, IMessageBase
     {
-        public RequestMessageText(string xml) : base(xml)
+        public override RequestMsgType MsgType => RequestMsgType.text;
+
+        /// <summary>
+        /// 文本消息内容
+        /// </summary>
+        public string Content
         {
+            get;
+            set;
         }
 
         /// <summary>
-        /// 内容
+        /// 点击的菜单ID
+        /// <para>收到XML推送之后，开发者可以根据提取出来的bizmsgmenuid和Content识别出微信用户点击的是哪个菜单。</para>
         /// </summary>
-        public string Content { get; set; }
-        public override RequestMsgType MsgType => RequestMsgType.text;
-
-        protected override void PerfectMessage(string xml)
+        public string bizmsgmenuid
         {
-            if (!string.IsNullOrEmpty(xml))
-            {
-                XElement element = XElement.Parse(xml);
-                if (element != null)
-                {
-                    this.Content = element.Element(Common.Content)?.Value;
-                }
-            }
-            
+            get;
+            set;
+        }
+
+        public RequestMessageText()
+        {
         }
     }
 }

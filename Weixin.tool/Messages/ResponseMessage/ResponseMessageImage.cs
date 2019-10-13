@@ -9,37 +9,27 @@ namespace Weixin.Tool.Messages.ResponseMessage
     /// <summary>
     /// 图片消息
     /// </summary>
-    public class ResponseMessageImage : ResponseMessageBase
+    public class ResponseMessageImage : ResponseMessageBase, IResponseMessageBase, IMessageBase
     {
-        /// <summary>
-        /// 图片消息媒体id
-        /// </summary>
-        protected string MediaId { get; set; }
+        public override ResponseMsgType MsgType => ResponseMsgType.Image;
 
-        protected override ResponseMsgType MsgType => ResponseMsgType.Image;
-
-        /// <summary>
-        /// 模板
-        /// </summary>
-        private string Template
+        public Image Image
         {
-            get
-            {
-                return @"<xml>
-                                  <ToUserName><![CDATA[{0}]]></ToUserName>
-                                  <FromUserName><![CDATA[{1}]]></FromUserName>
-                                  <CreateTime>{2}</CreateTime>
-                                  <MsgType><![CDATA[{3}]]></MsgType>
-                                   <Image>
-                                    <MediaId><![CDATA[{4}]]></MediaId>
-                                  </Image>
-                                   <MsgId>{5}</MsgId> 
-                            </xml>";
-            }
+            get;
+            set;
         }
-        protected override string GenerateContent()
+
+        public ResponseMessageImage()
         {
-            return string.Format(this.Template, this.ToUserName, this.FromUserName, this.CreateTime, this.MsgType.ToString(), this.MediaId,this.MsgId);
+            Image = new Image();
+        }
+    }
+    public class Image
+    {
+        public string MediaId
+        {
+            get;
+            set;
         }
     }
 }

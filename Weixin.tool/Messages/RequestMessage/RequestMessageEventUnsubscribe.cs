@@ -11,29 +11,12 @@ namespace Weixin.Tool.Messages.RequestMessage
     /// <summary>
     /// 取消关注
     /// </summary>
-    public class RequestMessageEventUnsubscribe : RequestMessageBase
+    public class RequestMessageEventUnsubscribe : RequestMessageEventBase, IRequestMessageEventBase, IRequestMessageBase, IMessageBase
     {
-
-        public RequestMessageEventUnsubscribe(string xml) : base(xml)
-        {
-        }
 
         /// <summary>
         /// 事件类型，subscribe(订阅)
         /// </summary>
-        public Event Event { get; set; } = Event.scan;
-        public override RequestMsgType MsgType => RequestMsgType.@event;
-
-        protected override void PerfectMessage(string xml)
-        {
-            if (!string.IsNullOrEmpty(xml))
-            {
-                XElement element = XElement.Parse(xml);
-                if (element != null)
-                {
-                    this.Event = element.Element("Event").Value.StringConvertToEnum<Event>();
-                }
-            }
-        }
+        public override Event Event => Event.unsubscribe;
     }
 }

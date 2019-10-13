@@ -10,38 +10,39 @@ namespace Weixin.Tool.Messages.RequestMessage
     /// <summary>
     /// 链接消息
     /// </summary>
-    public class RequestMessageLink : RequestMessageBase
+    public class RequestMessageLink : RequestMessageBase, IRequestMessageBase, IMessageBase
     {
-        public RequestMessageLink(string xml) : base(xml)
+        public override RequestMsgType MsgType => RequestMsgType.link;
+
+        /// <summary>
+        /// 消息标题
+        /// </summary>
+        public string Title
         {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// 消息描述
+        /// </summary>
+        public string Description
+        {
+            get;
+            set;
         }
 
         /// <summary>
         /// 消息链接
         /// </summary>
-        public string Url { get; set; }
-        /// <summary>
-        /// 消息标题
-        /// </summary>
-        public string Title { get; set; }
-        /// <summary>
-        /// 消息描述
-        /// </summary>
-        public string Description { get; set; }
-        public override RequestMsgType MsgType => RequestMsgType.link;
-
-        protected override void PerfectMessage(string xml)
+        public string Url
         {
-            if (!string.IsNullOrEmpty(xml))
-            {
-                XElement element = XElement.Parse(xml);
-                if (element != null)
-                {
-                    this.Url = element.Element("Url").Value;
-                    this.Title = element.Element("Title").Value;
-                    this.Description = element.Element("Description").Value;
-                }
-            }
+            get;
+            set;
+        }
+
+        public RequestMessageLink()
+        {
         }
     }
 }

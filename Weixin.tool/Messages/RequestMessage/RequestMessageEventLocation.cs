@@ -10,43 +10,38 @@ namespace Weixin.Tool.Messages.RequestMessage
     /// <summary>
     /// 上报地理位置事件
     /// </summary>
-    public class RequestMessageEventLocation : RequestMessageBase
+    public class RequestMessageEventLocation : RequestMessageEventBase, IRequestMessageEventBase, IRequestMessageBase, IMessageBase
     {
-        public RequestMessageEventLocation(string xml) : base(xml)
+        /// <summary>
+        /// 事件类型
+        /// </summary>
+        public override Event Event => Event.LOCATION;
+
+        /// <summary>
+        /// 地理位置维度，事件类型为LOCATION的时存在
+        /// </summary>
+        public double Latitude
         {
+            get;
+            set;
         }
 
         /// <summary>
-        /// 地理位置信息
+        /// 地理位置经度，事件类型为LOCATION的时存在
         /// </summary>
-        public string Label { get; set; }
-        /// <summary>
-        /// 地图缩放大小
-        /// </summary>
-        public string Scale { get; set; }
-        /// <summary>
-        /// 地理位置经度
-        /// </summary>
-        public string Location_Y { get; set; }
-        /// <summary>
-        /// 地理位置维度
-        /// </summary>
-        public string Location_X { get; set; }
-        public override RequestMsgType MsgType => RequestMsgType.location;
-
-        protected override void PerfectMessage(string xml)
+        public double Longitude
         {
-            if (!string.IsNullOrEmpty(xml))
-            {
-                XElement element = XElement.Parse(xml);
-                if (element != null)
-                {
-                    this.Label = element.Element("Label")?.Value;
-                    this.Scale = element.Element("Scale")?.Value;
-                    this.Location_Y = element.Element("Location_Y")?.Value;
-                    this.Location_X = element.Element("Location_X")?.Value;
-                }
-            }
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// 地理位置精度，事件类型为LOCATION的时存在
+        /// </summary>
+        public double Precision
+        {
+            get;
+            set;
         }
     }
 }

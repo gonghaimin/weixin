@@ -6,36 +6,24 @@ using Weixin.Tool.Messages.Base;
 
 namespace Weixin.Tool.Messages.ResponseMessage
 {
-    public class ResponseMessageVoice : ResponseMessageBase
+    public class ResponseMessageVoice : ResponseMessageBase, IResponseMessageBase, IMessageBase
     {
-        protected override ResponseMsgType MsgType => ResponseMsgType.Voice;
-        /// <summary>
-        /// 语音消息媒体id，可以调用获取临时素材接口拉取该媒体
-        /// </summary>
-        public string MediaId { get; set; }
+        public override ResponseMsgType MsgType => ResponseMsgType.Voice;
 
-        /// <summary>
-        /// 模板
-        /// </summary>
-        public string Template
+        public Voice Voice
         {
-            get
-            {
-                return @"<xml>
-                                  <ToUserName><![CDATA[{0}]]></ToUserName>
-                                  <FromUserName><![CDATA[{1}]]></FromUserName>
-                                  <CreateTime>{2}</CreateTime>
-                                  <MsgType><![CDATA[{3}]]></MsgType>
-                                  <Voice>
-                                    <MediaId><![CDATA[{4}]]></MediaId>
-                                   </Voice>
-                                    <MsgId>{5}</MsgId>
-                            </xml>";
-            }
+            get;
+            set;
         }
-        protected override string GenerateContent()
+
+        public ResponseMessageVoice()
         {
-            return string.Format(this.Template, this.ToUserName, this.FromUserName, this.CreateTime, this.MsgType, this.MediaId,this.MsgId);
+            Voice = new Voice();
         }
+    }
+
+    public class Voice
+    {
+        public string MediaId { get; set; }
     }
 }

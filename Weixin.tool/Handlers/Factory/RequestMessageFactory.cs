@@ -5,10 +5,12 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using Weixin.Tool.Enums;
+using Weixin.Tool.Messages.Base;
+using Weixin.Tool.Messages.MsgHelpers;
+using Weixin.Tool.Messages.RequestMessage;
 
-namespace Weixin.Tool.refactor
+namespace Weixin.Tool.Handlers.Factory
 {
-
     /// <summary>
     /// RequestMessage 消息处理方法工厂类
     /// </summary>
@@ -16,60 +18,73 @@ namespace Weixin.Tool.refactor
     {
         /// <summary>
         /// 获取XDocument转换后的IRequestMessageBase实例。
-        /// 如果MsgType不存在，抛出UnknownRequestMsgTypeException异常
         /// </summary>
         /// <returns></returns>
         public static IRequestMessageBase GetRequestEntity(XDocument doc)
         {
-            RequestMessageBase requestMessageBase = null;
+            RequestMessageBase val = null;
             try
             {
                 RequestMsgType requestMsgType = MsgTypeHelper.GetRequestMsgType(doc);
                 switch (requestMsgType)
                 {
                     case RequestMsgType.text:
-                        requestMessageBase = new RequestMessageText();
+                        val = new RequestMessageText();
                         break;
                     case RequestMsgType.location:
-
+                        val = new RequestMessageLocation();
                         break;
                     case RequestMsgType.image:
-                        requestMessageBase = new RequestMessageImage();
+                        val = new RequestMessageImage();
                         break;
                     case RequestMsgType.voice:
-                        requestMessageBase = new RequestMessageVoice();
+                        val = new RequestMessageVoice();
                         break;
                     case RequestMsgType.video:
-                        requestMessageBase = new RequestMessageVideo();
+                        val = new RequestMessageVideo();
                         break;
                     case RequestMsgType.link:
-
+                        val = new RequestMessageLink();
                         break;
                     case RequestMsgType.shortvideo:
-
+                        val = new RequestMessageShortVideo();
                         break;
                     case RequestMsgType.@event:
-                        Event eventType = EventHelper.GetEventType(doc);
+                        var eventType = EventHelper.GetEventType(doc.Root.Element("Event").Value);
+
                         switch (eventType)
                         {
+                            case Event.CLICK:
+                                val = new RequestMessageEventClick();
+                                break;
                             case Event.LOCATION:
+                                val = new RequestMessageEventLocation();
+                                break;
+                            case Event.subscribe:
+                                val = new RequestMessageEventSubscribe();
+                                break;
+                            case Event.scan:
+                                val = new RequestMessageEventScan();
+                                break;
+                            case Event.unsubscribe:
+                                val = new RequestMessageEventUnsubscribe();
+                                break;
+                            case Event.VIEW:
+                                val = new RequestMessageEventView();
                                 break;
                             default:
-                                requestMessageBase = new RequestMessageEventBase();
+                                val = new RequestMessageEventBase();
                                 break;
                         }
                         break;
-                    default:
-                        throw new ArgumentException("消息类型不能处理");
-
                 }
-                EntityHelper.FillEntityWithXml<RequestMessageBase>(requestMessageBase, doc);
+                val.FillEntityWithXml<RequestMessageBase>(doc);
+                return val;
             }
             catch (ArgumentException ex)
             {
-                throw new ArgumentException(string.Format("RequestMessage转换出错！可能是MsgType不存在！，XML：{0}，error:{1}", doc.ToString(), ex.ToString()));
+                throw new Exception($"RequestMessage转换出错！可能是MsgType不存在！，XML：{doc.ToString()}", ex);
             }
-            return requestMessageBase;
         }
 
         /// <summary>
@@ -79,7 +94,7 @@ namespace Weixin.Tool.refactor
         /// <returns></returns>
         public static IRequestMessageBase GetRequestEntity(string xml)
         {
-            return RequestMessageFactory.GetRequestEntity(XDocument.Parse(xml), null);
+            return GetRequestEntity(XDocument.Parse(xml));
         }
 
         /// <summary>
@@ -90,13 +105,10 @@ namespace Weixin.Tool.refactor
         /// <returns></returns>
         public static IRequestMessageBase GetRequestEntity(Stream stream)
         {
-            IRequestMessageBase requestEntity;
-            using (XmlReader xmlReader = XmlReader.Create(stream))
+            using (XmlReader reader = XmlReader.Create(stream))
             {
-                requestEntity = RequestMessageFactory.GetRequestEntity(XDocument.Load(xmlReader), null);
+                return GetRequestEntity(XDocument.Load(reader));
             }
-            return requestEntity;
         }
     }
 }
-    

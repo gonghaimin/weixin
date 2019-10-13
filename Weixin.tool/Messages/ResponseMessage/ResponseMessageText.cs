@@ -9,30 +9,18 @@ namespace Weixin.Tool.Messages.ResponseMessage
     /// <summary>
     /// 文本消息
     /// </summary>
-    public class ResponseMessageText : ResponseMessageBase
+    public class ResponseMessageText : ResponseMessageBase, IResponseMessageBase, IMessageBase
     {
-        /// <summary>
-        /// 内容
-        /// </summary>
-        public string Content { get; set; }
-        protected override ResponseMsgType MsgType => ResponseMsgType.Text;
-        private string Template
+        public override ResponseMsgType MsgType => ResponseMsgType.Text;
+
+        public string Content
         {
-            get
-            {
-                return @"<xml>
-                                <ToUserName><![CDATA[{0}]]></ToUserName>
-                                <FromUserName><![CDATA[{1}]]></FromUserName>
-                                <CreateTime>{2}</CreateTime>
-                                <MsgType><![CDATA[{3}]]></MsgType>
-                                <Content><![CDATA[{4}]]></Content>
-                                <MsgId>{5}</MsgId>
-                            </xml>";
-            }
+            get;
+            set;
         }
-        protected override string GenerateContent()
+
+        public ResponseMessageText()
         {
-            return string.Format(this.Template, this.ToUserName, this.FromUserName, this.CreateTime, this.MsgType.ToString(), this.Content,this.MsgId);
         }
     }
 }

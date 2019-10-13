@@ -4,7 +4,7 @@ using System.Text;
 using System.Xml.Linq;
 using Weixin.Tool.Enums;
 
-namespace Weixin.Tool.refactor
+namespace Weixin.Tool.Messages.MsgHelpers
 {
     /// <summary>
     /// 事件帮助类

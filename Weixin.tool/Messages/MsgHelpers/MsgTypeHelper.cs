@@ -4,7 +4,7 @@ using System.Text;
 using System.Xml.Linq;
 using Weixin.Tool.Enums;
 
-namespace Weixin.Tool.refactor
+namespace Weixin.Tool.Messages.MsgHelpers
 {
     /// <summary>
     /// 消息类型帮助类
@@ -30,7 +30,7 @@ namespace Weixin.Tool.refactor
         /// <returns></returns>
         public static RequestMsgType GetRequestMsgType(XDocument requestMessageDocument)
         {
-            return MsgTypeHelper.GetRequestMsgType(MsgTypeHelper.GetRequestMsgTypeString(requestMessageDocument));
+            return GetRequestMsgType(GetRequestMsgTypeString(requestMessageDocument));
         }
 
         /// <summary>
@@ -39,16 +39,14 @@ namespace Weixin.Tool.refactor
         /// <returns></returns>
         public static RequestMsgType GetRequestMsgType(string str)
         {
-            RequestMsgType result;
             try
             {
-                result = (RequestMsgType)Enum.Parse(typeof(RequestMsgType), str, true);
+                return (RequestMsgType)Enum.Parse(typeof(RequestMsgType), str, ignoreCase: true);
             }
             catch
             {
-                result = RequestMsgType.Unknown;
+                return RequestMsgType.Unknown;
             }
-            return result;
         }
 
         /// <summary>
@@ -57,7 +55,7 @@ namespace Weixin.Tool.refactor
         /// <returns></returns>
         public static ResponseMsgType GetResponseMsgType(XDocument doc)
         {
-            return MsgTypeHelper.GetResponseMsgType(doc.Root.Element("MsgType").Value);
+            return GetResponseMsgType(doc.Root.Element("MsgType").Value);
         }
 
         /// <summary>
@@ -66,7 +64,7 @@ namespace Weixin.Tool.refactor
         /// <returns></returns>
         public static ResponseMsgType GetResponseMsgType(string str)
         {
-            return (ResponseMsgType)Enum.Parse(typeof(ResponseMsgType), str, true);
+            return (ResponseMsgType)Enum.Parse(typeof(ResponseMsgType), str, ignoreCase: true);
         }
     }
 }

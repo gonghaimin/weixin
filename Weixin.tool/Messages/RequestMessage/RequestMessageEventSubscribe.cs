@@ -9,30 +9,19 @@ using Weixin.Tool.Utility;
 namespace Weixin.Tool.Messages.RequestMessage
 {
     /// <summary>
-    /// 关注事件
+    /// 关注事件推送
     /// </summary>
-    public class RequestMessageEventSubscribe : RequestMessageBase
+    public class RequestMessageEventSubscribe : RequestMessageEventBase, IRequestMessageEventBase, IRequestMessageBase, IMessageBase
     {
-        public RequestMessageEventSubscribe(string xml) : base(xml)
-        {
-        }
-
         /// <summary>
         /// 事件类型，subscribe(订阅)
         /// </summary>
-        public Event Event { get; set; } = Event.scan;
-        public override RequestMsgType MsgType => RequestMsgType.@event;
+        public override Event Event  =>Event.subscribe;
 
-        protected override void PerfectMessage(string xml)
-        {
-            if (!string.IsNullOrEmpty(xml))
-            {
-                XElement element = XElement.Parse(xml);
-                if (element != null)
-                {
-                    this.Event = element.Element("Event").Value.StringConvertToEnum<Event>();
-                }
-            }
-        }
+        /// <summary>
+        /// 二维码的ticket，可用来换取二维码图片
+        /// </summary>
+        public string Ticket { get; set; }
+
     }
 }
