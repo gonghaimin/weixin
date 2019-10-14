@@ -8,6 +8,7 @@ using Weixin.Tool.Messages.Base;
 using Weixin.Tool.Messages.RequestMessage;
 using Weixin.Tool.Messages.ResponseMessage;
 using Weixin.Tool.Models;
+using Weixin.Tool.Services;
 using Weixin.Tool.Utility;
 
 namespace Weixin.Tool.Handlers
@@ -97,6 +98,8 @@ namespace Weixin.Tool.Handlers
 
         public override IResponseMessageBase OnTextRequest(RequestMessageText requestMessage)
         {
+            TemplateService templateService = new TemplateService();
+            var result=templateService.templateSend(requestMessage.FromUserName);
             var responseMessage = ResponseMessageFactory.CreateFromRequestMessage<ResponseMessageText>(requestMessage);
             responseMessage.Content = "对不起，暂时不能处理你的消息，请联系客服！";
             return responseMessage;

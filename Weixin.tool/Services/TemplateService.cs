@@ -26,10 +26,10 @@ namespace Weixin.Tool.Services
         /// 发送模板消息
         /// </summary>
         /// <returns></returns>
-        public Dictionary<string, object> templateSend()
+        public Dictionary<string, object> templateSend(string touser= "o6QJo6Cw-P9xvcg2ok38k6PwKifQ")
         {
             var dict = new Dictionary<string, object>();
-            dict["touser"] = "o6QJo6Cw-P9xvcg2ok38k6PwKifQ";
+            dict["touser"] = touser;
             dict["template_id"] = "Xb0CvU59qECsmcOyiG6HYcc540g1MEDyReHCeSPB-n4";
             dict["url"] = "https://www.runoob.com/python3/python3-basic-syntax.html";
             //跳转小程序设置
