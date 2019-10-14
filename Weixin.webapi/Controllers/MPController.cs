@@ -14,6 +14,7 @@ using Weixin.Data;
 using Weixin.Tool;
 using Weixin.Tool.Handlers;
 using Weixin.Tool.Handlers.Base;
+using Weixin.Tool.Handlers.Factory;
 using Weixin.Tool.Messages.ResponseMessage;
 using Weixin.Tool.Models;
 using Weixin.Tool.Services;
@@ -26,11 +27,9 @@ namespace Weixin.WebApi.Controllers
     [ApiController]
     public class MPController : ControllerBase
     {
-        private readonly HandlerFactory _handlerFactory;
         private readonly UserService _userService;
-        public MPController(HandlerFactory handlerFactory,UserService userService)
+        public MPController(UserService userService)
         {
-            _handlerFactory = handlerFactory;
             _userService = userService;
         }
         [HttpGet]
@@ -48,6 +47,7 @@ namespace Weixin.WebApi.Controllers
             var res = string.Empty;
             var error = string.Empty;
             string requestXml = Common.ReadRequest(this.Request);
+            DefaultMessageHandler handler = null;
             if (signModel != null &&!string.IsNullOrEmpty(signModel.signature)&& !CheckSignature.Check(signModel.signature, signModel.timestamp, signModel.nonce, WeiXinContext.Config.Token))
             {
                 error = "验签失败";
@@ -56,7 +56,7 @@ namespace Weixin.WebApi.Controllers
             {
                 try
                 {
-                    var handler = _handlerFactory.CreateHandler(requestXml, signModel);
+                    handler = new DefaultMessageHandler(signModel, requestXml);
                     res = handler.HandleRequest();
                     return Content(res,Request.ContentType, Encoding.UTF8);
                 }
@@ -65,10 +65,10 @@ namespace Weixin.WebApi.Controllers
                     error = e.Message;
                 }
             }
-            var defaultHandler = new DefaultHandler();
-            defaultHandler.RequestXml = requestXml;
-            defaultHandler.SignModel = signModel;
-            res = defaultHandler.HandleRequest(new ResponseMessageText() { Content= error });
+            var responseMessage = ResponseMessageFactory.CreateFromRequestMessage<ResponseMessageText>(handler.RequestMessage);
+            responseMessage.Content = error;
+            handler.ResponseMessage = responseMessage;
+            res = handler.HandleRequest();
             
             return Content(res, Request.ContentType, Encoding.UTF8);
         }

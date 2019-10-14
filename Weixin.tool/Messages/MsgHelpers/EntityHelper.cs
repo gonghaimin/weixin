@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
+using Weixin.Tool.Handlers.Factory;
 using Weixin.Tool.Messages.Base;
 using Weixin.Tool.Messages.ResponseMessage;
 
@@ -218,7 +219,7 @@ namespace Weixin.Tool.Messages.MsgHelpers
         /// <returns></returns>
         public static T CreateResponseMessage<T>(this IRequestMessageBase requestMessage) where T : class, IResponseMessageBase
         {
-            return ResponseMessageBase.CreateFromRequestMessage<T>(requestMessage);
+            return ResponseMessageFactory.CreateFromRequestMessage<T>(requestMessage);
         }
 
     }

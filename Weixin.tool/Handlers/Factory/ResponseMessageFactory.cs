@@ -69,13 +69,13 @@ namespace Weixin.Tool.Handlers.Factory
         /// </summary>
         /// <param name="entity">ResponseMessage实体</param>
         /// <returns></returns>
-        public static XDocument ConvertEntityToXml(ResponseMessageBase entity)
+        public static XDocument ConvertEntityToXml(IResponseMessageBase entity)
         {
-            return EntityHelper.ConvertEntityToXml<ResponseMessageBase>(entity);
+            return EntityHelper.ConvertEntityToXml<IResponseMessageBase>(entity);
         }
-        public static string ConvertEntityToXmlStr(ResponseMessageBase entity)
+        public static string ConvertEntityToXmlStr(IResponseMessageBase entity)
         {
-            return EntityHelper.ConvertEntityToXml<ResponseMessageBase>(entity).ToString();
+            return EntityHelper.ConvertEntityToXml<IResponseMessageBase>(entity).ToString();
         }
         /// <summary>
         /// 获取响应类型实例，并初始化

@@ -69,7 +69,7 @@ namespace Weixin.WebApi
                  });
 
             services.Configure<WeixinSetting>(Configuration.GetSection("WeiXin"));
-            services.AddScoped<HandlerFactory>();
+
 
             var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes().Where(t => t.GetInterfaces().Contains(typeof(IService)))).ToList();
 
