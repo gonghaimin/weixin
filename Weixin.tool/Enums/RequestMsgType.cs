@@ -39,14 +39,6 @@ namespace Weixin.Tool.Enums
         /// 事件消息
         /// </summary>
         @event,
-        /// <summary>
-        /// 音乐消息
-        /// </summary>
-        music,
-        /// <summary>
-        /// 图文消息
-        /// </summary>
-        news
     }
 
 }

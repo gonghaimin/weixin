@@ -24,9 +24,6 @@ namespace Weixin.Tool.Messages.ResponseMessage
                 }
                 return 0;
             }
-            set
-            {
-            }
         }
 
         /// <summary>

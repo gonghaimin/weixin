@@ -22,6 +22,7 @@ namespace Weixin.Tool.Messages.Base
         public virtual RequestMsgType MsgType
         {
             get;
+            set;
         }
 
         public string Encrypt

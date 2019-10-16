@@ -14,10 +14,9 @@ namespace Weixin.Tool.Handlers.Base
     {
         public string RequestXml { get; set; }
         public SignModel SignModel { get; set; }
-        public IRequestMessageBase RequestMessage { get; internal set; }
-        public IResponseMessageBase ResponseMessage { get; set; }
-      
-        protected void DecryptMsg()
+        public abstract IRequestMessageBase RequestMessage { get; internal set; }
+        public abstract IResponseMessageBase ResponseMessage { get; set; }
+        protected virtual void DecryptMsg()
         {
             if (this.SignModel != null && !string.IsNullOrEmpty(this.SignModel.msg_signature))
             {
@@ -33,7 +32,7 @@ namespace Weixin.Tool.Handlers.Base
             }
             this.RequestMessage = RequestMessageFactory.GetRequestEntity(this.RequestXml);
         }
-        protected void EncryptMsg(ref string response)
+        protected virtual void EncryptMsg(ref string response)
         {
             if (this.SignModel != null && !string.IsNullOrEmpty(this.SignModel.msg_signature))
             {
@@ -47,63 +46,19 @@ namespace Weixin.Tool.Handlers.Base
             }
         }
         public abstract string HandleRequest();
-        public virtual IResponseMessageBase OnImageRequest(RequestMessageImage requestMessage)
-        {
-            return DefaultResponseMessage(requestMessage);
-        }
-        public virtual IResponseMessageBase OnVoiceRequest(RequestMessageVoice requestMessage)
-        {
-            return DefaultResponseMessage(requestMessage);
-        }
-        public virtual IResponseMessageBase OnVideoRequest(RequestMessageVideo requestMessage)
-        {
-            return DefaultResponseMessage(requestMessage);
-        }
-        public virtual IResponseMessageBase OnTextRequest(RequestMessageText requestMessage)
-        {
-            return DefaultResponseMessage(requestMessage);
-        }
-        public virtual IResponseMessageBase OnShortVideoRequest(RequestMessageShortVideo requestMessage)
-        {
-            return DefaultResponseMessage(requestMessage);
-        }
-        public virtual IResponseMessageBase OnLocationRequest(RequestMessageLocation requestMessage)
-        {
-            return DefaultResponseMessage(requestMessage);
-        }
-        public virtual IResponseMessageBase OnLinkRequest(RequestMessageLink requestMessage)
-        {
-            return DefaultResponseMessage(requestMessage);
-        }
-        public virtual IResponseMessageBase OnEventViewRequest(RequestMessageEventView requestMessage)
-        {
-            return DefaultResponseMessage(requestMessage);
-        }
-        public virtual IResponseMessageBase OnEventUnsubscribeRequest(RequestMessageEventUnsubscribe requestMessage)
-        {
-            return DefaultResponseMessage(requestMessage);
-        }
-        public virtual IResponseMessageBase OnEventSubscribeRequest(RequestMessageEventSubscribe requestMessage)
-        {
-            return DefaultResponseMessage(requestMessage);
-        }
-        public virtual IResponseMessageBase OnEventScanRequest(RequestMessageEventScan requestMessage)
-        {
-            return DefaultResponseMessage(requestMessage);
-        }
-        public virtual IResponseMessageBase OnEventLocationRequest(RequestMessageEventLocation requestMessage)
-        {
-            return DefaultResponseMessage(requestMessage);
-        }
-        public virtual IResponseMessageBase OnEventClickRequest(RequestMessageEventClick requestMessage)
-        {
-            return DefaultResponseMessage(requestMessage);
-        }
-        public virtual IResponseMessageBase DefaultResponseMessage(IRequestMessageBase requestMessage)
-        {
-            var responseMessage=ResponseMessageFactory.CreateFromRequestMessage<ResponseMessageText>(requestMessage);
-            responseMessage.Content = "对不起，暂时不能处理你的消息，请联系客服！";
-            return responseMessage;
-        }
+        public abstract IResponseMessageBase OnImageRequest(RequestMessageImage requestMessage);
+        public abstract IResponseMessageBase OnVoiceRequest(RequestMessageVoice requestMessage);
+        public abstract IResponseMessageBase OnVideoRequest(RequestMessageVideo requestMessage);
+        public abstract IResponseMessageBase OnTextRequest(RequestMessageText requestMessage);
+        public abstract IResponseMessageBase OnShortVideoRequest(RequestMessageShortVideo requestMessage);
+        public abstract IResponseMessageBase OnLocationRequest(RequestMessageLocation requestMessage);
+        public abstract IResponseMessageBase OnLinkRequest(RequestMessageLink requestMessage);
+        public abstract IResponseMessageBase OnEventViewRequest(RequestMessageEventView requestMessage);
+        public abstract IResponseMessageBase OnEventUnsubscribeRequest(RequestMessageEventUnsubscribe requestMessage);
+        public abstract IResponseMessageBase OnEventSubscribeRequest(RequestMessageEventSubscribe requestMessage);
+        public abstract IResponseMessageBase OnEventScanRequest(RequestMessageEventScan requestMessage);
+        public abstract IResponseMessageBase OnEventLocationRequest(RequestMessageEventLocation requestMessage);
+        public abstract IResponseMessageBase OnEventClickRequest(RequestMessageEventClick requestMessage);
+        public abstract IResponseMessageBase DefaultResponseMessage(IRequestMessageBase requestMessage);
     }
 }

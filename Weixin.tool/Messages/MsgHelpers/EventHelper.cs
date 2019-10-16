@@ -18,7 +18,7 @@ namespace Weixin.Tool.Messages.MsgHelpers
 
         public static Event GetEventType(string str)
         {
-            return (Event)Enum.Parse(typeof(Event), str, true);
+            return Enum.Parse<Event>(str, true);
         }
     }
 }

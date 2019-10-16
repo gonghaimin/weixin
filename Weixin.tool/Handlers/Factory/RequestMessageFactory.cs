@@ -83,7 +83,7 @@ namespace Weixin.Tool.Handlers.Factory
             }
             catch (ArgumentException ex)
             {
-                throw new Exception($"RequestMessage转换出错！可能是MsgType不存在！，XML：{doc.ToString()}", ex);
+                throw new Exception($"RequestMessage转换出错！可能是MsgType不存在！，XML：{doc.ToString()}",ex);
             }
         }
 
