@@ -45,31 +45,18 @@ namespace Weixin.WebApi.Controllers
         public ActionResult<string> Post([FromQuery]SignModel signModel)
         {
             var res = string.Empty;
-            var error = string.Empty;
             string requestXml = Common.ReadRequest(this.Request);
-            DefaultMessageHandler handler = null;
+            DefaultMessageHandler handler = new DefaultMessageHandler();
             if (signModel != null &&!string.IsNullOrEmpty(signModel.signature)&& !CheckSignature.Check(signModel.signature, signModel.timestamp, signModel.nonce, WeiXinContext.Config.Token))
             {
-                error = "验签失败";
+                res = handler.HandleErrorRequest(signModel, requestXml, "验签失败");
             }
             else
             {
-                try
-                {
-                    handler = new DefaultMessageHandler(signModel, requestXml);
-                    res = handler.HandleRequest();
-                    return Content(res,Request.ContentType, Encoding.UTF8);
-                }
-                catch (Exception e)
-                {
-                    error = e.Message;
-                }
+                handler = new DefaultMessageHandler(signModel, requestXml);
+                res = handler.HandleRequest();
+                
             }
-            var responseMessage = ResponseMessageFactory.CreateFromRequestMessage<ResponseMessageText>(handler.RequestMessage);
-            responseMessage.Content = error;
-            handler.ResponseMessage = responseMessage;
-            res = handler.HandleRequest();
-            
             return Content(res, Request.ContentType, Encoding.UTF8);
         }
     }

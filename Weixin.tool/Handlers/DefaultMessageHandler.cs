@@ -17,7 +17,7 @@ namespace Weixin.Tool.Handlers
 {
     public class DefaultMessageHandler : HandlerBase, IHandler
     {
-     
+
         public DefaultMessageHandler()
         {
 
@@ -25,7 +25,8 @@ namespace Weixin.Tool.Handlers
         public override IRequestMessageBase RequestMessage { get; internal set; }
         public override IResponseMessageBase ResponseMessage { get; set; }
 
-        public DefaultMessageHandler(SignModel signModel,string requestXml)
+        private Exception exception;
+        public DefaultMessageHandler(SignModel signModel, string requestXml)
         {
             this.SignModel = signModel;
             this.RequestXml = requestXml;
@@ -38,15 +39,41 @@ namespace Weixin.Tool.Handlers
                 var val = new RequestMessageBase();
                 val.FillEntityWithXml<RequestMessageBase>(XDocument.Parse(requestXml));
                 this.RequestMessage = val;
-                this.RequestMessage.MsgType = RequestMsgType.text;
-                throw ex;
+                exception = ex;
             }
-            
+
             // System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(T).TypeHandle); 运行制定构造函数，可以运行一些对象的静态函数
         }
+        public string HandleErrorRequest(SignModel signModel, string requestXml,string error)
+        {
+            this.SignModel = signModel;
+            this.RequestXml = requestXml;
 
+            var val = new RequestMessageBase();
+            val.FillEntityWithXml<RequestMessageBase>(XDocument.Parse(requestXml));
+            this.RequestMessage = val;
+
+            var responseMessageText = ResponseMessageFactory.CreateFromRequestMessage<ResponseMessageText>(this.RequestMessage);
+            responseMessageText.Content = error;
+
+            this.ResponseMessage = responseMessageText;
+            var response = ResponseMessageFactory.ConvertEntityToXmlStr(this.ResponseMessage);
+            this.EncryptMsg(ref response);
+            return response;
+        }
         public override string HandleRequest()
         {
+            string response = string.Empty;
+            if (this.exception != null)
+            {
+                var responseMessageText = ResponseMessageFactory.CreateFromRequestMessage<ResponseMessageText>(this.RequestMessage);
+                responseMessageText.Content = this.exception.Message;
+
+                this.ResponseMessage = responseMessageText;
+                response = ResponseMessageFactory.ConvertEntityToXmlStr(this.ResponseMessage);
+                EncryptMsg(ref response);
+                return response;
+            }
             var requestMsgType = this.RequestMessage.MsgType;
             switch (requestMsgType)
             {
@@ -96,7 +123,7 @@ namespace Weixin.Tool.Handlers
                     }
                     break;
             }
-            var response = ResponseMessageFactory.ConvertEntityToXmlStr(this.ResponseMessage);
+            response = ResponseMessageFactory.ConvertEntityToXmlStr(this.ResponseMessage);
             EncryptMsg(ref response);
             return response;
         }
@@ -109,14 +136,14 @@ namespace Weixin.Tool.Handlers
         public override IResponseMessageBase OnEventClickRequest(RequestMessageEventClick requestMessage)
         {
             var responseMessage = ResponseMessageFactory.CreateFromRequestMessage<ResponseMessageText>(requestMessage);
-            responseMessage.Content = "你触发自定义菜单事件：" + requestMessage.Event.ToString() + ";EventKey："+requestMessage.EventKey;
+            responseMessage.Content = "你触发自定义菜单事件：" + requestMessage.Event.ToString() + ";EventKey：" + requestMessage.EventKey;
             return responseMessage;
         }
 
         public override IResponseMessageBase OnEventLocationRequest(RequestMessageEventLocation requestMessage)
         {
             var responseMessage = ResponseMessageFactory.CreateFromRequestMessage<ResponseMessageText>(requestMessage);
-            responseMessage.Content = "你上报地理位置事件：" + requestMessage.Event.ToString() + ";EventKey：" + requestMessage.EventKey + "位置信息Latitude:" + requestMessage.Latitude+ ";Longitude:" + requestMessage.Longitude+ ";Precision:" + requestMessage.Precision;
+            responseMessage.Content = "你上报地理位置事件：" + requestMessage.Event.ToString() + ";EventKey：" + requestMessage.EventKey + "位置信息Latitude:" + requestMessage.Latitude + ";Longitude:" + requestMessage.Longitude + ";Precision:" + requestMessage.Precision;
             return responseMessage;
         }
 
@@ -173,7 +200,7 @@ namespace Weixin.Tool.Handlers
         public override IResponseMessageBase OnLocationRequest(RequestMessageLocation requestMessage)
         {
             var responseMessage = ResponseMessageFactory.CreateFromRequestMessage<ResponseMessageText>(requestMessage);
-            responseMessage.Content = "你发送了位置,Label:" + requestMessage.Label+ ";Location_X:" + requestMessage.Location_X+ ";Location_Y:" + requestMessage.Location_Y;
+            responseMessage.Content = "你发送了位置,Label:" + requestMessage.Label + ";Location_X:" + requestMessage.Location_X + ";Location_Y:" + requestMessage.Location_Y;
             return responseMessage;
         }
 
@@ -187,7 +214,7 @@ namespace Weixin.Tool.Handlers
         public override IResponseMessageBase OnTextRequest(RequestMessageText requestMessage)
         {
             TemplateService templateService = new TemplateService();
-            var result=templateService.templateSend(requestMessage.FromUserName);
+            var result = templateService.templateSend(requestMessage.FromUserName);
             var responseMessage = ResponseMessageFactory.CreateFromRequestMessage<ResponseMessageText>(requestMessage);
             responseMessage.Content = "对不起，暂时不能处理你的消息，请联系客服！";
             return responseMessage;
@@ -205,7 +232,7 @@ namespace Weixin.Tool.Handlers
         public override IResponseMessageBase OnVoiceRequest(RequestMessageVoice requestMessage)
         {
             var responseMessage = ResponseMessageFactory.CreateFromRequestMessage<ResponseMessageText>(requestMessage);
-            responseMessage.Content = "你发送了语音:MediaId=" + requestMessage.MediaId+ ";Recognition:" + requestMessage.Recognition;
+            responseMessage.Content = "你发送了语音:MediaId=" + requestMessage.MediaId + ";Recognition:" + requestMessage.Recognition;
             return responseMessage;
         }
     }

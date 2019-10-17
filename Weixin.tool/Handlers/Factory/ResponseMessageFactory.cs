@@ -49,7 +49,7 @@ namespace Weixin.Tool.Handlers.Factory
                 val.FillEntityWithXml<ResponseMessageBase>(doc);
                 return val;
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
                 throw new Exception($"ResponseMessage转换出错！可能是MsgType不存在！，XML：{doc.ToString()}", ex);
             }

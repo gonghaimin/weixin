@@ -19,11 +19,7 @@ namespace Weixin.Tool.Messages.Base
             set;
         }
 
-        public virtual RequestMsgType MsgType
-        {
-            get;
-            set;
-        }
+        public virtual RequestMsgType MsgType => RequestMsgType.text;
 
         public string Encrypt
         {

@@ -23,9 +23,11 @@ namespace Weixin.Tool.Handlers.Factory
         public static IRequestMessageBase GetRequestEntity(XDocument doc)
         {
             RequestMessageBase val = null;
+            RequestMsgType requestMsgType = default(RequestMsgType);
+            Event eventType = default(Event);
             try
             {
-                RequestMsgType requestMsgType = MsgTypeHelper.GetRequestMsgType(doc);
+                requestMsgType = MsgTypeHelper.GetRequestMsgType(doc);
                 switch (requestMsgType)
                 {
                     case RequestMsgType.text:
@@ -50,7 +52,7 @@ namespace Weixin.Tool.Handlers.Factory
                         val = new RequestMessageShortVideo();
                         break;
                     case RequestMsgType.@event:
-                        var eventType = EventHelper.GetEventType(doc.Root.Element("Event").Value);
+                         eventType = EventHelper.GetEventType(doc.Root.Element("Event").Value);
 
                         switch (eventType)
                         {
@@ -72,18 +74,19 @@ namespace Weixin.Tool.Handlers.Factory
                             case Event.VIEW:
                                 val = new RequestMessageEventView();
                                 break;
-                            default:
-                                val = new RequestMessageEventBase();
-                                break;
                         }
                         break;
+                }
+                if (val == null)
+                {
+                    throw new Exception();
                 }
                 val.FillEntityWithXml<RequestMessageBase>(doc);
                 return val;
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
-                throw new Exception($"RequestMessage转换出错！可能是MsgType不存在！，XML：{doc.ToString()}",ex);
+                throw new Exception($"RequestMessage转换出错！可能是MsgType不存在！，requestMsgType：{requestMsgType},Event:{eventType}");
             }
         }
 

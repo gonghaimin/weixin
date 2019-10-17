@@ -19,7 +19,6 @@ namespace Weixin.Tool.Messages.Base
         RequestMsgType MsgType
         {
             get;
-            set;
         }
 
         string Encrypt
